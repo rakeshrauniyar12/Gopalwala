@@ -1,0 +1,12 @@
+*{
+  padding: 0px;
+  margin: 0px;
+}
+@import url('https://fonts.googleapis.com/css2?family=Matimo:wght@400&display=swap');
+
+
+p {
+  font-family: 'Matimo', sans-serif;
+  font-weight: 400;
+}
+
