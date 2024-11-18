@@ -206,9 +206,7 @@
 .product-description{
     width: 80%;
     margin: auto;
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    grid-template-rows: auto;
+    display: flex;
     gap: 20px;
 }
   .product-desc-1{
@@ -261,4 +259,40 @@
     width: 100%;
     height: 100%;
     object-fit: contain;
+   }
+
+   @media (max-width:768px){
+    .header-section {
+      position: relative;
+      width: 100%;
+      height: 311px;
+  }
+  .choose-heading h2 {
+    font-weight: 800;
+    font-size: 32px;
+  }
+  .header-content {
+      width: 100%;
+      margin: auto;
+      text-align: center;
+  }
+  .product-append {
+   flex-direction: column;
+   row-gap: 20px;
+  }
+  .product-description {
+
+    flex-direction: column;
+  }
+  .choose-image {
+   flex-direction: column;
+  }
+  .header-p {
+      font-weight: 900;
+      font-size: 26px;
+      color: #ffff;
+  }
+  .repu-p {
+      width: 100%;
+  }
    }

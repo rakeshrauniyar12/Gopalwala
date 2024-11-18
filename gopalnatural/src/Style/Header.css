@@ -67,3 +67,40 @@
     align-items: center;
     background-color: #3d8e41;
 }
+
+
+
+@media (max-width:768px){
+    body{
+        overflow: hidden;
+    }
+    .header-container{
+        height: 100px;
+    }
+.header-2{
+    width: 92%;
+    margin-top: 10px;
+}
+
+.header-2-content{
+    width: 92%;
+}
+.header-2-content-2{
+    width: 92%;
+}
+    .header-1-section{
+        width: 96%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .header-1 {
+       gap: 3px;
+    }
+    .header-1-content {
+     gap: 3px;
+    }
+}
