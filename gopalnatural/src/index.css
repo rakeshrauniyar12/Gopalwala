@@ -4,7 +4,9 @@
 }
 @import url('https://fonts.googleapis.com/css2?family=Matimo:wght@400&display=swap');
 
-
+h1,h2,h3 {
+  font-family: 'Matimo', sans-serif;
+}
 p {
   font-family: 'Matimo', sans-serif;
   font-weight: 400;
