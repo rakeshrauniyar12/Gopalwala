@@ -71,9 +71,7 @@
 
 
 @media (max-width:768px){
-    body{
-        overflow: hidden;
-    }
+    
     .header-container{
         height: 100px;
     }
