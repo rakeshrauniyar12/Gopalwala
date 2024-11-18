@@ -14,6 +14,7 @@ import { MdClose } from "react-icons/md";
 const Navbar = ()=>{
    const  [showCategories,setShowCategories] = useState(false);
    const  [showCategories1,setShowCategories1] = useState(false);
+   const  [showCategories11,setShowCategories11] = useState(false);
    const [showHamburger,setShowHamburger]= useState(false);
 
     const handleCategories = ()=>{
@@ -22,6 +23,10 @@ const Navbar = ()=>{
 
     const handleCategories1 = ()=>{
         setShowCategories1(!showCategories1);   
+      }
+      const handleCategories2 = ()=>{
+        console.log("hello")
+        setShowCategories11(!showCategories11);   
       }
    const handleHamburger = ()=>{
     setShowHamburger(!showHamburger);
@@ -116,16 +121,36 @@ const Navbar = ()=>{
                             <RiArrowDropDownLine style={{fontSize:"30px",color:"black"}} onClick={handleCategories}/>
                         </div>
                         <div>
-                          {!showHamburger?<GiHamburgerMenu/>:<MdClose/>}
+                          {!showHamburger?<GiHamburgerMenu onClick={handleHamburger} style={{color:"#ffff",fontSize:"30px"}}/>:<MdClose onClick={handleHamburger} style={{color:"#ffff",fontSize:"30px"}}/>}
                         </div>
                      
                         </div> 
               </div>
               </>}
              
-              {showHamburger && <div className="second-div-content">
+              {showHamburger && <div className="second-div-content1">
                             <p>Home</p>
-                            <div className="second-drop-arrow"><p>Shop</p><RiArrowDropDownLine style={{fontSize:"30px",color:"#ffff"}} onClick={handleCategories1}/></div>
+                            <div className="second-drop-arrow"><p>Shop</p><RiArrowDropDownLine style={{fontSize:"30px",color:"black"}} onClick={handleCategories2}/></div>
+                            {showCategories11 && 
+                <div className="show-categories111">
+                    <div className="show-categories1">
+                        <div className="cate-img"><img src={fruit1}/></div>
+                        <p className="categ-p">Fresh Fruits</p>
+                        </div>
+                        <div className="show-categories1">
+                        <div className="cate-img"><img src={vegetable}/></div>
+                        <p className="categ-p">Fresh Vegetables</p>
+                        </div>
+                        <div className="show-categories1">
+                        <div className="cate-img"><img src={milk}/></div>
+                        <p className="categ-p">Fresh Milk and Dairy</p>
+                        </div>
+                        <div className="show-categories1">
+                        <div className="cate-img"><img src={meat}/></div>
+                        <p className="categ-p">Fresh Meats</p>
+                        </div>
+                </div>
+             }
                             <p>About us</p>
                             <p>Blog</p>
                             <p>Contact us</p>

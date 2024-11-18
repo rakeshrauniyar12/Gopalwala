@@ -204,6 +204,32 @@
 
 
 @media (max-width:768px){
+    .second-div-content1{
+        width: 100%;
+        position: absolute;
+        top: 216px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        row-gap: 15px;
+        padding: 14px;
+        background-color: #f5f5db;
+        z-index: 8888;
+    }
+    .show-categories111{
+        /* position: absolute; */
+        width: 50%;
+        padding: 10px;
+        border-radius: 15px;
+        z-index: 9999;
+    }
+    .show-categories {
+        position: absolute;
+        top: 216px;
+        left: 34px;
+        width: 56%;
+    }
     .navbar-main {
         width: 90%;
 
