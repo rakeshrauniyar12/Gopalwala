@@ -96,7 +96,7 @@ const Navbar = ()=>{
                     </div>
                     <div className="wish-cart-2">
                     <div style={{position:"relative"}}> 
-                        <div className="cart-icon-div"><img src={cart_icon}/></div>
+                        <div className="cart-icon-div"><img src={cart_icon} height={15}/></div>
                         <p className="cart-zero">0</p>
                         </div>
                         <div><p>Cart</p></div> 
