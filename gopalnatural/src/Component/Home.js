@@ -15,9 +15,28 @@ import apple from "../Assets/Home/product/apple.png";
 import pr1 from "../Assets/Home/product/pr-1.png";
 import pr2 from "../Assets/Home/product/pr-2.png";
 import pr3 from "../Assets/Home/product/pr-3.png";
+import { FaAngleRight } from "react-icons/fa";
+import back from "../Assets/Home/footer-back.png";
+import youtube from "../Assets/Home/logos_youtube-icon.png";
+import last_sec from "../Assets/Home/last-sec.png";
 import "../Style/Home.css";
+import Footer from "./Footer";
 const Home = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered1, setIsHovered1] = useState(false);
+  const [isHovered2, setIsHovered2] = useState(false);
+  const [isHovered3, setIsHovered3] = useState(false);
+
+  const products= [{image:apple,name:"Apple",quantity:"1kg",productPrice:"121",productDiscount:"7"},
+    {image:orange,name:"Orange",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+    {image:mutton,name:"Fresh Mutton",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+    {image:chicken,name:"Fresh Chicken",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+    {image:milk1,name:"Fresh Milk",quantity:"1L",productPrice:"120",productDiscount:"5"},
+    {image:curd,name:"Fresh Curd",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+    {image:tomato,name:"Tomato",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+  ]
   return (
+    <>
     <div className="home-container">
       <div className="header-section">
         <div className="header-content">
@@ -72,14 +91,14 @@ const Home = () => {
           </div>
           <div className="product-append">
             {/* first */}
-            <div className="product">
+            {products.map((product,index)=>(<div className="product">
               <div className="off-div">
-                <p>5 % off</p>
+                <p>{`${product.productDiscount} % off`}</p>
               </div>
               <div className="product-image">
-                <img src={apple} alt="Apple" />
+                <img src={product.image} alt="Apple" />
               </div>
-              <p className="productname-size">Apple</p>
+              <p className="productname-size">{product.name}</p>
               <p
                 style={{
                   fontSize: "14px",
@@ -88,10 +107,11 @@ const Home = () => {
                   marginBottom: "5px",
                 }}
               >
-                (1Kg)
+                {`(${product.quantity} Kg)`}
               </p>
               <p className="productname-size">
-                <span className="p-span">₹ 120</span>₹ 114
+                <span className="p-span">{`₹ ${product.productPrice}`}</span>
+                {`₹ ${(Math.ceil(product.productPrice-(product.productPrice*product.productDiscount/100)))}`}
               </p>
               <div
                 style={{
@@ -114,278 +134,8 @@ const Home = () => {
                   <img src={wish} />
                 </div>
               </div>
-            </div>
+            </div>))}
 
-            {/* second */}
-            <div className="product">
-              <div className="off-div">
-                <p>5 % off</p>
-              </div>
-              <div className="product-image">
-                <img src={chicken} alt="Apple" />
-              </div>
-              <p className="productname-size">Fresh Chicken Meat</p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                (1Kg)
-              </p>
-              <p className="productname-size">
-                <span className="p-span">₹ 120</span>₹ 114
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "3px",
-                  fontSize: "10px",
-                  marginTop: "5px",
-                  marginBottom: "10px",
-                }}
-              >
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-              </div>
-              <div className="product-last-section">
-                <button className="product-btn">Add to cart</button>
-                <div className="cart-icon-div1">
-                  <img src={wish} />
-                </div>
-              </div>
-            </div>
-
-            {/* third */}
-            <div className="product">
-              <div className="off-div">
-                <p>5 % off</p>
-              </div>
-              <div className="product-image">
-                <img src={orange} alt="Apple" />
-              </div>
-              <p className="productname-size">Orange</p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                (1Kg)
-              </p>
-              <p className="productname-size">
-                <span className="p-span">₹ 120</span>₹ 114
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "3px",
-                  fontSize: "10px",
-                  marginTop: "5px",
-                  marginBottom: "10px",
-                }}
-              >
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-              </div>
-              <div className="product-last-section">
-                <button className="product-btn">Add to cart</button>
-                <div className="cart-icon-div1">
-                  <img src={wish} />
-                </div>
-              </div>
-            </div>
-
-            {/* four */}
-
-            <div className="product">
-              <div className="off-div">
-                <p>5 % off</p>
-              </div>
-              <div className="product-image">
-                <img src={milk1} alt="Apple" />
-              </div>
-              <p className="productname-size">Fresh Milk</p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                (1 ltr)
-              </p>
-              <p className="productname-size">
-                <span className="p-span">₹ 120</span>₹ 114
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "3px",
-                  fontSize: "10px",
-                  marginTop: "5px",
-                  marginBottom: "10px",
-                }}
-              >
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-              </div>
-              <div className="product-last-section">
-                <button className="product-btn">Add to cart</button>
-                <div className="cart-icon-div1">
-                  <img src={wish} />
-                </div>
-              </div>
-            </div>
-
-            {/* five */}
-            <div className="product">
-              <div className="off-div">
-                <p>5 % off</p>
-              </div>
-              <div className="product-image">
-                <img src={tomato} alt="Apple" />
-              </div>
-              <p className="productname-size">Tomato</p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                (1Kg)
-              </p>
-              <p className="productname-size">
-                <span className="p-span">₹ 120</span>₹ 114
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "3px",
-                  fontSize: "10px",
-                  marginTop: "5px",
-                  marginBottom: "10px",
-                }}
-              >
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-              </div>
-              <div className="product-last-section">
-                <button className="product-btn">Add to cart</button>
-                <div className="cart-icon-div1">
-                  <img src={wish} />
-                </div>
-              </div>
-            </div>
-
-            {/* six */}
-            <div className="product">
-              <div className="off-div">
-                <p>5 % off</p>
-              </div>
-              <div className="product-image">
-                <img src={mutton} alt="Apple" />
-              </div>
-              <p className="productname-size">Fresh Mutton</p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                (1Kg)
-              </p>
-              <p className="productname-size">
-                <span className="p-span">₹ 120</span>₹ 114
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "3px",
-                  fontSize: "10px",
-                  marginTop: "5px",
-                  marginBottom: "10px",
-                }}
-              >
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-              </div>
-              <div className="product-last-section">
-                <button className="product-btn">Add to cart</button>
-                <div className="cart-icon-div1">
-                  <img src={wish} />
-                </div>
-              </div>
-            </div>
-
-            {/* seven  */}
-            <div className="product">
-              <div className="off-div">
-                <p>5 % off</p>
-              </div>
-              <div className="product-image">
-                <img src={curd} alt="Apple" />
-              </div>
-              <p className="productname-size">Fresh Curd</p>
-              <p
-                style={{
-                  fontSize: "14px",
-                  fontWeight: "400",
-                  marginTop: "5px",
-                  marginBottom: "5px",
-                }}
-              >
-                (1Kg)
-              </p>
-              <p className="productname-size">
-                <span className="p-span">₹ 120</span>₹ 114
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  columnGap: "3px",
-                  fontSize: "10px",
-                  marginTop: "5px",
-                  marginBottom: "10px",
-                }}
-              >
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-                <FaRegStar />
-              </div>
-              <div className="product-last-section">
-                <button className="product-btn">Add to cart</button>
-                <div className="cart-icon-div1">
-                  <img src={wish} />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -393,8 +143,8 @@ const Home = () => {
       <div className="product-categories-2">
         <div className="choose-content">
           <div className="choose-heading">
-            <h3>Genuine Organic Goods</h3>
-            <h2>Trending Items</h2>
+            <h3>Pick your offer.</h3>
+            <h2>One more deal for you!</h2>
           </div>
         </div>
 
@@ -434,7 +184,190 @@ const Home = () => {
             </div>
         </div>
       </div>
+
+      <div className="product-categories-1">
+        <div className="choose-content">
+          <div className="choose-heading">
+            <h3>Only Natural Goods</h3>
+            <h2>Natural and Fresh Goods</h2>
+          </div>
+          <div className="product-button">
+              <div className="product-button-1" 
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              >
+                <div><p className="pb-p">New Products</p>
+               { isHovered && <FaAngleRight style={{color:"#ffff"}}/>}
+                </div>
+                </div>
+              <div className="product-button-1"
+               onMouseEnter={() => setIsHovered1(true)}
+               onMouseLeave={() => setIsHovered1(false)}
+              >  <div><p className="pb-p">Top Selling</p>
+                 { isHovered1 && <FaAngleRight style={{color:"#ffff"}}/>}
+                </div></div>
+              <div className="product-button-1"
+               onMouseEnter={() => setIsHovered2(true)}
+               onMouseLeave={() => setIsHovered2(false)}
+              >  <div><p className="pb-p">Trending Products</p>
+               { isHovered2 && <FaAngleRight style={{color:"#ffff"}}/>}
+                </div></div>
+              <div className="product-button-1"
+                onMouseEnter={() => setIsHovered3(true)}
+                onMouseLeave={() => setIsHovered3(false)}
+              >  <div><p className="pb-p">New Products</p>
+                { isHovered3 && <FaAngleRight style={{color:"#ffff"}}/>}
+                </div></div>
+          </div>
+          <div className="product-append21">
+            {/* first */}
+            {products.map((product,index)=>(<div className="product">
+              <div className="off-div">
+                <p>{`${product.productDiscount} % off`}</p>
+              </div>
+              <div className="product-image">
+                <img src={product.image} alt="Apple" />
+              </div>
+              <p className="productname-size">{product.name}</p>
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  marginTop: "5px",
+                  marginBottom: "5px",
+                }}
+              >
+                {`(${product.quantity} Kg)`}
+              </p>
+              <p className="productname-size">
+                <span className="p-span">{`₹ ${product.productPrice}`}</span>
+                {`₹ ${(Math.ceil(product.productPrice-(product.productPrice*product.productDiscount/100)))}`}
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  columnGap: "3px",
+                  fontSize: "10px",
+                  marginTop: "5px",
+                  marginBottom: "10px",
+                }}
+              >
+                <FaRegStar />
+                <FaRegStar />
+                <FaRegStar />
+                <FaRegStar />
+                <FaRegStar />
+              </div>
+              <div className="product-last-section">
+                <button className="product-btn">Add to cart</button>
+                <div className="cart-icon-div1">
+                  <img src={wish} />
+                </div>
+              </div>
+            </div>))}
+
+          </div>
+        </div>
+      </div>
+
+    <div className="home-sec-5">
+    <div><img src={back}/></div>
     </div>
+    <div className="product-categories-1" style={{backgroundColor:"#f5f5db"}}>
+        <div className="choose-content">
+          <div className="choose-heading">
+            <h3>Just Organic Items</h3>
+            <h2>Today's Special Offers</h2>
+          </div>
+          <div className="product-append21">
+            {/* first */}
+            {products.map((product,index)=>(<div className="product">
+              <div className="off-div">
+                <p>{`${product.productDiscount} % off`}</p>
+              </div>
+              <div className="product-image">
+                <img src={product.image} alt="Apple" />
+              </div>
+              <p className="productname-size">{product.name}</p>
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "400",
+                  marginTop: "5px",
+                  marginBottom: "5px",
+                }}
+              >
+                {`(${product.quantity} Kg)`}
+              </p>
+              <p className="productname-size">
+                <span className="p-span">{`₹ ${product.productPrice}`}</span>
+                {`₹ ${(Math.ceil(product.productPrice-(product.productPrice*product.productDiscount/100)))}`}
+              </p>
+              <div
+                style={{
+                  display: "flex",
+                  columnGap: "3px",
+                  fontSize: "10px",
+                  marginTop: "5px",
+                  marginBottom: "10px",
+                }}
+              >
+                <FaRegStar />
+                <FaRegStar />
+                <FaRegStar />
+                <FaRegStar />
+                <FaRegStar />
+              </div>
+              <div className="product-last-section">
+                <button className="product-btn">Add to cart</button>
+                <div className="cart-icon-div1">
+                  <img src={wish} />
+                </div>
+              </div>
+            </div>))}
+
+          </div>
+        </div>
+      </div>
+
+      <div className="home-sec-6">
+        <div className="home-sec-6-header">
+          <h1>Subscribe to our monthly pass</h1>
+          <p>Transparent Pricing for you</p>
+        </div>
+        <div className="home-sec-6-content">
+          <div className="home-sec-6-content-1">
+          <div>
+            <p>Save More</p>
+            <p style={{fontSize:"15px",fontWeight:"500",marginBottom:"10px"}}>With Good Plans</p>
+            <p>Come and get on board in minutes Then save more for your next payment</p>
+          </div>
+          <div className="home-sec-6-content-1-img"><img src={last_sec}/></div>
+          </div>
+          <div className="home-sec-6-content-1">
+          <div>
+            <p>Save More</p>
+            <p style={{fontSize:"15px",fontWeight:"500",marginBottom:"10px"}}>With Good Plans</p>
+            <p>Come and get on board in minutes Then save more for your next payment</p>
+          </div>
+          <div className="home-sec-6-content-1-img"><img src={last_sec}/></div>
+          </div>
+          <div className="home-sec-6-content-1">
+          <div>
+            <p>Save More</p>
+            <p style={{fontSize:"15px",fontWeight:"500",marginBottom:"10px"}}>With Good Plans</p>
+            <p>Come and get on board in minutes Then save more for your next payment</p>
+          </div>
+          <div className="home-sec-6-content-1-img"><img src={last_sec}/></div>
+          </div>
+        </div>
+      </div>
+
+      <Footer/>
+     </div>
+    
+  
+    </>
   );
 };
 
