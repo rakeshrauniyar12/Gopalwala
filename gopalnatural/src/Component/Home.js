@@ -272,7 +272,7 @@ const Home = () => {
       </div>
 
     <div className="home-sec-5">
-    <div><img src={back}/></div>
+    <div className="home-sec-5-iii"><img src={back}/></div>
     </div>
     <div className="product-categories-1" style={{backgroundColor:"#f5f5db"}}>
         <div className="choose-content">

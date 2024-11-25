@@ -42,7 +42,14 @@
     font-weight: 600;
     background-color: #3d8e41;
 }
+.home-sec-5-iii{
+  width: 100%;
+}
 
+.home-sec-5-iii>img{
+  object-fit: cover;
+  width: 100%;
+}
 .choose-categories-1{
     width: 100%;
     background-color: #f5f5db;
