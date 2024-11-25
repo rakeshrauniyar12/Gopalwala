@@ -85,15 +85,17 @@
         height: 100px;
     }
 .header-2{
-    width: 92%;
+    width: 80%;
+    margin: auto;
     margin-top: 10px;
+    justify-content: space-between;
 }
 
 .header-2-content{
-    width: 92%;
+    width: 75%;
 }
 .header-2-content-2{
-    width: 92%;
+    width: 75%;
 }
     .header-1-section{
         width: 96%;

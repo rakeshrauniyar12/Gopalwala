@@ -134,7 +134,7 @@ const Navbar = () => {
                     <p>Favourite</p>
                   </div>
                 </div>
-                <div className="wish-cart-2">
+                <Link to={"/cart"} className="cart-link"><div className="wish-cart-2">
                   <div style={{ position: "relative" }}>
                     <div className="cart-icon-div">
                       <img src={cart_icon} height={15} />
@@ -144,7 +144,7 @@ const Navbar = () => {
                   <div>
                     <p>Cart</p>
                   </div>
-                </div>
+                </div></Link>
               </div>
             </div>
             <div className="option-div">
@@ -193,7 +193,7 @@ const Navbar = () => {
 
       {showHamburger && (
         <div className="second-div-content1">
-          <p>Home</p>
+          <Link to={"/"} className="cart-link"><p>Home</p></Link>
           <div className="second-drop-arrow">
             <p>Shop</p>
             <RiArrowDropDownLine
