@@ -10,6 +10,7 @@ import milk from "../Assets/Home/milk.png";
 import meat from "../Assets/Home/meat.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [showCategories, setShowCategories] = useState(false);
@@ -73,10 +74,10 @@ const Navbar = () => {
                   <p className="cart-zero">0</p>
                 </div>
                 <div>
-                  <p>Wishlist</p>
+                  <p>Favourite</p>
                 </div>
               </div>
-              <div className="wish-cart-2">
+              <Link to={"/cart"} className="cart-link"><div className="wish-cart-2">
                 <div style={{ position: "relative" }}>
                   <div className="cart-icon-div">
                     <img src={cart_icon} />
@@ -86,7 +87,7 @@ const Navbar = () => {
                 <div>
                   <p>Cart</p>
                 </div>
-              </div>
+              </div></Link>
             </div>
           </div>
           <div className="navbar-end">
@@ -101,7 +102,7 @@ const Navbar = () => {
                 />
               </div>
               <div className="second-div-content">
-                <p>Home</p>
+                <Link to={"/"} className="home-ppp"><p>Home</p></Link>
                 <div className="second-drop-arrow">
                   <p>Shop</p>
                   <RiArrowDropDownLine
@@ -130,7 +131,7 @@ const Navbar = () => {
                     <p className="cart-zero">0</p>
                   </div>
                   <div>
-                    <p>Wishlist</p>
+                    <p>Favourite</p>
                   </div>
                 </div>
                 <div className="wish-cart-2">
@@ -235,6 +236,34 @@ const Navbar = () => {
       )}
       {showCategories && (
         <div className="show-categories">
+          <div className="show-categories1">
+            <div className="cate-img">
+              <img src={fruit1} />
+            </div>
+            <p className="categ-p">Fresh Fruits</p>
+          </div>
+          <div className="show-categories1">
+            <div className="cate-img">
+              <img src={vegetable} />
+            </div>
+            <p className="categ-p">Fresh Vegetables</p>
+          </div>
+          <div className="show-categories1">
+            <div className="cate-img">
+              <img src={milk} />
+            </div>
+            <p className="categ-p">Fresh Milk and Dairy</p>
+          </div>
+          <div className="show-categories1">
+            <div className="cate-img">
+              <img src={meat} />
+            </div>
+            <p className="categ-p">Fresh Meats</p>
+          </div>
+        </div>
+      )}
+      {showCategories1 && (
+        <div className="show-categories144">
           <div className="show-categories1">
             <div className="cate-img">
               <img src={fruit1} />

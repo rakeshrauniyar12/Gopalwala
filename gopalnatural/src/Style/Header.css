@@ -53,6 +53,7 @@
     color: #3d8e41;
     font-size: 13px;
     border: 1px solid #3d8e41;
+    cursor: pointer;
 }
 .header-2-content-2{
     height: 22px;
@@ -66,10 +67,18 @@
     justify-content: center;
     align-items: center;
     background-color: #3d8e41;
+    cursor: pointer;
 }
 
-
-
+.header-register{
+    text-decoration: none;
+    color: #3d8e41;
+}
+.header-register1{
+    text-decoration: none;
+    color: #ffff;
+    /* background-color: #f5f5db; */
+}
 @media (max-width:768px){
     
     .header-container{

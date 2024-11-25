@@ -1,0 +1,88 @@
+.newArrivalsMain {
+    width: 96%;
+    margin: auto;
+    margin-top: 25px;
+  }
+  
+  .newArrivalsMain > h2 {
+    font-weight: lighter;
+    color: rgb(106, 106, 106);
+    font-size: 20px;
+  }
+  
+  .newArrivalsClothes {
+    display: flex;
+    flex-direction: row;
+    gap: 0 10px;
+    padding-bottom: 20px;
+    margin-top: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+  }
+  
+  .newArrivalsClothes::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .newArrivalsClothes > .newArrivalEachDiv {
+    width: 200px;
+    padding-bottom: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+      rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    display: inline-block;
+    vertical-align: top;
+  }
+  
+  .newArrivalEachDiv .newClotheImgDiv {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .newArrivalEachDiv .newClotheImgDiv > img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
+  }
+  
+  .newArrivalEachDiv .newClotheInfoDiv {
+    width: 100%;
+    padding: 0 10px;
+    padding-top: 8px;
+  }
+  
+  .newArrivalEachDiv .newClotheInfoDiv > .newClotheBrand {
+    font-size: 14px;
+    color: #8d6c33;
+    text-align: center;
+  }
+  
+  .newArrivalEachDiv .newClotheInfoDiv > .newClotheTitle {
+    font-size: 15px;
+    font-weight: lighter;
+    color: grey;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .newArrivalEachDiv .newClotheInfoDiv > .newClothePrice {
+    color: rgb(53, 49, 49);
+    text-align: center;
+    font-weight: lighter;
+    font-size: 18px;
+  }
+  
+  .newArrivalEachDiv .newClotheInfoDiv > .newClothePrice > span {
+    font-size: 11px;
+    color: rgb(157, 155, 155);
+  }

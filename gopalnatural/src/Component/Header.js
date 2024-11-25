@@ -4,16 +4,18 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdAccountBox } from "react-icons/md";
 import { IoMdCall } from "react-icons/io";
 import { RiAccountPinBoxFill } from "react-icons/ri";
-
+import { Link } from "react-router-dom";
 
 const Header = ()=>{
+
+
     return(
         <div className="header-container">
             <div className="header-1-section">
             <div className="header-1">
             <div className="header-1-content">
                 <FaLocationDot style={{fontSize:"24px"}}/>
-                <p>12 Poor Street, New York.</p>
+                <p>12 Poor Street, Hyderabad.</p>
             </div>
             <div className="header-1-content">
                 <IoMdCall style={{fontSize:"24px"}}/>
@@ -21,14 +23,16 @@ const Header = ()=>{
             </div>
           </div>
           <div className="header-2">
-            <div className="header-2-content">
+          <Link to={"/register"} className="header-register"> <div className="header-2-content">
            <MdAccountBox/>
            <p>Register</p>
             </div>
-            <div className="header-2-content-2">
+            </Link>
+            <Link to={"/login"}className="header-register1"><div className="header-2-content-2">
             <RiAccountPinBoxFill/>
-            <p>Sign in</p>
+             <p>Sign in</p>
             </div>
+            </Link>
           </div>
             </div>
         

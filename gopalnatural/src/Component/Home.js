@@ -21,6 +21,7 @@ import youtube from "../Assets/Home/logos_youtube-icon.png";
 import last_sec from "../Assets/Home/last-sec.png";
 import "../Style/Home.css";
 import Footer from "./Footer";
+import ProductCarousel from "./ProductC";
 const Home = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isHovered1, setIsHovered1] = useState(false);
@@ -362,8 +363,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-
-      <Footer/>
      </div>
     
   

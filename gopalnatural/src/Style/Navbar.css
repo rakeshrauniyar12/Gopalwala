@@ -111,7 +111,16 @@
     width: 100%;
     background-color: #3d8e41;
 }
-
+.show-categories144{
+position: absolute;
+top: 144px;
+left: 510px;
+width: 14%;
+background-color: #ffff;
+padding: 10px;
+border-radius: 15px;
+z-index: 9999;
+}
 .navbar-end-content{
     width: 80%;
    margin: auto;
@@ -168,6 +177,14 @@
     /* transform: translateY(20px);
     transition: opacity 0.3s ease, transform 0.3s ease;
     animation:; */
+}
+.home-ppp{
+    text-decoration: none;
+    color: #ffff;
+}
+.cart-link{
+    text-decoration: none;
+    color: black;
 }
 .show-categories11{
     position: absolute;
