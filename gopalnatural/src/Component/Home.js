@@ -271,8 +271,15 @@ const Home = () => {
         </div>
       </div>
 
-    <div className="home-sec-5">
+    <div className="home-sec-5" style={{position:"relative"}}>
     <div className="home-sec-5-iii"><img src={back}/></div>
+    <div className="header-content-down">
+          <p className="header-p-down">Organic and Nutritious Fresh Produce</p>
+          <p className="repu-p-down">
+          Fresh from the farm, straight to your plate, Nourish your body with nature’s bounty, Taste the goodness of nature,Fuel your day with the power of fruits and veggies
+          </p>
+          <button className="header-btn">Shop Now</button>
+        </div>
     </div>
     <div className="product-categories-1" style={{backgroundColor:"#f5f5db"}}>
         <div className="choose-content">
