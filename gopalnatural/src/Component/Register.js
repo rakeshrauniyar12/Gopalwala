@@ -1,9 +1,19 @@
-import React from "react";
+import React,{useState} from "react";
 import "../Style/Login.css"
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Register = ()=>{
+    const [isRotated, setIsRotated] = useState(false);
+    const [showSociety,setShowSociety] = useState(false);
+    const handleRotate = () => {
+        setIsRotated((prev) => !prev);
+      };
+    const handleShowSociety = ()=>{
+        setShowSociety(!showSociety);
+       
+    }
     return(
         <div className='login-main-container'>
         <div className='login-content'>
@@ -19,6 +29,31 @@ const Register = ()=>{
              <div className='login-content-input-1'>
              <input placeholder='Confirm Password'/>
              </div>
+             <div className="select-society">
+                <p>Select Your Society</p>
+                <RiArrowDropDownLine
+                 style={{
+                    fontSize: "60px",
+                    transform: isRotated ? "rotate(180deg)" : "rotate(0deg)",
+                    transition: "transform 0.3s ease",
+                    cursor:"pointer"
+                  }}
+                  onClick={()=>{
+                    handleRotate()
+                    handleShowSociety()
+                  }}
+                 />
+              </div>
+             {showSociety && <div className="society-dropdown">
+                <p>Tata Promont</p>
+                <p>Sobha Neopolis</p>
+                <p>Embassy Lake</p>
+                <p>Felicity Engrace</p>
+                <p>Sattva Aeropolis</p>
+                <p>Suncity</p>
+                <p>Grey Stone</p>
+              </div>}
+              
              <div className='login-content-input-3'>
                  <input type='checkbox'/>
                  <p>Remember me for 30 Days</p>
