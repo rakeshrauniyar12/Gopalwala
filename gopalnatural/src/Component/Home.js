@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState,useEffect } from "react";
 import wish from "../Assets/Navbar/wish.png";
 import { FaRegStar } from "react-icons/fa";
 import meat from "../Assets/Home/meat.png";
@@ -22,20 +22,61 @@ import last_sec from "../Assets/Home/last-sec.png";
 import "../Style/Home.css";
 import Footer from "./Footer";
 import ProductCarousel from "./ProductC";
+import axios from "axios";
+
 const Home = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isHovered1, setIsHovered1] = useState(false);
   const [isHovered2, setIsHovered2] = useState(false);
   const [isHovered3, setIsHovered3] = useState(false);
+  const [products,setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const products= [{image:apple,name:"Apple",quantity:"1kg",productPrice:"121",productDiscount:"7"},
-    {image:orange,name:"Orange",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-    {image:mutton,name:"Fresh Mutton",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-    {image:chicken,name:"Fresh Chicken",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-    {image:milk1,name:"Fresh Milk",quantity:"1L",productPrice:"120",productDiscount:"5"},
-    {image:curd,name:"Fresh Curd",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-    {image:tomato,name:"Tomato",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-  ]
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("https://gopalbackend.onrender.com/api/product/getAllProduct");
+        setProducts(response.data.products);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleAddToCart  = async (product)=>{
+    console.log(product);
+    try {
+      const response = await axios.post(
+        "https://gopalbackend.onrender.com/api/cartProduct/saveCartProduct",
+        product,
+        {
+          headers: {
+            "Content-Type": "application/json", // Specify the content type
+          },
+        }
+      );
+  
+      // Log or return the response
+      console.log("Product saved successfully:", response);
+     // Returns response to the calling function if needed
+    } catch (error) {
+      console.error("Error saving product:", error.response?.data || error.message);
+      throw error; // Rethrow the error if needed for error handling
+    }
+  }
+  // const products= [{image:apple,name:"Apple",quantity:"1kg",productPrice:"121",productDiscount:"7"},
+  //   {image:orange,name:"Orange",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+  //   {image:mutton,name:"Fresh Mutton",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+  //   {image:chicken,name:"Fresh Chicken",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+  //   {image:milk1,name:"Fresh Milk",quantity:"1L",productPrice:"120",productDiscount:"5"},
+  //   {image:curd,name:"Fresh Curd",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+  //   {image:tomato,name:"Tomato",quantity:"1kg",productPrice:"120",productDiscount:"5"},
+  // ]
   return (
     <>
     <div className="home-container">
@@ -97,9 +138,9 @@ const Home = () => {
                 <p>{`${product.productDiscount} % off`}</p>
               </div>
               <div className="product-image">
-                <img src={product.image} alt="Apple" />
+                <img src={product.productImage} alt="Apple" />
               </div>
-              <p className="productname-size">{product.name}</p>
+              <p className="productname-size">{product.productName}</p>
               <p
                 style={{
                   fontSize: "14px",
@@ -108,7 +149,7 @@ const Home = () => {
                   marginBottom: "5px",
                 }}
               >
-                {`(${product.quantity} Kg)`}
+                {`(${product.productQuantity} Kg)`}
               </p>
               <p className="productname-size">
                 <span className="p-span">{`₹ ${product.productPrice}`}</span>
@@ -129,7 +170,7 @@ const Home = () => {
                 <FaRegStar />
                 <FaRegStar />
               </div>
-              <div className="product-last-section">
+              <div className="product-last-section" onClick={()=>{handleAddToCart(product)}}>
                 <button className="product-btn">Add to cart</button>
                 <div className="cart-icon-div1">
                   <img src={wish} />
@@ -227,9 +268,9 @@ const Home = () => {
                 <p>{`${product.productDiscount} % off`}</p>
               </div>
               <div className="product-image">
-                <img src={product.image} alt="Apple" />
+                <img src={product.productImage} alt="Apple" />
               </div>
-              <p className="productname-size">{product.name}</p>
+              <p className="productname-size">{product.productName}</p>
               <p
                 style={{
                   fontSize: "14px",
@@ -238,7 +279,7 @@ const Home = () => {
                   marginBottom: "5px",
                 }}
               >
-                {`(${product.quantity} Kg)`}
+                {`(${product.productQuantity} Kg)`}
               </p>
               <p className="productname-size">
                 <span className="p-span">{`₹ ${product.productPrice}`}</span>
@@ -259,7 +300,7 @@ const Home = () => {
                 <FaRegStar />
                 <FaRegStar />
               </div>
-              <div className="product-last-section">
+              <div className="product-last-section" onClick={()=>{handleAddToCart(product)}}>
                 <button className="product-btn">Add to cart</button>
                 <div className="cart-icon-div1">
                   <img src={wish} />
@@ -294,9 +335,9 @@ const Home = () => {
                 <p>{`${product.productDiscount} % off`}</p>
               </div>
               <div className="product-image">
-                <img src={product.image} alt="Apple" />
+                <img src={product.productImage} alt="Apple" />
               </div>
-              <p className="productname-size">{product.name}</p>
+              <p className="productname-size">{product.productName}</p>
               <p
                 style={{
                   fontSize: "14px",
@@ -305,7 +346,7 @@ const Home = () => {
                   marginBottom: "5px",
                 }}
               >
-                {`(${product.quantity} Kg)`}
+                {`(${product.productQuantity} Kg)`}
               </p>
               <p className="productname-size">
                 <span className="p-span">{`₹ ${product.productPrice}`}</span>
@@ -326,7 +367,7 @@ const Home = () => {
                 <FaRegStar />
                 <FaRegStar />
               </div>
-              <div className="product-last-section">
+              <div className="product-last-section" onClick={()=>{handleAddToCart(product)}}>
                 <button className="product-btn">Add to cart</button>
                 <div className="cart-icon-div1">
                   <img src={wish} />

@@ -11,6 +11,7 @@ import meat from "../Assets/Home/meat.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
   const [showCategories, setShowCategories] = useState(false);
@@ -18,7 +19,26 @@ const Navbar = () => {
   const [showCategories11, setShowCategories11] = useState(false);
   const [showHamburger, setShowHamburger] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [products,setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("https://gopalbackend.onrender.com/api/cartProduct/getAllCartProduct");
+        setProducts(response.data.products);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const numberOfCartProduct=products.length;
   useEffect(() => {
     // Update isMobile state on window resize
     const handleResize = () => {
@@ -82,7 +102,7 @@ const Navbar = () => {
                   <div className="cart-icon-div">
                     <img src={cart_icon} />
                   </div>
-                  <p className="cart-zero">0</p>
+                  <p className="cart-zero">{numberOfCartProduct}</p>
                 </div>
                 <div>
                   <p>Cart</p>
@@ -139,7 +159,7 @@ const Navbar = () => {
                     <div className="cart-icon-div">
                       <img src={cart_icon} height={15} />
                     </div>
-                    <p className="cart-zero">0</p>
+                    <p className="cart-zero">{numberOfCartProduct}</p>
                   </div>
                   <div>
                     <p>Cart</p>

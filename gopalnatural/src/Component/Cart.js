@@ -3,10 +3,28 @@ import "../Style/Cart.css"
 import apple from "../Assets/Home/product/apple.png";
 import { IoMdClose } from "react-icons/io";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Cart = () => {
    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
+   const [products,setProducts] = useState([]);
+   const [loading, setLoading] = useState(true);
+   const [error, setError] = useState(null);
+ 
+   useEffect(() => {
+     const fetchProducts = async () => {
+       try {
+         const response = await axios.get("https://gopalbackend.onrender.com/api/cartProduct/getAllCartProduct");
+         setProducts(response.data.products);
+         setLoading(false);
+       } catch (error) {
+         setError(error.message);
+         setLoading(false);
+       }
+     };
+ 
+     fetchProducts();
+   }, []);
    useEffect(() => {
      // Update isMobile state on window resize
      const handleResize = () => {
@@ -16,9 +34,9 @@ const Cart = () => {
      window.addEventListener("resize", handleResize);
      return () => window.removeEventListener("resize", handleResize);
    }, []);
-    const products= [{productImage:apple,productName:"Apple",productUnit:"Kg",productQuantity:"1",productPrice:"121",productDiscount:"7"},
-        {productImage:apple,productName:"Apple",productUnit:"Kg",productQuantity:"1",productPrice:"121",productDiscount:"7"},
-      ]
+    // const products= [{productImage:apple,productName:"Apple",productUnit:"Kg",productQuantity:"1",productPrice:"121",productDiscount:"7"},
+    //     {productImage:apple,productName:"Apple",productUnit:"Kg",productQuantity:"1",productPrice:"121",productDiscount:"7"},
+    //   ]
       const totalProductPrice=20.00;
 
   return (

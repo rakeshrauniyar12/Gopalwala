@@ -127,6 +127,7 @@
 .product-image {
     width: 80%;
     margin: auto;
+    height: 100px;
     display: flex;
     justify-content: center; 
   align-items: center;
@@ -136,7 +137,9 @@
   }
   
   .product-image img {
-
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
     transition: transform 0.3s ease; /* Smooth transition for image */
   }
   
@@ -162,6 +165,7 @@
     border-radius: 6px;
   }
 .product-append>div{
+   width: 30%;
     position: relative;
     border-radius: 20px;
     border: 1px solid #3d8e41;
