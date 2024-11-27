@@ -126,7 +126,9 @@ const Home = () => {
             {loading ? (
                 <div className="spinner-container">
                   <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
-                </div>):products.map((product,index)=>(<div className="product">
+                </div>):
+                products.length===0?<div>No Product found.</div>:
+                products.map((product,index)=>(<div className="product">
               <div className="off-div">
                 <p>{`${product.productDiscount} % off`}</p>
               </div>
@@ -250,7 +252,7 @@ const Home = () => {
               <div className="product-button-1"
                 onMouseEnter={() => setIsHovered3(true)}
                 onMouseLeave={() => setIsHovered3(false)}
-              >  <div><p className="pb-p">New Products</p>
+              >  <div><p className="pb-p">Top Rated</p>
                 { isHovered3 && <FaAngleRight style={{color:"#ffff"}}/>}
                 </div></div>
           </div>
@@ -259,7 +261,9 @@ const Home = () => {
             {loading ? (
                 <div className="spinner-container">
                   <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
-                </div>):products.map((product,index)=>(<div className="product">
+                </div>):
+                 products.length===0?<div>No Product found.</div>:
+                products.map((product,index)=>(<div className="product">
               <div className="off-div">
                 <p>{`${product.productDiscount} % off`}</p>
               </div>
@@ -329,7 +333,9 @@ const Home = () => {
             {loading ? (
                 <div className="spinner-container">
                   <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
-                </div>):products.map((product,index)=>(<div className="product">
+                </div>):
+                 products.length===0?<div>No Product found.</div>:
+                products.map((product,index)=>(<div className="product">
               <div className="off-div">
                 <p>{`${product.productDiscount} % off`}</p>
               </div>
