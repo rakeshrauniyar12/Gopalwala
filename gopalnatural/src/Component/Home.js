@@ -20,10 +20,12 @@ import back from "../Assets/Home/footer-back.png";
 import youtube from "../Assets/Home/logos_youtube-icon.png";
 import last_sec from "../Assets/Home/last-sec.png";
 import "../Style/Home.css";
+import { toast } from "react-toastify";
 import Footer from "./Footer";
 import ProductCarousel from "./ProductC";
 import axios from "axios";
-
+import {getProduct,addToCart}  from "../backend.js"
+import ClipLoader from "react-spinners/ClipLoader";
 const Home = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isHovered1, setIsHovered1] = useState(false);
@@ -36,8 +38,9 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://gopalbackend.onrender.com/api/product/getAllProduct");
-        setProducts(response.data.products);
+        let getProducts= await getProduct();
+        console.log(getProducts);
+        setProducts(getProducts);
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -47,27 +50,14 @@ const Home = () => {
 
     fetchProducts();
   }, []);
-
+ 
   const handleAddToCart  = async (product)=>{
-    console.log(product);
-    try {
-      const response = await axios.post(
-        "https://gopalbackend.onrender.com/api/cartProduct/saveCartProduct",
-        product,
-        {
-          headers: {
-            "Content-Type": "application/json", // Specify the content type
-          },
-        }
-      );
-  
-      // Log or return the response
-      console.log("Product saved successfully:", response);
-     // Returns response to the calling function if needed
-    } catch (error) {
-      console.error("Error saving product:", error.response?.data || error.message);
-      throw error; // Rethrow the error if needed for error handling
-    }
+          const addProduct = await addToCart(product);
+          if(addProduct){
+            toast.success("Product added to cart successfully.")
+          }else{
+            toast.warn("Product already in cart!")
+          }
   }
   // const products= [{image:apple,name:"Apple",quantity:"1kg",productPrice:"121",productDiscount:"7"},
   //   {image:orange,name:"Orange",quantity:"1kg",productPrice:"120",productDiscount:"5"},
@@ -133,7 +123,10 @@ const Home = () => {
           </div>
           <div className="product-append">
             {/* first */}
-            {products.map((product,index)=>(<div className="product">
+            {loading ? (
+                <div className="spinner-container">
+                  <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
+                </div>):products.map((product,index)=>(<div className="product">
               <div className="off-div">
                 <p>{`${product.productDiscount} % off`}</p>
               </div>
@@ -263,7 +256,10 @@ const Home = () => {
           </div>
           <div className="product-append21">
             {/* first */}
-            {products.map((product,index)=>(<div className="product">
+            {loading ? (
+                <div className="spinner-container">
+                  <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
+                </div>):products.map((product,index)=>(<div className="product">
               <div className="off-div">
                 <p>{`${product.productDiscount} % off`}</p>
               </div>
@@ -330,7 +326,10 @@ const Home = () => {
           </div>
           <div className="product-append21">
             {/* first */}
-            {products.map((product,index)=>(<div className="product">
+            {loading ? (
+                <div className="spinner-container">
+                  <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
+                </div>):products.map((product,index)=>(<div className="product">
               <div className="off-div">
                 <p>{`${product.productDiscount} % off`}</p>
               </div>

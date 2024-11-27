@@ -12,6 +12,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { getAllCartProduct } from "../backend";
 
 const Navbar = () => {
   const [showCategories, setShowCategories] = useState(false);
@@ -26,8 +27,8 @@ const Navbar = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("https://gopalbackend.onrender.com/api/cartProduct/getAllCartProduct");
-        setProducts(response.data.products);
+       const response = await getAllCartProduct();
+        setProducts(response);
         setLoading(false);
       } catch (error) {
         setError(error.message);

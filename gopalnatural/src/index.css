@@ -12,3 +12,17 @@ p {
   font-weight: 400;
 }
 
+.spinner-container {
+  /* width: 20%;
+  margin: auto; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.error-message {
+  text-align: center;
+  color: red;
+  font-size: 18px;
+}
