@@ -404,6 +404,12 @@
   color: #ffff;
 }
    @media (max-width:768px){
+
+
+    .product-append>div{
+      width: 90%;
+
+    }
     .header-section {
       position: relative;
       width: 100%;
