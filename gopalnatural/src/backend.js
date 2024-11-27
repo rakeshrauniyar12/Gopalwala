@@ -50,11 +50,6 @@ const addToCart = async (product) => {
 
 const deleteCartProduct = async (productId)=>{
     const res= await axios.delete(`${apiUrl}/cartProduct/deleteCartProduct/${productId}`);
-    console.log(res);
-       if(res){
-        return true; 
-       }else{
-        return false;
-       }; 
+   return res;
 }
 export  {getProduct,addToCart,getAllCartProduct,deleteCartProduct};

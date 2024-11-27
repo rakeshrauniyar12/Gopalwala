@@ -40,7 +40,7 @@ useEffect (()=>{
       const res = await deleteCartProduct(product._id); // Await the delete operation
       if (res) {
         toast.success("Product deleted from cart.");
-        fetchProducts(); // Fetch updated cart products
+        setProducts(res.data.remainingProducts);
       } else {
         toast.error("Failed to delete product from cart.");
       }
@@ -92,7 +92,8 @@ useEffect (()=>{
                 <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
               </div>
             ) : (
-              products.map((product, index) => (
+              products.length===0?
+              <div style={{width:"30%",margin:"auto",display:"flex",justifyContent:"center",alignItems:"center",height:"200px"}}><p style={{fontSize:"25px",fontWeight:"600",color:"red"}}>Your cart is empty.</p></div>:products.map((product, index) => (
                 <div key={index} className="cart-product">
                   <div>
                     <div className="cart-product-image">
@@ -132,7 +133,9 @@ useEffect (()=>{
                 <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
               </div>
             ) : (
-              products.map((product, index) => (
+              products.length===0?
+              <div style={{
+                width:"90%",margin:"auto",display:"flex",justifyContent:"center",alignItems:"center",height:"200px"}}><p style={{fontSize:"25px",fontWeight:"600",color:"red"}}>Your cart is empty.</p></div>:products.map((product, index) => (
                 <div key={index}>
                   <div className="cart-mobile-image">
                     <img src={product.productImage} alt={product.productName} />
