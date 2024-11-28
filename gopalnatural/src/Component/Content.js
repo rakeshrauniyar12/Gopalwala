@@ -5,6 +5,7 @@ import Home from "./Home";
 import Register from "./Register"
 import Cart from "./Cart";
 import Checkout from "./Checkout";
+import Subscription from "./Subscription";
 const Content = () => {
  
   return (
@@ -15,6 +16,7 @@ const Content = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/subscription/:id" element={<Subscription />} />
       </Routes>
     </div>
   );

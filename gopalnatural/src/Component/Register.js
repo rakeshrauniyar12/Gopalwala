@@ -113,7 +113,7 @@ const Register = () => {
 
           {/* Updated society selection */}
           <div className="select-society">
-            <p>{formData.societyName ? `Society: ${formData.societyName}` : "Select Your Society"}</p>
+            <p>{formData.societyName ? `${formData.societyName}` : "Select Your Society"}</p>
             <div
               className="society-selection-box"
               onClick={() => {
@@ -121,7 +121,6 @@ const Register = () => {
                 handleShowSociety();
               }}
             >
-              <p>{formData.societyName}</p>
               <RiArrowDropDownLine
                 style={{
                   fontSize: "60px",

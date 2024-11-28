@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-let apiUrl= "https://gopalbackend.onrender.com/api";
+let apiUrl= "https://gopalbackend.onrender.com";
 
 const registerUser = async (email,password,societyName)=>{
   try {
@@ -29,9 +29,12 @@ const getProduct = async ()=>{
     const response = await axios.get(`${apiUrl}/product/getAllProduct`);
       return response.data.products;
 }
+const getProductById = async (productId)=>{
+  const response = await axios.get(`${apiUrl}/product/getProduct/${productId}`);
+    return response.data.product;
+}
 const getAllCartProduct = async ()=>{
   const cartProducts  = await axios.get(`${apiUrl}/cartProduct/getAllCartProduct`);
-  console.log(cartProducts.data.products);
   return cartProducts.data.products;
 }
 const addToCart = async (product) => {
@@ -68,9 +71,16 @@ const addToCart = async (product) => {
     }
   }
 };
-
+const updateCartProduct = async (productId, updatedData) => {
+  const res = await axios.patch(`${apiUrl}/cartProduct/updateCartProduct/${productId}`, updatedData, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return res.data;
+};
 const deleteCartProduct = async (productId)=>{
     const res= await axios.delete(`${apiUrl}/cartProduct/deleteCartProduct/${productId}`);
    return res;
 }
-export  {getProduct,addToCart,getAllCartProduct,deleteCartProduct,registerUser,loginUser};
+export  {getProduct,addToCart,getAllCartProduct,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct};

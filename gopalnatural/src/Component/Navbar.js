@@ -13,6 +13,7 @@ import { MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { getAllCartProduct } from "../backend";
+import { useCart } from "./CartContext";
 
 const Navbar = () => {
   const [showCategories, setShowCategories] = useState(false);
@@ -20,26 +21,22 @@ const Navbar = () => {
   const [showCategories11, setShowCategories11] = useState(false);
   const [showHamburger, setShowHamburger] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [products,setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { cartProducts, updateCart } = useCart();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-       const response = await getAllCartProduct();
-        setProducts(response);
-        setLoading(false);
+        const response = await getAllCartProduct();
+        updateCart(response); // Update context with fetched products
       } catch (error) {
-        setError(error.message);
-        setLoading(false);
+        console.error("Failed to fetch cart products:", error);
       }
     };
 
     fetchProducts();
   }, []);
 
-  const numberOfCartProduct=products.length;
+
   useEffect(() => {
     // Update isMobile state on window resize
     const handleResize = () => {
@@ -103,7 +100,7 @@ const Navbar = () => {
                   <div className="cart-icon-div">
                     <img src={cart_icon} />
                   </div>
-                  <p className="cart-zero">{numberOfCartProduct}</p>
+                  <p className="cart-zero">{Array.isArray(cartProducts) ? cartProducts.length : 0}</p>
                 </div>
                 <div>
                   <p>Cart</p>
@@ -160,7 +157,7 @@ const Navbar = () => {
                     <div className="cart-icon-div">
                       <img src={cart_icon} height={15} />
                     </div>
-                    <p className="cart-zero">{numberOfCartProduct}</p>
+                    <p className="cart-zero">{Array.isArray(cartProducts) ? cartProducts.length : 0}</p>
                   </div>
                   <div>
                     <p>Cart</p>

@@ -201,7 +201,11 @@
     background-color: #dbeac5;
     cursor: pointer;
 }
-
+.product-buy-subs{
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+}
 .product-btn:hover{
     background-color: #3d8e41;
     color: #ffff;
@@ -310,7 +314,7 @@
   color: #3d8e41;
   font-size: 24px;
   font-weight: 500;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 .product-append21>div {
   position: relative;
@@ -400,6 +404,7 @@
   width: 100%;
   object-fit: contain;
 }
+
 .home-sec-6-content-1>div>p{
   color: #ffff;
 }
@@ -415,7 +420,9 @@
       width: 100%;
       height: 311px;
   }
-
+  .product-buy-subs {
+    width: 87%;
+  }
   .home-sec-5 {
     width: 100%;
     height: 245px;

@@ -15,6 +15,10 @@
     padding: 10px 20px;
     color: #ffff;
 }
+.quantity-controls{
+    display: flex;
+    justify-content: space-between;
+}
 .cart-header>div{
     width: 20%;
 
@@ -104,6 +108,10 @@
 @media (max-width:768px){
     .cart-main-container{
         padding-top: 20px;
+    }
+
+    .quantity-controls {
+   width: 30%;
     }
     .cart-total {
         width: 85%;

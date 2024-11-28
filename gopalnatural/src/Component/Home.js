@@ -5,13 +5,6 @@ import meat from "../Assets/Home/meat.png";
 import fruits from "../Assets/Home/fruits.png";
 import milk from "../Assets/Home/milk.png";
 import vegetables from "../Assets/Home/vegetable.png";
-import chicken from "../Assets/Home/product/chicken.png";
-import tomato from "../Assets/Home/product/tomato.png";
-import orange from "../Assets/Home/product/orange.png";
-import mutton from "../Assets/Home/product/mutton.png";
-import milk1 from "../Assets/Home/product/milk.png";
-import curd from "../Assets/Home/product/curd.png";
-import apple from "../Assets/Home/product/apple.png";
 import pr1 from "../Assets/Home/product/pr-1.png";
 import pr2 from "../Assets/Home/product/pr-2.png";
 import pr3 from "../Assets/Home/product/pr-3.png";
@@ -21,11 +14,10 @@ import youtube from "../Assets/Home/logos_youtube-icon.png";
 import last_sec from "../Assets/Home/last-sec.png";
 import "../Style/Home.css";
 import { toast } from "react-toastify";
-import Footer from "./Footer";
-import ProductCarousel from "./ProductC";
-import axios from "axios";
 import {getProduct,addToCart}  from "../backend.js"
 import ClipLoader from "react-spinners/ClipLoader";
+import { useCart } from "./CartContext";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [isHovered1, setIsHovered1] = useState(false);
@@ -34,12 +26,12 @@ const Home = () => {
   const [products,setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { addProduct } = useCart();
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         let getProducts= await getProduct();
-        console.log(getProducts);
         setProducts(getProducts);
         setLoading(false);
       } catch (error) {
@@ -52,21 +44,17 @@ const Home = () => {
   }, []);
  
   const handleAddToCart  = async (product)=>{
-          const addProduct = await addToCart(product);
-          if(addProduct){
+          const addProduct1 = await addToCart(product);
+          addProduct(addProduct1)
+          if(addProduct1){
             toast.success("Product added to cart successfully.")
           }else{
             toast.warn("Product already in cart!")
           }
   }
-  // const products= [{image:apple,name:"Apple",quantity:"1kg",productPrice:"121",productDiscount:"7"},
-  //   {image:orange,name:"Orange",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-  //   {image:mutton,name:"Fresh Mutton",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-  //   {image:chicken,name:"Fresh Chicken",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-  //   {image:milk1,name:"Fresh Milk",quantity:"1L",productPrice:"120",productDiscount:"5"},
-  //   {image:curd,name:"Fresh Curd",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-  //   {image:tomato,name:"Tomato",quantity:"1kg",productPrice:"120",productDiscount:"5"},
-  // ]
+ const navigateSubscription = (productId)=>{
+  navigate(`/subscription/${productId}`);
+ }
   return (
     <>
     <div className="home-container">
@@ -165,8 +153,12 @@ const Home = () => {
                 <FaRegStar />
                 <FaRegStar />
               </div>
-              <div className="product-last-section" onClick={()=>{handleAddToCart(product)}}>
-                <button className="product-btn">Add to cart</button>
+              <div className="product-last-section" >
+                <div className="product-buy-subs">
+                <button className="product-btn" onClick={()=>{handleAddToCart(product)}}>Buy Once</button>
+              <button className="product-btn" onClick={()=>{navigateSubscription(product._id)}}>Subscriptions</button>
+                </div>
+               
                 <div className="cart-icon-div1">
                   <img src={wish} />
                 </div>
@@ -300,8 +292,11 @@ const Home = () => {
                 <FaRegStar />
                 <FaRegStar />
               </div>
-              <div className="product-last-section" onClick={()=>{handleAddToCart(product)}}>
-                <button className="product-btn">Add to cart</button>
+              <div className="product-last-section">
+              <div className="product-buy-subs">
+                <button className="product-btn" onClick={()=>{handleAddToCart(product)}}>Buy Once</button>
+              <button className="product-btn" onClick={()=>{navigateSubscription(product._id)}}>Subscriptions</button>
+                </div>
                 <div className="cart-icon-div1">
                   <img src={wish} />
                 </div>
@@ -372,8 +367,11 @@ const Home = () => {
                 <FaRegStar />
                 <FaRegStar />
               </div>
-              <div className="product-last-section" onClick={()=>{handleAddToCart(product)}}>
-                <button className="product-btn">Add to cart</button>
+              <div className="product-last-section">
+              <div className="product-buy-subs">
+                <button className="product-btn" onClick={()=>{handleAddToCart(product)}}>Buy Once</button>
+              <button className="product-btn" onClick={()=>{navigateSubscription(product._id)}}>Subscriptions</button>
+                </div>
                 <div className="cart-icon-div1">
                   <img src={wish} />
                 </div>
