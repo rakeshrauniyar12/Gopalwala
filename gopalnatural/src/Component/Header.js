@@ -7,7 +7,7 @@ import { RiAccountPinBoxFill } from "react-icons/ri";
 import { Link } from "react-router-dom";
 
 const Header = ()=>{
-
+    const isLoggedIn = null;
 
     return(
         <div className="header-container">
@@ -22,7 +22,7 @@ const Header = ()=>{
                 <p>+1 964 565 87652</p>
             </div>
           </div>
-          <div className="header-2">
+        <div className="header-2">
           <Link to={"/register"} className="header-register"> <div className="header-2-content">
            <MdAccountBox/>
            <p>Register</p>

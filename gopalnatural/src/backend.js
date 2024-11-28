@@ -3,7 +3,28 @@ import axios from "axios";
 
 let apiUrl= "https://gopalbackend.onrender.com/api";
 
-
+const registerUser = async (email,password,societyName)=>{
+  try {
+    const response = await axios.post(
+      `${apiUrl}/auth/register`,
+      { email, password, societyName }
+    );
+    return response.data.user;
+  } catch (err) {
+    throw (err.response?.data?.message || "Registration failed");
+  }   
+}
+const loginUser = async (email,password)=>{
+try{
+  const response = await axios.post(`${apiUrl}/auth/login`, {
+    email,
+    password,
+  });
+  return response;
+} catch(err){
+  throw (err.response?.data?.message || "login failed");
+}
+}
 const getProduct = async ()=>{
     const response = await axios.get(`${apiUrl}/product/getAllProduct`);
       return response.data.products;
@@ -52,4 +73,4 @@ const deleteCartProduct = async (productId)=>{
     const res= await axios.delete(`${apiUrl}/cartProduct/deleteCartProduct/${productId}`);
    return res;
 }
-export  {getProduct,addToCart,getAllCartProduct,deleteCartProduct};
+export  {getProduct,addToCart,getAllCartProduct,deleteCartProduct,registerUser,loginUser};
