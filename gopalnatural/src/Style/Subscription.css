@@ -1,93 +1,115 @@
-
-
-.subscription-container{
-    padding-top: 100px;
-    padding-bottom: 100px;
+.subscription-container {
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
-.select-options{
-    width: 52%;
-    margin: auto;
-    padding: 20px;
-    margin-top: 30px;
+.select-options {
+  width: 52%;
+  margin: auto;
+  padding: 20px;
+  margin-top: 30px;
+}
+.oninterval-div {
+  width: 52%;
+  margin: auto;
+  padding: 20px;
+  margin-top: 20px;
+}
+.oninterval-div > div {
+  display: flex;
+  justify-content: space-between;
+}
+.drop-dow44{
+    font-size: 30px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
-.options-btn{
-    width: 100%;
+.repeat-down{
+    position: relative;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+.options-btn {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
 
-.op-btn{
-padding: 5px 20px;
-color: #3d8e41;
-border-radius: 6px;
-background-color: #dbeac5;
-border: 1px solid gray;
-margin: 10px;
-cursor: pointer;
+.op-btn {
+  padding: 5px 20px;
+  color: #3d8e41;
+  border-radius: 6px;
+  background-color: #dbeac5;
+  border: 1px solid gray;
+  margin: 10px;
+  cursor: pointer;
 }
 
-.op-btn:hover{
-    background-color: #3d8e41;
-    color: #ffff;
+.op-btn:hover {
+  background-color: #3d8e41;
+  color: #ffff;
 }
-.option-everyday{
-    width: 60%;
-    margin: auto;
-    margin-top: 20px;
-}
-
-.option-everyday>div{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
+.option-everyday {
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
 }
 
-.option-custom{
-    width: 60%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
+.option-everyday > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
-.option-custom-2{
-    width: 60%;
-    margin: auto; 
-    margin-top: 20px;
+
+.option-custom {
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
-.option-custom-3>div{
+.option-custom-2 {
+  width: 60%;
+  margin: auto;
+  margin-top: 20px;
+}
+.option-custom-3 > div {
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 15px;
 }
-.quantity-custom{
-    width: 30%;
+.quantity-custom {
+  width: 30%;
 }
-@media (max-width:768px){
-    .option-h1{
-        font-size: 17px;
-        font-weight: 700;
-    }
-    .option-custom {
-        width: 95%;
-    }
-    .option-custom-2 {
-        width: 95%;
-    }
-    .option-everyday {
-        width: 94%;
-    }
-  .subscription-container{
+@media (max-width: 768px) {
+  .option-h1 {
+    font-size: 17px;
+    font-weight: 700;
+  }
+  .option-custom {
+    width: 95%;
+  }
+  .option-custom-2 {
+    width: 95%;
+  }
+  .option-everyday {
+    width: 94%;
+  }
+  .subscription-container {
     padding-top: 15px;
     padding-bottom: 5px;
   }
-    .select-options{
-        width: 100%;
-    }
-    .op-btn{
-   width: 90%;
-    }
+  .select-options {
+    width: 100%;
+  }
+  .oninterval-div {
+    width: 90%;
+  }
+  .op-btn {
+    width: 90%;
+  }
 }

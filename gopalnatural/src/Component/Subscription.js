@@ -8,6 +8,7 @@ import { IoMdClose } from "react-icons/io";
 import { useCart } from "./CartContext";
 import { deleteCartProduct, updateCartProduct } from "../backend";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"; // Import icons
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Subscription = () => {
   const { id } = useParams(); // Extract 'id' from the URL
@@ -17,7 +18,21 @@ const Subscription = () => {
   const { cartProducts, removeProduct, updateCart } = useCart();
   const [quantity, setQuantity] = useState(1);
   const [frequency, setFrequency] = useState("everyday"); // State to store frequency
+  const [isRotated, setIsRotated] = useState(false);
+  const [showSociety, setShowSociety] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    societyName:  "2 Days", // Default society name
+  });
+  const handleRotate = () => {
+    setIsRotated((prev) => !prev);
+  };
 
+  const handleShowSociety = () => {
+    setShowSociety((prev) => !prev);
+  };
   useEffect(() => {
     const fetchProduct = async () => {
       try {
@@ -48,7 +63,14 @@ const Subscription = () => {
       console.error("Error deleting product:", error);
     }
   };
-
+  const handleSocietySelect = (society) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      societyName: society,
+    }));
+    setShowSociety(false);
+    setIsRotated(false);
+  };
   const handleUpdateCartProduct = async (product, newQuantity) => {
     if (newQuantity <= 0) {
       toast.error("Quantity cannot be less than 1.");
@@ -75,9 +97,6 @@ const Subscription = () => {
             </div>
             <div>
               <p>Price</p>
-            </div>
-            <div>
-              <p>Quantity</p>
             </div>
             <div>
               <p>Total</p>
@@ -123,7 +142,7 @@ const Subscription = () => {
                 <div>
                   <p>{`₹ ${product.productPrice}`}</p>
                 </div>
-                <div>
+                {/* <div>
                   <div className="quantity-controls">
                     <button
                       onClick={() => handleUpdateCartProduct(quantity - 1)}
@@ -137,7 +156,7 @@ const Subscription = () => {
                       <AiOutlinePlus />
                     </button>
                   </div>
-                </div>
+                </div> */}
                 <div>
                   <p>{`₹ ${product.productPrice * product.productQuantity}`}</p>
                 </div>
@@ -272,6 +291,34 @@ const Subscription = () => {
         </div>
         {frequency === "everyday" && (
           <div className="option-everyday">
+             <div>
+                    <p>Quantity</p>
+                    <div className="quantity-custom">
+                      <div className="quantity-controls" style={{gap:"10px"}}>
+                        <button
+                          onClick={() =>
+                            handleUpdateCartProduct(
+                              product,
+                              product.productQuantity - 1
+                            )
+                          }
+                        >
+                          <AiOutlineMinus />
+                        </button>
+                        <p>{product.productQuantity}</p>
+                        <button
+                          onClick={() =>
+                            handleUpdateCartProduct(
+                              product,
+                              product.productQuantity + 1
+                            )
+                          }
+                        >
+                          <AiOutlinePlus />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
             <div>
               <p>Select the delivery date</p>
               <input type="date" />
@@ -336,15 +383,95 @@ const Subscription = () => {
           </div>
         )}
         {frequency === "oninterval" && (
-          <div>
-            <p>On Interval: Choose the delivery frequency.</p>
+          <div className="oninterval-div">
             <div>
-              <label>Choose interval:</label>
-              <select>
-                <option value="weekly">Weekly</option>
-                <option value="bi-weekly">Bi-weekly</option>
-                <option value="monthly">Monthly</option>
-              </select>
+               <div>
+                    <p style={{marginBottom:"10px"}}>Quantity</p>
+                    <div className="quantity-custom">
+                      <div className="quantity-controls" style={{gap:"10px"}}>
+                        <button
+                          onClick={() =>
+                            handleUpdateCartProduct(
+                              product,
+                              product.productQuantity - 1
+                            )
+                          }
+                        >
+                          <AiOutlineMinus />
+                        </button>
+                        <p>{product.productQuantity}</p>
+                        <button
+                          onClick={() =>
+                            handleUpdateCartProduct(
+                              product,
+                              product.productQuantity + 1
+                            )
+                          }
+                        >
+                          <AiOutlinePlus />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{width:"40%"}}>
+                    <p>Repeat Once in</p>
+                    <div className="repeat-down">
+            <p>{formData.societyName ? `${formData.societyName}` : "Select Your Society"}</p>
+            <div
+              onClick={() => {
+                handleRotate();
+                handleShowSociety();
+              }}
+            >
+              <RiArrowDropDownLine
+              style={{
+                transform: isRotated ? "rotate(180deg)" : "rotate(0deg)",
+               }}
+               className="drop-dow44"
+              />
+            </div>
+          </div>
+          {showSociety && (
+            <div className="society-dropdown1">
+              {[
+                "3 Days",
+                "4 Days",
+                "5 Days",
+                "6 Days",
+                "7 Days",
+                "8 Days",
+              ].map((society) => (
+                <p
+                  key={society}
+                  onClick={() => handleSocietySelect(society)}
+                  style={{ cursor: "pointer" }}
+                >
+                  {society}
+                </p>
+              ))}
+            </div>
+          )}
+
+                    </div>
+                   
+            </div>
+            <div className="option-custom1" style={{marginTop:"20px"}}>
+              <div>
+                <p>Select the delivery date</p>
+                <input type="date" />
+              </div>
+              <div>
+                <p>End delivery date</p>
+                <input type="date" />
+              </div>
+            </div>
+            <div style={{marginTop:"20px"}}>
+              <p>Delivery Slot</p>
+              <p>04:00-07:00 A.M.</p>
+            </div>
+            <div style={{marginTop:"20px"}}>
+              <p>Delivery to</p>
+              <p>Add Address</p>
             </div>
           </div>
         )}
