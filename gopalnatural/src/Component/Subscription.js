@@ -211,32 +211,7 @@ const Subscription = () => {
                     <b>Price:</b>
                     <p>{product.productPrice}</p>
                   </div>
-                  <div>
-                    <b>Quantity:</b>
-                    <div className="quantity-controls">
-                      <button
-                        onClick={() =>
-                          handleUpdateCartProduct(
-                            product,
-                            product.productQuantity - 1
-                          )
-                        }
-                      >
-                        <AiOutlineMinus />
-                      </button>
-                      <p>{product.productQuantity}</p>
-                      <button
-                        onClick={() =>
-                          handleUpdateCartProduct(
-                            product,
-                            product.productQuantity + 1
-                          )
-                        }
-                      >
-                        <AiOutlinePlus />
-                      </button>
-                    </div>
-                  </div>
+                
                   <div
                     style={{
                       borderTop: "1.6px solid #9e9e90",
