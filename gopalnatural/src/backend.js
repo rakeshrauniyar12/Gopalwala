@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 
-let apiUrl= "https://gopalbackend.onrender.com";
+let apiUrl= "https://gopalbackend.onrender.com/api";
 
 const registerUser = async (email,password,societyName)=>{
   try {
