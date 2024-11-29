@@ -31,7 +31,7 @@ const Subscription = () => {
 
     fetchProduct();
   }, [id]);
-
+  const days= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
   const handleDeleteCartProduct = async (product) => {
     try {
       const res = await deleteCartProduct(product._id); // Await the delete operation
@@ -266,27 +266,98 @@ const Subscription = () => {
       )}
 
       <div className="select-options">
-        <h1 className="option-h1">How often do you want to receive this item</h1>
+        <h1 className="option-h1">
+          How often do you want to receive this item
+        </h1>
         <div className="options-btn">
-        <div>
-          <button className="op-btn" onClick={() => handleFrequencyChange("everyday")}>Every Day</button>
-        </div>
-        <div>
-          <button className="op-btn" onClick={() => handleFrequencyChange("custom")}>Custom</button>
-        </div>
-        <div>
-          <button className="op-btn" onClick={() => handleFrequencyChange("oninterval")}>On Interval</button>
-        </div>
+          <div>
+            <button
+              className="op-btn"
+              onClick={() => handleFrequencyChange("everyday")}
+            >
+              Every Day
+            </button>
+          </div>
+          <div>
+            <button
+              className="op-btn"
+              onClick={() => handleFrequencyChange("custom")}
+            >
+              Custom
+            </button>
+          </div>
+          <div>
+            <button
+              className="op-btn"
+              onClick={() => handleFrequencyChange("oninterval")}
+            >
+              On Interval
+            </button>
+          </div>
         </div>
         {frequency === "everyday" && (
-          <div>
-            <p>Every Day: You will receive this item every day.</p>
+          <div className="option-everyday">
+            <div>
+              <p>Select the delivery date</p>
+              <input type="date" />
+            </div>
+            <div>
+              <p>Delivery Slot</p>
+              <p>04:00-07:00 A.M.</p>
+            </div>
+            <div>
+              <p>Delivery to</p>
+              <p>Add Address</p>
+            </div>
           </div>
         )}
         {frequency === "custom" && (
           <div>
-            <p>Select the delivery date</p>
-            <input type="date" />
+            <div className="option-custom">
+              <div>
+                <p>Select the delivery date</p>
+                <input type="date" />
+              </div>
+              <div>
+                <p>End delivery date</p>
+                <input type="date" />
+              </div>
+            </div>
+            <div className="option-custom-2">
+              <h2>Select Quantity</h2>
+              <div className="option-custom-3">
+                {days.map((day)=>(
+                    <div>
+                    <p>{day}</p>
+                    <div className="quantity-custom">
+                      <div className="quantity-controls">
+                        <button
+                          onClick={() =>
+                            handleUpdateCartProduct(
+                              product,
+                              product.productQuantity - 1
+                            )
+                          }
+                        >
+                          <AiOutlineMinus />
+                        </button>
+                        <p>{product.productQuantity}</p>
+                        <button
+                          onClick={() =>
+                            handleUpdateCartProduct(
+                              product,
+                              product.productQuantity + 1
+                            )
+                          }
+                        >
+                          <AiOutlinePlus />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         )}
         {frequency === "oninterval" && (
@@ -308,4 +379,3 @@ const Subscription = () => {
 };
 
 export default Subscription;
-

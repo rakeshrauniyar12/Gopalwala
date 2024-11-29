@@ -32,7 +32,40 @@ cursor: pointer;
     background-color: #3d8e41;
     color: #ffff;
 }
+.option-everyday{
+    width: 60%;
+    margin: auto;
+    margin-top: 20px;
+}
 
+.option-everyday>div{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.option-custom{
+    width: 60%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.option-custom-2{
+    width: 60%;
+    margin: auto; 
+    margin-top: 20px;
+}
+.option-custom-3>div{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.quantity-custom{
+    width: 30%;
+}
 @media (max-width:768px){
     .option-h1{
         font-size: 17px;
