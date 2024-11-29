@@ -330,7 +330,7 @@ const Subscription = () => {
                     <div>
                     <p>{day}</p>
                     <div className="quantity-custom">
-                      <div className="quantity-controls">
+                      <div className="quantity-controls" style={{gap:"10px"}}>
                         <button
                           onClick={() =>
                             handleUpdateCartProduct(
