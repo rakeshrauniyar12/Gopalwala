@@ -71,6 +71,15 @@ cursor: pointer;
         font-size: 17px;
         font-weight: 700;
     }
+    .option-custom {
+        width: 95%;
+    }
+    .option-custom-2 {
+        width: 95%;
+    }
+    .option-everyday {
+        width: 94%;
+    }
   .subscription-container{
     padding-top: 15px;
     padding-bottom: 5px;
