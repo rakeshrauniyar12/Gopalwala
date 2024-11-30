@@ -36,7 +36,6 @@ const Navbar = () => {
     fetchProducts();
   }, []);
 
-
   useEffect(() => {
     // Update isMobile state on window resize
     const handleResize = () => {
@@ -95,17 +94,21 @@ const Navbar = () => {
                   <p>Favourite</p>
                 </div>
               </div>
-              <Link to={"/cart"} className="cart-link"><div className="wish-cart-2">
-                <div style={{ position: "relative" }}>
-                  <div className="cart-icon-div">
-                    <img src={cart_icon} />
+              <Link to={"/cart"} className="cart-link">
+                <div className="wish-cart-2">
+                  <div style={{ position: "relative" }}>
+                    <div className="cart-icon-div">
+                      <img src={cart_icon} />
+                    </div>
+                    <p className="cart-zero">
+                      {Array.isArray(cartProducts) ? cartProducts.length : 0}
+                    </p>
                   </div>
-                  <p className="cart-zero">{Array.isArray(cartProducts) ? cartProducts.length : 0}</p>
+                  <div>
+                    <p>Cart</p>
+                  </div>
                 </div>
-                <div>
-                  <p>Cart</p>
-                </div>
-              </div></Link>
+              </Link>
             </div>
           </div>
           <div className="navbar-end">
@@ -120,7 +123,9 @@ const Navbar = () => {
                 />
               </div>
               <div className="second-div-content">
-                <Link to={"/"} className="home-ppp"><p>Home</p></Link>
+                <Link to={"/"} className="home-ppp">
+                  <p>Home</p>
+                </Link>
                 <div className="second-drop-arrow">
                   <p>Shop</p>
                   <RiArrowDropDownLine
@@ -130,6 +135,7 @@ const Navbar = () => {
                 </div>
                 <p>About us</p>
                 <p>Blog</p>
+                <Link className="link-nav-btn" to={"/subscription"}><p>Subscription</p></Link>
                 <p>Contact us</p>
               </div>
             </div>
@@ -152,17 +158,21 @@ const Navbar = () => {
                     <p>Favourite</p>
                   </div>
                 </div>
-                <Link to={"/cart"} className="cart-link"><div className="wish-cart-2">
-                  <div style={{ position: "relative" }}>
-                    <div className="cart-icon-div">
-                      <img src={cart_icon} height={15} />
+                <Link to={"/cart"} className="cart-link">
+                  <div className="wish-cart-2">
+                    <div style={{ position: "relative" }}>
+                      <div className="cart-icon-div">
+                        <img src={cart_icon} height={15} />
+                      </div>
+                      <p className="cart-zero">
+                        {Array.isArray(cartProducts) ? cartProducts.length : 0}
+                      </p>
                     </div>
-                    <p className="cart-zero">{Array.isArray(cartProducts) ? cartProducts.length : 0}</p>
+                    <div>
+                      <p>Cart</p>
+                    </div>
                   </div>
-                  <div>
-                    <p>Cart</p>
-                  </div>
-                </div></Link>
+                </Link>
               </div>
             </div>
             <div className="option-div">
@@ -211,7 +221,9 @@ const Navbar = () => {
 
       {showHamburger && (
         <div className="second-div-content1">
-          <Link to={"/"} className="cart-link"><p>Home</p></Link>
+          <Link to={"/"} className="cart-link"  onClick={handleMenuToggle}>
+            <p>Home</p>
+          </Link>
           <div className="second-drop-arrow">
             <p>Shop</p>
             <RiArrowDropDownLine
@@ -249,6 +261,7 @@ const Navbar = () => {
           )}
           <p>About us</p>
           <p>Blog</p>
+          <Link className="link-nav-btn" to={"/subscription"}  onClick={handleMenuToggle}><p>Subscription</p></Link>
           <p>Contact us</p>
         </div>
       )}

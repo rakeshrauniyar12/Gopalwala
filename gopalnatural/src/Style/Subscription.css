@@ -19,42 +19,119 @@
   display: flex;
   justify-content: space-between;
 }
-.drop-dow44{
-    font-size: 30px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+.drop-dow44 {
+  font-size: 30px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 }
 
-.repeat-down{
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.options-btn {
-  width: 100%;
+.repeat-down {
+  position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+.options-btn {
+  width: 60%;
+  margin: auto;
+  display: flex;
 }
 
 .op-btn {
-  padding: 5px 20px;
+  padding: 10px 20px;
   color: #3d8e41;
   border-radius: 6px;
   background-color: #dbeac5;
   border: 1px solid gray;
   margin: 10px;
   cursor: pointer;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 600;
 }
-
-.op-btn:hover {
-  background-color: #3d8e41;
+.end-start-btn {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin: auto;
+  margin-top: 20px;
+  align-items: center;
+}
+.end-start-btn1 {
+  display: flex;
+  width: 65%;
+  justify-content: space-between;
+  margin: auto;
+}
+.option-custom1 {
+  width: 65%;
+  margin: auto;
+  margin-top: 20px;
+  background-color: #dbeac5;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.select-range{
+  padding: 5px 15px;
+  background-color: #dbeac5;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid #3d8e41;
+  font-size: 16px;
+  font-weight: 600;
+  color: #3d8e41;
+}
+.select-range:hover{
+   background-color: #3d8e41;
+   color: #ffff;
+}
+.quantity-incr {
+  cursor: pointer;
+  font-size: 22px;
+  border: 1px solid gray;
+  padding: 3px;
+  background: green;
   color: #ffff;
+  border-radius: 5px;
 }
 .option-everyday {
   width: 60%;
   margin: auto;
   margin-top: 20px;
+  background-color: #dbeac5;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+.option-222 {
+  width: 100%;
+  margin: auto;
+}
+.sub-btn {
+  padding: 10px 20px;
+  margin-top: 20px;
+  background-color: #dbeac5;
+  color: #3d8e41;
+  border: 1px solid #dbeac5;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.sub-btn:hover {
+  background-color: #3d8e41;
+  color: #ffff;
+}
+.subs-product-page-main {
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  text-align: center;
 }
 
 .option-everyday > div {
@@ -65,11 +142,12 @@
 }
 
 .option-custom {
-  width: 60%;
+  width: 100%;
   margin: auto;
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .option-custom-2 {
   width: 60%;
@@ -85,26 +163,53 @@
 .quantity-custom {
   width: 30%;
 }
+.option-h1 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.rang-btn{
+  width: 30%;
+}
 @media (max-width: 768px) {
   .option-h1 {
     font-size: 17px;
     font-weight: 700;
   }
+  .rang-btn{
+    width: 100%;
+    margin-top: 20px;
+  }
+  .select-range{
+     width: 100%;
+  }
+  .end-start-btn {
+    flex-direction: column;
+  }
+  .options-btn {
+    width: 100%;
+  }
   .option-custom {
     width: 95%;
+  }
+  .end-start-btn1 {
+    width: 100%;
   }
   .option-custom-2 {
     width: 95%;
   }
   .option-everyday {
-    width: 94%;
+    width: 90%;
+    padding: 12px;
+  }
+  .option-custom1 {
+    width: 89%;
   }
   .subscription-container {
     padding-top: 15px;
     padding-bottom: 5px;
   }
   .select-options {
-    width: 100%;
+    width: 90%;
   }
   .oninterval-div {
     width: 90%;

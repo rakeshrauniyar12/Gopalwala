@@ -5,6 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios for API requests
 import { toast } from "react-toastify"; // Import toast for notifications
 import { loginUser } from '../backend';
+import Header from './Header';
+import {useAuth} from "./AuthProvider";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -12,7 +14,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false); // Loading state for login button
   const navigate = useNavigate(); // To navigate to other pages after login
-
+  const { login } = useAuth();
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -48,7 +50,7 @@ const Login = () => {
         )
         // Here you would typically store the token in cookies (as backend sets it in a cookie)
         // But if you need to check locally, storing in localStorage is an option (not recommended for production).
-        localStorage.setItem("token", loginData.data.token); // Store JWT in localStorage
+        login(loginData.data.token);
 
         // Navigate to the dashboard or home page
         navigate("/"); // Replace with your route after login

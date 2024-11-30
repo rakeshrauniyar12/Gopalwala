@@ -77,7 +77,9 @@
     gap: 10px;
     cursor: pointer;
 }
-
+.link-nav-btn{
+    text-decoration: none;
+}
 .cart-icon-div{
     border-radius: 50%;
     background-color: #dbeac5;
