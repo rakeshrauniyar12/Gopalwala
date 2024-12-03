@@ -8,11 +8,10 @@ import logoutlogo from "../Assets/logout.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import "../Style/Account.css";
 
-
 import { toast } from "react-toastify";
 
 const Account = () => {
- 
+  const { isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
   
  
@@ -81,7 +80,10 @@ const Account = () => {
               display: "flex",
               alignItems: "center",
             }}
-        
+             onClick={()=>{
+              logout()
+              navigate("/")
+             }}
           >
             <h3 style={{ color: "#EF314C", fontSize: "20px" }}>Logout</h3>
           </div>

@@ -1,7 +1,7 @@
-import React from "react";
 import axios from "axios";
 
-let apiUrl= "https://gopalbackend.onrender.com/api";
+// const apiUrl= "https://gopalbackend.onrender.com/api";
+const apiUrl= "http://localhost:8080/api";
 
 const registerUser = async (email,password,societyName)=>{
   try {
@@ -25,6 +25,86 @@ try{
   throw (err.response?.data?.message || "login failed");
 }
 }
+
+const getUserById = async (userId) => {
+  console.log("Get user Id",userId);
+  try {
+    const token = localStorage.getItem("token"); // Replace with your token storage method
+    console.log(apiUrl)
+    console.log("Token",token)
+    const res = await axios.get(`${apiUrl}/auth/getUserById/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Add Bearer token if required
+      },
+    });
+    console.log("Backend",res);
+    return res; // Return the response data
+  } catch (error) {
+    console.error("Error fetching user by ID:", error.response?.data || error.message);
+    throw error; // Rethrow error for debugging or handling in calling code
+  }
+};
+
+const addAddress = async (userId, addressData) => {
+  try {
+    const token = localStorage.getItem("token"); // Get the token from localStorage or your chosen method
+    const response = await axios.post(
+      `${apiUrl}/auth/saveAddress`,
+      { userId, addressData },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Pass the token if required for authorization
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data; // Return the saved address data or success message
+  } catch (error) {
+    console.error("Error adding address:", error.response?.data || error.message);
+    throw error; // Rethrow the error for handling in calling code
+  }
+};
+
+const getAddress = async (userId) => {
+  try {
+    const token = localStorage.getItem("token"); // Get the token
+    const response = await axios.get(`${apiUrl}/auth/getAddress/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Pass the token for authorization
+      },
+    });
+    return response.data; // Return the address data
+  } catch (error) {
+    console.error("Error fetching address:", error.response?.data || error.message);
+    throw error; // Rethrow the error for handling in calling code
+  }
+};
+
+
+const removeAddress = async (userId, addressId) => {
+  try {
+    const token = localStorage.getItem("token"); // Get the token
+    const response = await axios.delete(
+      `${apiUrl}/auth/removeAddress`, 
+      { userId, addressId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Pass the token for authorization
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data; // Return success message or confirmation
+  } catch (error) {
+    console.error("Error removing address:", error.response?.data || error.message);
+    throw error; // Rethrow the error for handling in calling code
+  }
+};
+
+
+
+
+
 const getProduct = async ()=>{
     const response = await axios.get(`${apiUrl}/product/getAllProduct`);
       return response.data.products;
@@ -83,4 +163,4 @@ const deleteCartProduct = async (productId)=>{
     const res= await axios.delete(`${apiUrl}/cartProduct/deleteCartProduct/${productId}`);
    return res;
 }
-export  {getProduct,addToCart,getAllCartProduct,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct};
+export  {getProduct,addToCart,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById};

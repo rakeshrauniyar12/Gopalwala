@@ -14,7 +14,7 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false); // Loading state for login button
   const navigate = useNavigate(); // To navigate to other pages after login
-  const { login } = useAuth();
+  const { login,currentUser } = useAuth();
   // Handle input changes
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,7 +39,7 @@ const Login = () => {
     try {
       // Make API request to backend (ensure the endpoint is correct)
     const loginData =  await loginUser(email,password);
-     console.log(loginData);
+     console.log(loginData.data.user._id);
       if (loginData.data.msg==="Login successful") {
         toast.success("Login successful!");
         setFormData(
@@ -50,9 +50,10 @@ const Login = () => {
         )
         // Here you would typically store the token in cookies (as backend sets it in a cookie)
         // But if you need to check locally, storing in localStorage is an option (not recommended for production).
-        login(loginData.data.token);
-
+        login(loginData.data.token,loginData.data.user._id);
+       
         // Navigate to the dashboard or home page
+       
         navigate("/"); // Replace with your route after login
       } else {
         toast.error("Invalid email or password");

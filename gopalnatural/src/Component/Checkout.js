@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState,useContext} from "react";
 import "../Style/Checkout.css"
 import {Link} from "react-router-dom";
 import upi from "../Assets/Checkout/upi.png"
@@ -7,20 +7,33 @@ import google_pay from "../Assets/Checkout/google_pay.png"
 import paytm from "../Assets/Checkout/paytm.png"
 import phone_pe from "../Assets/Checkout/phone_pe.png"
 import visa from "../Assets/Checkout/visa.png"
-import { RiArrowDropDownLine } from "react-icons/ri";
-const Checkout = ()=>{
-    const [showSociety,setShowSociety] = useState(false);
-    const [isRotated, setIsRotated] = useState(false);
+import { useAuth } from "./AuthProvider";
+import { getAddress } from "../backend";
+import { AddressContent } from "./Address";
+import { AddressContext } from "./Address";
 
+const Checkout = ()=>{
+    // const [showSociety,setShowSociety] = useState(false);
+    const [isRotated, setIsRotated] = useState(false);
+    const {currentUser, isLoggedIn, logout } = useAuth();
+    const [address,setAddress] = useState([]); 
+    const { addresses, setAddresses, loading } = useContext(AddressContext);
     const handleRotate = () => {
       setIsRotated((prev) => !prev);
     };
-    const handleShowSociety = ()=>{
-        setShowSociety(!showSociety);
-        console.log("hello")
-    }
+    // useEffect(async ()=>{
+    //     const fetchAddress = await getAddress(currentUser);
+    //     // setAddress(fetchAddress);
+    //     console.log(fetchAddress);
+    // })
+    // const handleShowSociety = ()=>{
+    //     setShowSociety(!showSociety);
+    // }
+
+  
     return(
         <div className="checkout-main-container">
+      {  !isLoggedIn?  <div className="address-page-content">
               <div><h1 className="checkout-h1">Shipping Information</h1></div>
               <div><p className="checkout-p">Already have an account? <Link to={"/login"} className="checkout-link">Login</Link></p></div>
 
@@ -28,7 +41,6 @@ const Checkout = ()=>{
                 <div><input placeholder="Enter First Name"/></div>
                 <div><input placeholder="Enter Last Name"/></div>
                 <div><input placeholder="Enter Phone No"/></div>
-                <div><input placeholder="Enter Mail ID"/></div>
                 <div><input placeholder="Enter Country"/></div>
                 <div><input placeholder="Enter State"/></div>
                 <div><input placeholder="Enter Zip Code"/></div>
@@ -37,11 +49,19 @@ const Checkout = ()=>{
               <div className="checkout-area">
                <textarea placeholder="Enter Address"/>
               </div>
+              </div>:
+              <>
+              {
+               addresses? <div key={addresses.addresses[0]._id} className="address-first-div">
+                  <p>{`${addresses.addresses[0].firstName},${addresses.addresses[0].lastName},${addresses.addresses[0].phoneNumber},${currentUser.data.data.societyName},${addresses.addresses[0].city},${addresses.addresses[0].zipCode},${addresses.addresses[0].state}`}</p>
+                </div>:""}
+              </>
+              }
               <div className="check-end">
-              <div className="check-payment">
-              <div><h1 className="checkout-h1">Society</h1></div>
-              <div><p className="checkout-p">Select Your Society</p></div>
-              <div className="select-society">
+               {/* <div className="check-payment">
+               <div><h1 className="checkout-h1">Society</h1></div>
+              <div><p className="checkout-p">Select Your Society</p></div> 
+               <div className="select-society">
                 <p>Select Your Society</p>
                 <RiArrowDropDownLine
                  style={{
@@ -55,7 +75,7 @@ const Checkout = ()=>{
                     handleShowSociety()
                   }}
                  />
-              </div>
+              </div> 
              {showSociety && <div className="society-dropdown">
                 <p>Tata Promont</p>
                 <p>Sobha Neopolis</p>
@@ -65,7 +85,7 @@ const Checkout = ()=>{
                 <p>Suncity</p>
                 <p>Grey Stone</p>
               </div>}
-              </div>
+              </div>  */}
              <div className="check-payment">
               <div><h1 className="checkout-h1">Payment Method</h1></div>
               <div><p className="checkout-p">Select Your Payment Method</p></div>

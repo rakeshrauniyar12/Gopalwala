@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { getAllCartProduct } from "../backend";
 import { useCart } from "./CartContext";
+import { useAuth } from "./AuthProvider";
 
 const Navbar = () => {
   const [showCategories, setShowCategories] = useState(false);
@@ -22,7 +23,7 @@ const Navbar = () => {
   const [showHamburger, setShowHamburger] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const { cartProducts, updateCart } = useCart();
-
+  const { isLoggedIn, logout } = useAuth();
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -94,7 +95,7 @@ const Navbar = () => {
                   <p>Favourite</p>
                 </div>
               </div>
-              <Link to={"/cart"} className="cart-link">
+              <Link to={"/cart"} className="cart-link1">
                 <div className="wish-cart-2">
                   <div style={{ position: "relative" }}>
                     <div className="cart-icon-div">
@@ -135,7 +136,9 @@ const Navbar = () => {
                 </div>
                 <p>About us</p>
                 <p>Blog</p>
-                <Link className="link-nav-btn" to={"/subscription"}><p>Subscription</p></Link>
+                <Link className="link-nav-btn" to={"/subscription"}>
+                  <p>Subscription</p>
+                </Link>
                 <p>Contact us</p>
               </div>
             </div>
@@ -158,7 +161,7 @@ const Navbar = () => {
                     <p>Favourite</p>
                   </div>
                 </div>
-                <Link to={"/cart"} className="cart-link">
+                <Link to={"/cart"} className="cart-link1">
                   <div className="wish-cart-2">
                     <div style={{ position: "relative" }}>
                       <div className="cart-icon-div">
@@ -192,6 +195,12 @@ const Navbar = () => {
           </div>
           <div className="navbar-end">
             <div className="navbar-end-content">
+              <div>
+                <GiHamburgerMenu
+                  onClick={handleMenuToggle}
+                  style={{ color: "#ffff", fontSize: "30px" }}
+                />
+              </div>
               <div className="first-drop-arrow">
                 <div>
                   <p>Browse By Categories</p>
@@ -201,19 +210,6 @@ const Navbar = () => {
                   onClick={handleCategories}
                 />
               </div>
-              <div>
-                {showHamburger ? (
-                  <MdClose
-                    onClick={handleMenuToggle}
-                    style={{ color: "#ffff", fontSize: "30px" }}
-                  />
-                ) : (
-                  <GiHamburgerMenu
-                    onClick={handleMenuToggle}
-                    style={{ color: "#ffff", fontSize: "30px" }}
-                  />
-                )}
-              </div>
             </div>
           </div>
         </>
@@ -221,7 +217,11 @@ const Navbar = () => {
 
       {showHamburger && (
         <div className="second-div-content1">
-          <Link to={"/"} className="cart-link"  onClick={handleMenuToggle}>
+          <MdClose
+            onClick={handleMenuToggle}
+            style={{ color: "black", fontSize: "35px",margin:"10px 20px" }}
+          />
+          <Link to={"/"} className="cart-link" onClick={handleMenuToggle}>
             <p>Home</p>
           </Link>
           <div className="second-drop-arrow">
@@ -259,10 +259,27 @@ const Navbar = () => {
               </div>
             </div>
           )}
-          <p>About us</p>
-          <p>Blog</p>
-          <Link className="link-nav-btn" to={"/subscription"}  onClick={handleMenuToggle}><p>Subscription</p></Link>
-          <p>Contact us</p>
+          <Link className="cart-link">
+            <p>About us</p>
+          </Link>
+          <Link className="cart-link">
+            <p>Blog</p>
+          </Link>
+          <Link
+            className="cart-link"
+            to={"/subscription"}
+            onClick={handleMenuToggle}
+          >
+            <p>Subscription</p>
+          </Link>
+          <Link className="cart-link">
+            <p>Contact us</p>
+          </Link>
+         {isLoggedIn? <button onClick={()=>{
+          logout()
+          handleMenuToggle()}} className="header-logout-btn">
+            Logout
+          </button>:""}
         </div>
       )}
       {showCategories && (

@@ -28,14 +28,9 @@ const Header = () => {
                         <div className="header-2-content">
                             <Link to="/account" className="header-profile">
                                 <MdAccountBox />
-                                <p>Profile</p>
+                                <p>My Profile</p>
                             </Link>
-                            <button
-                                onClick={logout}
-                                className="header-logout-btn"
-                            >
-                                Logout
-                            </button>
+                          
                         </div>
                     ) : (
                         <>
