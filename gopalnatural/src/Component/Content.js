@@ -7,7 +7,7 @@ import Cart from "./Cart";
 import Checkout from "./Checkout";
 import {Subscription,SubscriptionProductPage} from "./Subscription";
 import Account from "./Account";
-import Address from "./Address";
+import  { AddressContent } from "./Address";
 const Content = () => {
  
   return (
@@ -21,7 +21,7 @@ const Content = () => {
         <Route path="/subscription/:id" element={<Subscription />} />
         <Route path="/subscription" element={<SubscriptionProductPage />} />
         <Route path="/account" element={<Account />} />
-        <Route path="/address" element={<Address />} />
+        <Route path="/address" element={<AddressContent />} />
       </Routes>
     </div>
   );

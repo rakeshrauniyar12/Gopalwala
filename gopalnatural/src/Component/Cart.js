@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import "../Style/Cart.css";
 import { IoMdClose } from "react-icons/io";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"; // Import icons
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   deleteCartProduct,
   getAllCartProduct,
   updateCartProduct,
 } from "../backend";
+import { Navigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { toast } from "react-toastify";
 import { useCart } from "./CartContext";
@@ -18,7 +19,7 @@ const Cart = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { removeProduct, updateCart } = useCart();
-
+   const navigate = useNavigate();
   const fetchProducts = async () => {
     try {
       const product = await getAllCartProduct();
@@ -89,7 +90,13 @@ const Cart = () => {
   // SGST and CGST calculations
   const tax = totalProductPrice * 0.06;
   const totalPriceWithTax = totalProductPrice + 2 * tax;
-
+  const goToCheckout = ()=>{
+    if(products.length===0){
+     toast.warn("Your cart is empty!")
+    } else{
+     navigate("/checkout",{ state: { totalPriceWithTax, products } })
+    }
+}
   return (
     <div className="cart-main-container">
       {!isMobile ? (
@@ -336,9 +343,9 @@ const Cart = () => {
             <p>Total</p>
             <p>{`₹ ${totalPriceWithTax.toFixed(2)}`}</p>
           </div>
-          <Link to={"/checkout"}>
-            <button className="cart-btn">Proceed to checkout</button>
-          </Link>
+          
+            <button className="cart-btn" onClick={goToCheckout}>Proceed to checkout</button>
+          
         </div>
       </div>
     </div>

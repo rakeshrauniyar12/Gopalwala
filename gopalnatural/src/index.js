@@ -4,15 +4,14 @@ import './index.css';
 import App from './App';
 import { CartProvider } from './Component/CartContext';
 import { AuthProvider } from './Component/AuthProvider';
-import { AddressProvider } from './Component/Address';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
     <CartProvider>
-    <AddressProvider>
+   
     <App />
-    </AddressProvider>
+   
     </CartProvider>
     </AuthProvider>
   </React.StrictMode>

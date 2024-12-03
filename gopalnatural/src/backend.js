@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const apiUrl= "https://gopalbackend.onrender.com/api";
-const apiUrl= "http://localhost:8080/api";
+const apiUrl= "https://gopalbackend.onrender.com/api";
+// const apiUrl= "http://localhost:8080/api";
 
 const registerUser = async (email,password,societyName)=>{
   try {
@@ -83,16 +83,8 @@ const getAddress = async (userId) => {
 
 const removeAddress = async (userId, addressId) => {
   try {
-    const token = localStorage.getItem("token"); // Get the token
     const response = await axios.delete(
-      `${apiUrl}/auth/removeAddress`, 
-      { userId, addressId },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // Pass the token for authorization
-          "Content-Type": "application/json",
-        },
-      }
+      `${apiUrl}/auth/removeAddress/${userId}/${addressId}`
     );
     return response.data; // Return success message or confirmation
   } catch (error) {
@@ -163,4 +155,23 @@ const deleteCartProduct = async (productId)=>{
     const res= await axios.delete(`${apiUrl}/cartProduct/deleteCartProduct/${productId}`);
    return res;
 }
-export  {getProduct,addToCart,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById};
+
+
+const saveOrder = async (orderData) => {
+  try {
+   // Send the order data to the backend using a POST request
+    const response = await axios.post(
+      `${apiUrl}/auth/saveOrder`, // Assuming your backend has a POST method to save orders
+      orderData,
+    )
+
+    // Return the response (order confirmation or details)
+    return response.data; 
+  } catch (error) {
+    console.error("Error placing order:", error.response?.data || error.message);
+    throw error; // Rethrow error for handling in calling code
+  }
+};
+
+
+export  {getProduct,addToCart,saveOrder,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById};
