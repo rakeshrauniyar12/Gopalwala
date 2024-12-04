@@ -80,6 +80,15 @@ const getAddress = async (userId) => {
   }
 };
 
+const getAddressById = async (addressId) => {
+  try {
+    const response = await axios.get(`${apiUrl}/auth/getAddressById/${addressId}`);
+    return response.data; // Return the address details
+  } catch (error) {
+    console.error("Error fetching address by ID:", error.response?.data || error.message);
+    throw error; // Rethrow the error for handling in the calling code
+  }
+};
 
 const removeAddress = async (userId, addressId) => {
   try {
@@ -172,6 +181,34 @@ const saveOrder = async (orderData) => {
     throw error; // Rethrow error for handling in calling code
   }
 };
+const fetchOrders = async (userId) => {
+  try {
+    const response = await axios.get(`${apiUrl}/auth/getOrder/${userId}`);
+    console.log("User Orders:", response.data.orders);
+    return response.data.orders; // Return orders to use in your frontend
+  } catch (error) {
+    console.error("Error fetching orders:", error.response?.data || error.message);
+  }
+};
+const updateAddress = async (id, updatedData) => {
+  try {
+    const token = localStorage.getItem("token"); // Get the token from localStorage
+    console.log(token);
+    const response = await axios.patch(
+      `${apiUrl}/auth/updateAddress/${id}`,
+      updatedData, // Pass the updated address data
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include the token for authorization
+        },
+      }
+    );
+    return response.data; // Return the updated address data
+  } catch (error) {
+    console.error("Error updating address:", error.response?.data || error.message);
+    throw error; // Rethrow the error for handling in the calling code
+  }
+};
 
 
-export  {getProduct,addToCart,saveOrder,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById};
+export  {getProduct,addToCart,saveOrder,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById,getAddressById,updateAddress,fetchOrders};

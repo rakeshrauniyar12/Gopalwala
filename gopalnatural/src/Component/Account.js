@@ -40,7 +40,7 @@ const Account = () => {
             <p>Edit name, password and phone number</p>
           </div>
         </div>
-        <div className="accountOptionsDiv" onClick={() => navigate("/orders")}>
+        <div className="accountOptionsDiv" onClick={() => navigate("/account/orders")}>
           <div className="optionDivImage">
             <img src={orders} alt="orders" />
           </div>
