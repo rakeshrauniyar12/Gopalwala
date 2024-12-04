@@ -10,6 +10,7 @@ import Account from "./Account";
 import  { AddAddressPage, AddressContent, UpdateAddressPage } from "./Address";
 import { Orders } from "./Orders";
 import OrderPlaced from "./OrderPlaced";
+import Profile from "./Profile";
 const Content = () => {
  
   return (
@@ -28,6 +29,7 @@ const Content = () => {
         <Route path="/address/updateaddress/:id" element={<UpdateAddressPage />} />
         <Route path="/account/orders" element={<Orders />} />
         <Route path="/orderplaced" element={<OrderPlaced />} />
+        <Route path="/account/profile" element={<Profile />} />
       </Routes>
     </div>
   );

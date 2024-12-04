@@ -30,7 +30,7 @@ const Account = () => {
       <div className="accountOptions">
         <div
           className="accountOptionsDiv"
-          onClick={() => navigate("/loginandsecurity")}
+          onClick={() => navigate("/account/profile")}
         >
           <div className="optionDivImage">
             <img src={profile} alt="profile" />
