@@ -110,7 +110,7 @@ const OrderContent = ()=>{
                       </div>
                       <div>
                         <p>Ship To</p>
-                        <p>{order.addressId.firstName}</p>
+                        <p>{order.addressId?order.addressId.firstName:""}</p>
                       </div>
                       {order.status !== "delivered" ? (
                         <div>
