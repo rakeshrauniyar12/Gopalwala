@@ -10,6 +10,7 @@ import { deleteCartProduct, updateCartProduct } from "../backend";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai"; // Import icons
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
+import CardWithCalendar from "./datpicker";
 
 
 const Subscription = () => {
@@ -17,7 +18,7 @@ const Subscription = () => {
   const [product, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const isMobile = window.innerWidth <= 768;
-  const [frequency, setFrequency] = useState("everyday"); // State to store frequency
+  const [frequency, setFrequency] = useState("custom"); // State to store frequency
   const [selectedDates, setSelectedDates] = useState([]); // State to store selected dates and their quantities
   const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const [startDate, setStartDate] = useState("");
@@ -103,9 +104,17 @@ const Subscription = () => {
   };
 
   // Get day name from a date
+  // const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
   const getDayName = (date) => {
-    const dayIndex = new Date(date).getDay();
-    return days[dayIndex];
+    console.log("Date",date);
+    // Split the date (DD/MM/YYYY) into parts
+    const [day, month, year] = date.split("/").map(Number);
+    // Create a valid Date object (MM/DD/YYYY format)
+    const parsedDate = new Date(`${year}-${month}-${day}`);
+    return parsedDate.toString() === "Invalid Date"
+      ? "Invalid Date"
+      : days[parsedDate.getDay()];
   };
 
   // Handle frequency change
@@ -129,6 +138,7 @@ const Subscription = () => {
 
   return (
     <div className="subscription-container">
+    
       {!isMobile ? (
         <>
           <div className="cart-header">
@@ -257,88 +267,89 @@ const Subscription = () => {
       <div className="select-options">
         <h1 className="option-h1">How often do you want to receive this item?</h1>
         <div className="options-btn">
-          <button className="op-btn" onClick={() => handleFrequencyChange("everyday")}
+          <button className="op-btn" onClick={() => handleFrequencyChange("custom")}
             style={{
               backgroundColor: frequency === "everyday" ? "#3d8e41" : "#dbeac5",
               color: frequency === "everyday" ? "#ffff" : "#3d8e41",
             }}
             >
-            Every Day
+            Custom
           </button>
-          <button className="op-btn" onClick={() => handleFrequencyChange("custom")}
+          {/* <button className="op-btn" onClick={() => handleFrequencyChange("custom")}
             style={{
               backgroundColor: frequency === "custom" ? "#3d8e41" : "#dbeac5",
               color: frequency === "custom" ? "#ffff" : "#3d8e41",
             }}
             >
             Custom
-          </button>
+          </button> */}
         </div>
-        {frequency === "everyday" && (
-          <div className="option-everyday">
-             <div>
-              <div className="option-222">
-            <div className="option-custom">
-              <p style={{fontSize:"20px",fontWeight:"600"}}>Select the delivery date(s):</p>
-              <input
-                type="date"
-                onChange={(e) => handleAddDate(e.target.value)}
-              />
-            </div>
+        {frequency === "custom" && (
+          // <div className="option-everyday">
+          //    <div>
+          //     <div className="option-222">
+          //   <div className="option-custom">
+          //     <p style={{fontSize:"20px",fontWeight:"600"}}>Select the delivery date(s):</p>
+          //     <input
+          //       type="date"
+          //       onChange={(e) => handleAddDate(e.target.value)}
+          //     />
+          //   </div>
 
-            {selectedDates.length > 0 && (
-              <div className="selected-dates">
-                <p>Selected Dates:</p>
-                {selectedDates.map(({ date, quantity }) => (
-                  <div
-                    key={date}
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "10px",
-                      border: "1px solid #ccc",
-                      marginBottom: "5px",
-                    }}
-                  >
-                    <span style={{width:"45%"}}>
-                      {date} ({getDayName(date)})
-                    </span>
-                    <div style={{width:"25%", display: "flex", alignItems: "center" }}>
-                      <AiOutlineMinus
-                        className="quantity-incr"
-                        onClick={() => updateQuantity(date, -1)}
-                      />
-                      <span style={{ margin: "0 10px", fontWeight: "bold" }}>
-                        {quantity}
-                      </span>
-                      <AiOutlinePlus
-                        className="quantity-incr"
-                        onClick={() => updateQuantity(date, 1)}
-                      />
-                    </div>
-                    <IoMdClose
-                      style={{ cursor: "pointer", color: "red" }}
-                      onClick={() => handleRemoveDate(date)}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-            </div>
-          </div>
-            <div>
-              <p>Delivery Slot</p>
-              <p>04:00-07:00 A.M.</p>
-            </div>
-            <div>
-              <p>Delivery to</p>
-              <p>Add Address</p>
-            </div>
-          </div>
+          //   {selectedDates.length > 0 && (
+          //     <div className="selected-dates">
+          //       <p>Selected Dates:</p>
+          //       {selectedDates.map(({ date, quantity }) => (
+          //         <div
+          //           key={date}
+          //           style={{
+          //             display: "flex",
+          //             justifyContent: "space-between",
+          //             alignItems: "center",
+          //             padding: "10px",
+          //             border: "1px solid #ccc",
+          //             marginBottom: "5px",
+          //           }}
+          //         >
+          //           <span style={{width:"45%"}}>
+          //             {date} ({getDayName(date)})
+          //           </span>
+          //           <div style={{width:"25%", display: "flex", alignItems: "center" }}>
+          //             <AiOutlineMinus
+          //               className="quantity-incr"
+          //               onClick={() => updateQuantity(date, -1)}
+          //             />
+          //             <span style={{ margin: "0 10px", fontWeight: "bold" }}>
+          //               {quantity}
+          //             </span>
+          //             <AiOutlinePlus
+          //               className="quantity-incr"
+          //               onClick={() => updateQuantity(date, 1)}
+          //             />
+          //           </div>
+          //           <IoMdClose
+          //             style={{ cursor: "pointer", color: "red" }}
+          //             onClick={() => handleRemoveDate(date)}
+          //           />
+          //         </div>
+          //       ))}
+          //     </div>
+          //   )}
+          //   </div>
+          // </div>
+          //   <div>
+          //     <p>Delivery Slot</p>
+          //     <p>04:00-07:00 A.M.</p>
+          //   </div>
+          //   <div>
+          //     <p>Delivery to</p>
+          //     <p>Add Address</p>
+          //   </div>
+          // </div>
+          <CardWithCalendar/>
         )}
 
-        {frequency === "custom" && (
+        {/* {frequency === "custom" && (
         <div className="option-custom1">
           <p style={{fontSize:"20px",fontWeight:"600"}}>Select the start and end date:</p>
           <div className="end-start-btn">
@@ -408,7 +419,7 @@ const Subscription = () => {
               </div>
             )}
         </div>
-        )}
+        )} */}
       </div>
     </div>
   );

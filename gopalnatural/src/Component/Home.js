@@ -14,7 +14,7 @@ import youtube from "../Assets/Home/logos_youtube-icon.png";
 import last_sec from "../Assets/Home/last-sec.png";
 import "../Style/Home.css";
 import { toast } from "react-toastify";
-import { getProduct, addToCart } from "../backend.js";
+import { getProduct, addToCart, getUser } from "../backend.js";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useCart } from "./CartContext";
 import { useNavigate } from "react-router-dom";
@@ -44,6 +44,14 @@ const Home = () => {
 
     fetchProducts();
   }, []);
+
+  useEffect(()=>{
+    const fetchGoogleUserDetails= async ()=>{
+      const  getUserDetails = await getUser();
+      console.log("Login Component",getUserDetails);
+    }
+   fetchGoogleUserDetails();  
+  },[])
   if(products.length>0){
   console.log("All Product", products[0].productPrice);
   }

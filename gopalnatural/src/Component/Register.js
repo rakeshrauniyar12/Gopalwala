@@ -81,37 +81,9 @@ const Register = () => {
     <div className="login-main-container">
       <div className="login-content">
         <div className="login-content-1">
-          <h1 className="login-h1">Welcome Back</h1>
+          {/* <h1 className="login-h1">Welcome Back</h1> */}
           <p>Please enter your details</p>
-
-          <div className="login-content-input-1">
-            <input
-              name="email"
-              placeholder="Enter Email ID"
-              value={formData.email}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="login-content-input-1">
-            <input
-              name="password"
-              type="password"
-              placeholder="Enter Password"
-              value={formData.password}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="login-content-input-1">
-            <input
-              name="confirmPassword"
-              type="password"
-              placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              onChange={handleInputChange}
-            />
-          </div>
-
-          {/* Updated society selection */}
+              {/* Updated society selection */}
           <div className="select-society">
             <p>{formData.societyName ? `${formData.societyName}` : "Select Your Society"}</p>
             <div
@@ -155,6 +127,34 @@ const Register = () => {
             </div>
           )}
 
+          <div className="login-content-input-1">
+            <input
+              name="email"
+              placeholder="Enter Email ID"
+              value={formData.email}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="login-content-input-1">
+            <input
+              name="password"
+              type="password"
+              placeholder="Enter Password"
+              value={formData.password}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="login-content-input-1">
+            <input
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+            />
+          </div>
+
+       
           <div className="login-content-input-3">
             <input type="checkbox" />
             <p>Remember me for 30 Days</p>

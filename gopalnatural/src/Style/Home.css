@@ -123,6 +123,7 @@
   font-size: 24px;
   font-weight: 500;
   padding-left: 26px;
+  overflow-y: hidden;
 }
 .product-image {
   width: 80%;
@@ -165,7 +166,7 @@
   border-radius: 6px;
 }
 .product-append > div {
-  width: 90%;
+  width: 83%;
   position: relative;
   border-radius: 20px;
   border: 1px solid #3d8e41;
@@ -201,7 +202,7 @@
   cursor: pointer;
 }
 .product-buy-subs {
-  width: 70%;
+  width: 75%;
   display: flex;
   justify-content: space-between;
 }

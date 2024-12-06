@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const apiUrl= "https://gopalbackend.onrender.com/api";
-// const apiUrl= "http://localhost:8080/api";
+// const apiUrl= "https://gopalbackend.onrender.com/api";
+const apiUrl= "http://localhost:8080/api";
 
 const registerUser = async (email,password,societyName)=>{
   try {
@@ -14,6 +14,15 @@ const registerUser = async (email,password,societyName)=>{
     throw (err.response?.data?.message || "Registration failed");
   }   
 }
+const getUser = async () => {
+  try {
+    const url = `http://localhost:8080/auth/login/success`;
+    const { data } = await axios.get(url, { withCredentials: true });
+      return data;
+  } catch (err) {
+    console.log(err);
+  }
+};
 const loginUser = async (email,password)=>{
 try{
   const response = await axios.post(`${apiUrl}/auth/login`, {
@@ -211,4 +220,4 @@ const updateAddress = async (id, updatedData) => {
 };
 
 
-export  {getProduct,addToCart,saveOrder,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById,getAddressById,updateAddress,fetchOrders};
+export  {getProduct,getUser,addToCart,saveOrder,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById,getAddressById,updateAddress,fetchOrders};

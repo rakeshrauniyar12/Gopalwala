@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios for API requests
 import { toast } from "react-toastify"; // Import toast for notifications
-import { loginUser } from '../backend';
+import { getUser, loginUser } from '../backend';
 import Header from './Header';
 import {useAuth} from "./AuthProvider";
 const Login = () => {
@@ -23,7 +23,12 @@ const Login = () => {
       [name]: value,
     }));
   };
-
+  const googleAuth = async () => {
+		window.open(
+			`http://localhost:8080/auth/google/callback`,
+			"_self"
+		);
+	};
   // Handle login process
   const handleLogin = async () => {
     const { email, password } = formData;
@@ -72,7 +77,6 @@ const Login = () => {
     <div className='login-main-container'>
       <div className='login-content'>
         <div className='login-content-1'>
-          <h1 className='login-h1'>Welcome Back</h1>
           <p>Please enter your details</p>
           <div className='login-content-input-1'>
             <input
@@ -104,7 +108,7 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
           <div className='login-footer-content'>
-            <div className='login-content-google'>
+            <div className='login-content-google' onClick={googleAuth}>
               <p>Sign in with Google</p>
               <FcGoogle style={{ height: "30px", width: "30px" }} />
             </div>

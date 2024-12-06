@@ -3,6 +3,7 @@ import { fetchOrders } from "../backend";
 import { useAuth } from "./AuthProvider";
 import "../Style/Order.css";
 import { Link } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 
 const Orders = () => {
   const [order, setOrders] = useState([]);
@@ -58,6 +59,7 @@ const Orders = () => {
 
 
 const OrderContent = ()=>{
+  const [loading, setLoading] = useState(true);
     const [order, setOrders] = useState([]);
     const [selectedOption, setSelectedOption] = useState("order"); // Track selected option
     const { currentUser } = useAuth();
@@ -68,6 +70,11 @@ const OrderContent = ()=>{
         const orders = await fetchOrders(currentUser.data.data._id);
         console.log("Order Page", orders);
         setOrders(orders);
+        if(orders){
+          setLoading(false);
+        } else{
+          setLoading(true);
+        }
       };
       getOrder();
     }, [currentUser]);
@@ -82,7 +89,11 @@ const OrderContent = ()=>{
   
     return(
         <>
-        {order.length === 0 ? (
+        {loading ? (
+                <div className="spinner-container">
+                  <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
+                </div>
+              ):order.length === 0 ? (
             <h2
               style={{
                 display: "flex",
