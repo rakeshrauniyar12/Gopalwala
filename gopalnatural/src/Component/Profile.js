@@ -19,13 +19,13 @@ console.log("Profile Current User",currentUser)
         <div className="userdpdiv">
           <div>
            <CgProfile style={{fontSize:"50px"}}/>
-            <p>{currentUser.data.data.email}</p>
+            <p>{currentUser?currentUser.data.data.email:""}</p>
           </div>
         </div>
         <div className="login-main-first">
           <div className="login-main-first-first">
             <label>Email</label>
-            <p>{currentUser.data.data.email}</p>
+            <p>{currentUser?currentUser.data.data.email:""}</p>
           </div>
         </div>
         <div className="login-main-first" style={{ borderBottom: "none" }}>
