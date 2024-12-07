@@ -11,7 +11,7 @@
     width: 80%;
     margin: auto;
     align-items: center;
-    background-color: #3d8e41;
+    background-color: #4a9dd1;
     padding: 10px 20px;
     color: #ffff;
 }
@@ -72,7 +72,7 @@
 .cart-total-1{
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    background-color: #3d8e41;
+    background-color: #4a9dd1;
     padding: 10px 20px;
     font-size: 20px;
     font-weight: 600;
@@ -96,7 +96,7 @@
 .cart-btn{
     color: #ffff;
     font-size: 14px;
-    background-color: #3d8e41;
+    background-color: #b44700;
     padding: 3px 14px;
     cursor: pointer;
     border-radius: 20px;

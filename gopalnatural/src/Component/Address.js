@@ -223,6 +223,22 @@ const AddAddressPage = () => {
           </div>
           <div>
             <input
+              placeholder="Enter Email"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            {errors.lastName && <p style={{ color: "red" }}>{errors.lastName}</p>}
+          </div>
+          <div>
+            <input
+              placeholder="Enter Password"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            {errors.lastName && <p style={{ color: "red" }}>{errors.lastName}</p>}
+          </div>
+          <div>
+            <input
               placeholder="Enter Phone No"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
@@ -231,7 +247,7 @@ const AddAddressPage = () => {
           </div>
           <div>
             <input
-              placeholder="Enter Country"
+              placeholder="Enter Falt No,"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
             />
@@ -239,13 +255,13 @@ const AddAddressPage = () => {
           </div>
           <div>
             <input
-              placeholder="Enter State"
+              placeholder="Enter Tower No."
               value={state}
               onChange={(e) => setState(e.target.value)}
             />
             {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
           </div>
-          <div>
+          {/* <div>
             <input
               placeholder="Enter Zip Code"
               value={zipCode}
@@ -260,16 +276,16 @@ const AddAddressPage = () => {
               onChange={(e) => setCity(e.target.value)}
             />
             {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
-          </div>
+          </div> */}
         </div>
-        <div className="checkout-area">
+        {/* <div className="checkout-area">
           <textarea
             placeholder="Enter Address"
             value={fullAddress}
             onChange={(e) => setFullAddress(e.target.value)}
           />
           {errors.fullAddress && <p style={{ color: "red" }}>{errors.fullAddress}</p>}
-        </div>
+        </div> */}
       </div>
       <div style={{ marginTop: "20px" }}>
         <button onClick={handleAddAddress} disabled={loading} className="add-addres">

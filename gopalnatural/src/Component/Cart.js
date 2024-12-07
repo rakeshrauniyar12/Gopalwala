@@ -152,7 +152,7 @@ const Cart = () => {
                         alt={product.productName}
                       />
                     </div>
-                    <p style={{ color: "#3d8e41" }}>{product.productName}</p>
+                    <p style={{ color: "#b44700" }}>{product.productName}</p>
                   </div>
                   <div>
                     <p>{product.productUnit}</p>

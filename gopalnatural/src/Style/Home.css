@@ -60,7 +60,7 @@
   color: #ffff;
   font-size: 20px;
   font-weight: 600;
-  background-color: #3d8e41;
+  background-color: #b44700;
 }
 .home-sec-5-iii {
   width: 100%;
@@ -88,7 +88,7 @@
 .choose-heading h2 {
   font-weight: 800;
   font-size: 35px;
-  color: #3d8e41;
+  color: #b44700;
   margin-top: 5px;
   margin-bottom: 20px;
 }
@@ -98,7 +98,7 @@
   align-items: center;
   gap: 20px;
   text-align: center;
-  color: #3d8e41;
+  color: #b44700;
   font-size: 24px;
   font-weight: 500;
 }
@@ -119,7 +119,7 @@
   align-items: center;
   gap: 20px;
   text-align: left;
-  color: #3d8e41;
+  color: #b44700;
   font-size: 24px;
   font-weight: 500;
   padding-left: 26px;
@@ -156,7 +156,7 @@
   position: absolute;
   right: 12px;
   background-color: #dbeac5;
-  color: #3d8e41;
+  color: #b44700;
   padding: 6px 12px;
   text-align: center;
   display: flex;
@@ -169,7 +169,7 @@
   width: 83%;
   position: relative;
   border-radius: 20px;
-  border: 1px solid #3d8e41;
+  border: 2px solid #b44700;
   padding: 10px;
   /* box-shadow: offset-x offset-y blur-radius spread-radius color; */
   box-shadow: 7px 0 2px -5px gray, -7px 0 2px -5px gray;
@@ -197,7 +197,7 @@
   font-size: 12px;
   font-weight: 600;
   padding: 4px 15px;
-  color: #3d8e41;
+  color: #b44700;
   background-color: #dbeac5;
   cursor: pointer;
 }
@@ -279,7 +279,7 @@
   padding: 5px 10px;
   color: #ffff;
   font-size: 12px;
-  background-color: #3d8e41;
+  background-color: #b44700;
 }
 .img-btn1 {
   width: 50%;
@@ -309,15 +309,16 @@
   align-items: center;
   gap: 30px;
   text-align: left;
-  color: #3d8e41;
+  color: #b44700;
   font-size: 24px;
   font-weight: 500;
   grid-template-columns: repeat(3, 1fr);
 }
 .product-append21 > div {
+  width: 85%;
   position: relative;
   border-radius: 20px;
-  border: 2px solid #3d8e41;
+  border: 2px solid #b44700;
   padding: 10px;
   box-shadow: 7px 0 2px -5px gray, -7px 0 2px -5px gray;
 }
@@ -335,7 +336,8 @@
   padding: 10px 20px;
   border: 1px solid transparent;
   border-radius: 30px;
-  background-color: #daeac5;
+  background-color: #fff5c2;
+  color: #b44700;
   cursor: pointer;
   text-align: center;
 }
@@ -377,7 +379,7 @@
   text-align: center;
 }
 .home-sec-6-header > h1 {
-  color: #3d8e41;
+  color: #b44700;
   margin-bottom: 10px;
 }
 .home-sec-6-content {
@@ -391,7 +393,7 @@
   border-radius: 30px;
   width: 20%;
   padding: 10px 30px;
-  background-color: #3d8e41;
+  background-color: #4a9dd1;
 }
 .home-sec-6-content-1-img {
   width: 100%;
@@ -428,7 +430,7 @@
     color: #ffff;
     font-size: 20px;
     font-weight: 600;
-    background-color: #3d8e41;
+    background-color: #b44700;
   }
 
   .header-content-down {

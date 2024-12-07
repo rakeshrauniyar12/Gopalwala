@@ -39,7 +39,7 @@
 
 .op-btn {
   padding: 10px 20px;
-  color: #3d8e41;
+  color: #b44700;
   border-radius: 6px;
   background-color: #dbeac5;
   border: 1px solid gray;
@@ -91,7 +91,7 @@
   font-size: 22px;
   border: 1px solid gray;
   padding: 3px;
-  background: green;
+  background: #b44700;
   color: #ffff;
   border-radius: 5px;
 }
@@ -113,7 +113,7 @@
   padding: 10px 20px;
   margin-top: 20px;
   background-color: #dbeac5;
-  color: #3d8e41;
+  color: #b44700;
   border: 1px solid #dbeac5;
   border-radius: 10px;
   font-size: 16px;

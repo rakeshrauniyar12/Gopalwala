@@ -11,6 +11,7 @@ import { useAuth } from "./AuthProvider";
 import { getAddress,saveOrder,removeAddress, getAddressById } from "../backend";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import { AddAddressPage } from "./Address";
 const Checkout = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,7 +20,7 @@ const Checkout = () => {
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const { currentUser, isLoggedIn } = useAuth();
   const { totalPriceWithTax, products } = location.state || {};
- 
+  
 
   useEffect(() => {
     const fetchAddress = async () => {
@@ -105,13 +106,7 @@ const path = "/checkout"
     <div className="checkout-main-container">
       <div className="check-1">
         {!isLoggedIn ? (
-          <>
-           <Link to={"/login"}><div>
-               <p>Please login</p>
-           </div>
-           </Link>
-           <div><p></p></div>
-           </>
+           <AddAddressPage/>
         ) : (
           <>
            
@@ -261,7 +256,7 @@ const path = "/checkout"
           Place your order
         </button>
         <p>
-          By placing your order, you agree to zorawear's privacy notice and
+          By placing your order, you agree to gowwala's privacy notice and
           conditions of use.
         </p>
       </div>

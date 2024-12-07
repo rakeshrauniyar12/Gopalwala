@@ -62,7 +62,7 @@
     padding: 10px;
     border-radius: 10px;
     border: none;
-    background-color: green;
+    background-color: #b44700;
     margin-top: 20px;
     color: #ffff;
     font-weight: 600;
@@ -85,7 +85,7 @@
    }
 
    .login-forgot{
-    color: #3d8e41;
+    color: #b44700;
     margin-top: 20px;
    }
 

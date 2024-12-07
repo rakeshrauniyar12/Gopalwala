@@ -18,7 +18,7 @@
 }
 
 .option-div{
-    border: 1.5px solid #3d8e41;
+    border: 1.5px solid #b44700;
     border-radius: 28px;
     display: flex;
 }
@@ -27,7 +27,7 @@
     background-color: #f5f5db;
 }
 .option-div-1{
-    border-right: 1.5px solid #3d8e41;
+    border-right: 1.5px solid #b44700;
 }
 .option-div-input{
     height: 57%;
@@ -49,7 +49,7 @@
     color: rgba(128, 128, 128, 1);
 }
 .io-search{
-    background-color: #3d8e41;
+    background-color: #b44700;
     border-radius: 50%;
     padding: 10px ;
     font-size: 24px;
@@ -82,7 +82,7 @@
 }
 .cart-icon-div{
     border-radius: 50%;
-    background-color: #dbeac5;
+    background-color: #ffff;
     padding: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -104,14 +104,14 @@
     top: -11%;
     color: #ffff;
     font-size: 10px;
-    background-color: #3d8e41;
+    background-color: #b44700;
     left: 61%;
     right: 12%;
 }
 
 .navbar-end{
     width: 100%;
-    background-color: #3d8e41;
+    background-color: #4a9dd1;
 }
 .show-categories144{
 position: absolute;

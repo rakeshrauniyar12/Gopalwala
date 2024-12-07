@@ -48,9 +48,9 @@ const Orders = () => {
   return (
     <div style={{marginBottom:"60px"}}>
     <div className="option-selector">
-      <button style={{borderBottom: selectedOption==="order"?"2px solid #3d8e41":""}} onClick={() => handleOptionChange("order")}>Order</button>
-      <button style={{borderBottom: selectedOption==="cancel"?"2px solid #3d8e41":""}} onClick={() => handleOptionChange("cancel")}>Cancel</button>
-      <button style={{borderBottom: selectedOption==="return"?"2px solid #3d8e41":""}} onClick={() => handleOptionChange("return")}>Return</button>
+      <button style={{borderBottom: selectedOption==="order"?"2px solid #b44700":""}} onClick={() => handleOptionChange("order")}>Order</button>
+      <button style={{borderBottom: selectedOption==="cancel"?"2px solid #b44700":""}} onClick={() => handleOptionChange("cancel")}>Cancel</button>
+      <button style={{borderBottom: selectedOption==="return"?"2px solid #b44700":""}} onClick={() => handleOptionChange("return")}>Return</button>
     </div>
     {renderComponent()}
     </div>

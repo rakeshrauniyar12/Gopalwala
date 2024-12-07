@@ -185,7 +185,7 @@ const Subscription = () => {
                   <div className="cart-product-image">
                     <img src={product.productImage} alt={product.productName} />
                   </div>
-                  <p style={{ color: "#3d8e41" }}>{product.productName}</p>
+                  <p style={{ color: "#b44700" }}>{product.productName}</p>
                 </div>
                 <div>
                   <p>{product.productUnit}</p>
@@ -432,7 +432,7 @@ const SubscriptionProductPage = ()=>{
     <div className="subs-product-page-main">
       <div>
         <p style={{color:"Red",fontSize:"18px",fontWeight:"600"}}>You have not subscribed any product.</p>
-        <Link to={"/"}><button className="sub-btn">Click here to subscribe product</button></Link>
+        <Link to={"/.product-append"}><button className="sub-btn">Click here to subscribe product</button></Link>
       </div>
     </div>
   )

@@ -6,7 +6,7 @@
   padding-top: 60px;
 }
 .checkout-h1 {
-  color: #3d8e41;
+  color: #b44700;
   font-size: 30px;
   font-weight: 800;
   margin-bottom: 10px;
@@ -92,7 +92,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #3d8e41;
+  background-color: #b44700;
   padding: 0px 15px;
   color: #ffff;
   margin-top: 30px;
@@ -115,7 +115,7 @@
 }
 
 .society-dropdown > p:hover {
-  background-color: #3d8e41;
+  background-color: #b44700;
   color: #ffff;
 }
 
@@ -165,7 +165,7 @@
   width: 100%;
   font-size: 15px;
   font-family: "Montserrat", sans-serif;
-  background-color: #3d8e41;
+  background-color: #b44700;
   color: white;
   font-weight: lighter;
   border-radius: 10px;

@@ -31,7 +31,7 @@
   display: flex;
   gap: 10px;
   text-decoration: none;
-  color: black;
+  color: #b44700;
 }
 .header-1-content {
   display: flex;
@@ -56,29 +56,29 @@
   column-gap: 10px;
   justify-content: center;
   align-items: center;
-  color: #3d8e41;
+  color: #b44700;
   font-size: 13px;
-  border: 1px solid #3d8e41;
+  border: 1px solid #b44700;
   cursor: pointer;
 }
 .header-2-content-2 {
   height: 22px;
-  border: 1px solid #3d8e41;
+  border: 1px solid #b44700;
   border-radius: 20px;
   padding: 5px 20px;
   display: flex;
   column-gap: 10px;
   font-size: 13px;
-  color: #ffff;
+  color: #b44700;
   justify-content: center;
   align-items: center;
-  background-color: #3d8e41;
+  /* background-color: #b4470; */
   cursor: pointer;
 }
 
 .header-register {
   text-decoration: none;
-  color: #3d8e41;
+  color: #b44700;
 }
 .header-register1 {
   text-decoration: none;
