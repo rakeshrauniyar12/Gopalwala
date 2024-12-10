@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const apiUrl= "https://gopalbackend.onrender.com/api";
-const apiUrl= "http://localhost:8080/api";
+const apiUrl= "https://gopalbackend.onrender.com/api";
+// const apiUrl= "http://localhost:8080/api";
 
 const registerUser = async (email,password,societyName)=>{
   try {
