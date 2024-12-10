@@ -88,7 +88,25 @@ const getAddress = async (userId) => {
     throw error; // Rethrow the error for handling in calling code
   }
 };
-
+const saveSubscriptionProduct = async (userId, subscriptionData) => {
+  try {
+    const token = localStorage.getItem("token"); // Retrieve token from localStorage
+    const response = await axios.post(
+      `${apiUrl}/auth/saveSubscriptionProduct`,
+      { userId, subscriptionData },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // Include token for authorization
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data; // Return the saved subscription product or success message
+  } catch (error) {
+    console.error("Error saving subscription product:", error.response?.data || error.message);
+    throw error; // Rethrow the error for handling in calling code
+  }
+};
 const getAddressById = async (addressId) => {
   try {
     const response = await axios.get(`${apiUrl}/auth/getAddressById/${addressId}`);
@@ -199,6 +217,32 @@ const fetchOrders = async (userId) => {
     console.error("Error fetching orders:", error.response?.data || error.message);
   }
 };
+const fetchOrdersByUserAndOrderId = async (userId, orderId) => {
+  const url = `${apiUrl}/auth/getOrderByUserAndOrderId/${userId}/${orderId}`;
+  console.log("Attempting API call to:", url);
+
+  try {
+    const response = await axios.get(url);
+    console.log("API Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("API Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+
+const fetchOrdersByUserOrderAndProductId = async (userId,orderId,productId) => {
+  try {
+    const response = await axios.get(`${apiUrl}/auth/getOrderByUserOrderAndProductId/${userId}/${orderId}/${productId}`);
+    console.log("User Orders:", response.data);
+    return response.data; // Return orders to use in your frontend
+  } catch (error) {
+    console.error("Error fetching orders:", error.response?.data || error.message);
+  }
+};
+
 const updateAddress = async (id, updatedData) => {
   try {
     const token = localStorage.getItem("token"); // Get the token from localStorage
@@ -218,6 +262,15 @@ const updateAddress = async (id, updatedData) => {
     throw error; // Rethrow the error for handling in the calling code
   }
 };
+const getSubscriptionProducts = async (userId) => {
+  try {
+    const token = localStorage.getItem("token"); // Fetch token from localStorage or chosen storage
+    const response = await axios.get(`${apiUrl}/auth/getSubscriptionProductByUserId/${userId}`);
+    return response.data; // Return the fetched subscription products
+  } catch (error) {
+    console.error("Error fetching subscription products:", error.response?.data || error.message);
+    throw error; // Rethrow error for further handling in calling code
+  }
+};
 
-
-export  {getProduct,getUser,addToCart,saveOrder,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById,getAddressById,updateAddress,fetchOrders};
+export  {getProduct,getUser,addToCart,saveOrder,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById,getAddressById,updateAddress,saveSubscriptionProduct,fetchOrders,fetchOrdersByUserAndOrderId,fetchOrdersByUserOrderAndProductId};

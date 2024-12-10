@@ -82,7 +82,7 @@ const Home = () => {
           </div>
         </div>
 
-        <div className="choose-categories-1">
+        {/* <div className="choose-categories-1">
           <div className="choose-content">
             <div className="choose-heading">
               <h3>Choose your Categories</h3>
@@ -115,7 +115,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="product-categories-1">
           <div className="choose-content">
@@ -279,7 +279,7 @@ const Home = () => {
         <div className="product-categories-1">
           <div className="choose-content">
             <div className="choose-heading">
-              <h3>Only Natural Goods</h3>
+              <h3>Organic foods without adulteration</h3>
               <h2>Natural and Fresh Goods</h2>
             </div>
             <div className="product-button">

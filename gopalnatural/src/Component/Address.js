@@ -79,7 +79,7 @@ const AddressContent = () => {
           ) : (
             addresses.map((address) => (
               <div key={address._id} className="address-first-div">
-                <p>{`${address.firstName}, ${address.lastName}, ${address.phoneNumber}, ${currentUser.data.data.societyName}, ${address.city}, ${address.zipCode}, ${address.state}`}</p>
+                <p>{` ${address.flatNumber}, ${address.towerNumber},${currentUser.data.data.societyName},${address.firstName}, ${address.lastName}, ${address.phoneNumber} `}</p>
                 <div style={{display:"flex",justifyContent:"space-between"}}>
                 <button
                   onClick={() => handleRemoveAddress(address._id)}
@@ -110,11 +110,8 @@ const AddAddressPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [city, setCity] = useState("");
-  const [fullAddress, setFullAddress] = useState("");
+  const [flatNumber, setFlatNumber] = useState("");
+  const [towerNumber, setTowerNumber] = useState("");
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
    const [addresses,setAddresses] = useState([]);
@@ -128,12 +125,8 @@ const AddAddressPage = () => {
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!phoneRegex.test(phoneNumber))
       newErrors.phoneNumber = "Please enter a valid 10-digit phone number.";
-    if (!country.trim()) newErrors.country = "Please enter your country.";
-    if (!state.trim()) newErrors.state = "Please enter your state.";
-    if (!zipCode.trim()) newErrors.zipCode = "Please enter your zip code.";
-    if (!city.trim()) newErrors.city = "Please enter your city.";
-    if (!fullAddress.trim())
-      newErrors.fullAddress = "Please enter your full address.";
+    if (!flatNumber.trim()) newErrors.flatNumber = "Please enter flat number.";
+    if (!towerNumber.trim()) newErrors.towerNumber = "Please enter tower number.";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -169,11 +162,8 @@ const AddAddressPage = () => {
       firstName,
       lastName,
       phoneNumber,
-      country,
-      state,
-      zipCode,
-      city,
-      fullAddress,
+      flatNumber,
+      towerNumber,
     };
 
     try {
@@ -181,11 +171,8 @@ const AddAddressPage = () => {
       setFirstName("");
       setLastName("");
       setPhoneNumber("");
-      setCountry("");
-      setState("");
-      setZipCode("");
-      setCity("");
-      setFullAddress("");
+      setFlatNumber("");
+      setTowerNumber("");
 
       toast.success("Address added successfully!", { autoClose: 1500 });
       navigate(path,{state:{totalPriceWithTax,products}})
@@ -223,22 +210,6 @@ const AddAddressPage = () => {
           </div>
           <div>
             <input
-              placeholder="Enter Email"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            {errors.lastName && <p style={{ color: "red" }}>{errors.lastName}</p>}
-          </div>
-          <div>
-            <input
-              placeholder="Enter Password"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            {errors.lastName && <p style={{ color: "red" }}>{errors.lastName}</p>}
-          </div>
-          <div>
-            <input
               placeholder="Enter Phone No"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
@@ -248,35 +219,19 @@ const AddAddressPage = () => {
           <div>
             <input
               placeholder="Enter Falt No,"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
+              value={flatNumber}
+              onChange={(e) => setFlatNumber(e.target.value)}
             />
-            {errors.country && <p style={{ color: "red" }}>{errors.country}</p>}
+            {errors.flatNumber && <p style={{ color: "red" }}>{errors.flatNumber}</p>}
           </div>
           <div>
             <input
               placeholder="Enter Tower No."
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              value={towerNumber}
+              onChange={(e) => setTowerNumber(e.target.value)}
             />
-            {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
+            {errors.towerNumber && <p style={{ color: "red" }}>{errors.towerNumber}</p>}
           </div>
-          {/* <div>
-            <input
-              placeholder="Enter Zip Code"
-              value={zipCode}
-              onChange={(e) => setZipCode(e.target.value)}
-            />
-            {errors.zipCode && <p style={{ color: "red" }}>{errors.zipCode}</p>}
-          </div>
-          <div>
-            <input
-              placeholder="Enter City"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-            {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
-          </div> */}
         </div>
         {/* <div className="checkout-area">
           <textarea
@@ -305,11 +260,8 @@ const UpdateAddressPage = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState("");
-  const [city, setCity] = useState("");
-  const [fullAddress, setFullAddress] = useState("");
+  const [flatNumber, setFlatNumber] = useState("");
+  const [towerNumber, setTowerNumber] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
@@ -324,11 +276,8 @@ const UpdateAddressPage = () => {
           setFirstName(addressData.firstName);
           setLastName(addressData.lastName);
           setPhoneNumber(addressData.phoneNumber);
-          setCountry(addressData.country);
-          setState(addressData.state);
-          setZipCode(addressData.zipCode);
-          setCity(addressData.city);
-          setFullAddress(addressData.fullAddress);
+          setFlatNumber(addressData.flatNumber)
+          setTowerNumber(addressData.towerNumber)
         }
       } catch (error) {
         console.error("Error fetching address:", error);
@@ -349,12 +298,8 @@ const UpdateAddressPage = () => {
     const phoneRegex = /^[6-9]\d{9}$/;
     if (!phoneRegex.test(phoneNumber))
       newErrors.phoneNumber = "Please enter a valid 10-digit phone number.";
-    if (!country.trim()) newErrors.country = "Please enter your country.";
-    if (!state.trim()) newErrors.state = "Please enter your state.";
-    if (!zipCode.trim()) newErrors.zipCode = "Please enter your zip code.";
-    if (!city.trim()) newErrors.city = "Please enter your city.";
-    if (!fullAddress.trim())
-      newErrors.fullAddress = "Please enter your full address.";
+    if (!flatNumber.trim()) newErrors.flatNumber = "Please enter your flat number";
+    if (!towerNumber.trim()) newErrors.towerNumber = "Please enter your tower number";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -368,11 +313,8 @@ const UpdateAddressPage = () => {
       firstName,
       lastName,
       phoneNumber,
-      country,
-      state,
-      zipCode,
-      city,
-      fullAddress,
+      flatNumber,
+      towerNumber,
     };
   
     try {
@@ -418,47 +360,32 @@ const UpdateAddressPage = () => {
             />
             {errors.phoneNumber && <p style={{ color: "red" }}>{errors.phoneNumber}</p>}
           </div>
+        
           <div>
             <input
-              placeholder="Enter Country"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
+              placeholder="Enter Flat No."
+              value={flatNumber}
+              onChange={(e) => setFlatNumber(e.target.value)}
             />
-            {errors.country && <p style={{ color: "red" }}>{errors.country}</p>}
+            {errors.flatNumber && <p style={{ color: "red" }}>{errors.flatNumber}</p>}
           </div>
           <div>
             <input
-              placeholder="Enter State"
-              value={state}
-              onChange={(e) => setState(e.target.value)}
+              placeholder="Enter Tower No."
+              value={towerNumber}
+              onChange={(e) => setTowerNumber(e.target.value)}
             />
-            {errors.state && <p style={{ color: "red" }}>{errors.state}</p>}
-          </div>
-          <div>
-            <input
-              placeholder="Enter Zip Code"
-              value={zipCode}
-              onChange={(e) => setZipCode(e.target.value)}
-            />
-            {errors.zipCode && <p style={{ color: "red" }}>{errors.zipCode}</p>}
-          </div>
-          <div>
-            <input
-              placeholder="Enter City"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-            {errors.city && <p style={{ color: "red" }}>{errors.city}</p>}
+            {errors.towerNumber && <p style={{ color: "red" }}>{errors.towerNumber}</p>}
           </div>
         </div>
-        <div className="checkout-area">
+        {/* <div className="checkout-area">
           <textarea
             placeholder="Enter Address"
             value={fullAddress}
             onChange={(e) => setFullAddress(e.target.value)}
           />
           {errors.fullAddress && <p style={{ color: "red" }}>{errors.fullAddress}</p>}
-        </div>
+        </div> */}
       </div>
       <div style={{ marginTop: "20px" }}>
         <button onClick={handleUpdateAddress} disabled={loading} className="add-addres">

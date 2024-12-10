@@ -17,7 +17,6 @@ export const AuthProvider = ({ children }) => {
         setIsLoggedIn(true);
         try {
             const user = await getUserById(userId);
-            console.log("Auth Provider",user);
             if (user) setCurrentUser(user);
         } catch (error) {
             console.error("Failed to fetch user details:", error);

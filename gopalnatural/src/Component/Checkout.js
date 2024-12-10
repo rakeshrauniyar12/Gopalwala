@@ -8,20 +8,28 @@ import paytm from "../Assets/Checkout/paytm.png";
 import phone_pe from "../Assets/Checkout/phone_pe.png";
 import visa from "../Assets/Checkout/visa.png";
 import { useAuth } from "./AuthProvider";
-import { getAddress,saveOrder,removeAddress, getAddressById } from "../backend";
+import {
+  getAddress,
+  saveOrder,
+  removeAddress,
+  getAddressById,
+  saveSubscriptionProduct,
+} from "../backend";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AddAddressPage } from "./Address";
+import CheckoutLoginPage from "./CheckoutLoginPage";
 const Checkout = () => {
+  const [refreshKey, setRefreshKey] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const { currentUser, isLoggedIn } = useAuth();
-  const { totalPriceWithTax, products } = location.state || {};
-  
-
+  const { totalPriceWithTax, products, finalObject, paths } =
+    location.state || {};
+  console.log(paths);
   useEffect(() => {
     const fetchAddress = async () => {
       const fetchAddress = await getAddress(currentUser.data.data._id);
@@ -32,65 +40,107 @@ const Checkout = () => {
     if (currentUser) {
       fetchAddress();
     }
-  }, [currentUser]);
+  }, [currentUser, refreshKey]);
   const handleAddressChange = (addressId) => {
     setSelectedAddress(addressId);
   };
-const path = "/checkout"
+  const path = "/checkout";
   const handlePaymentChange = (paymentMethod) => {
     setSelectedPaymentMethod(paymentMethod);
   };
- 
+
   const handlePlaceOrder = async () => {
-    if(!isLoggedIn){
-      toast.warn("Please login!")
+    if (!isLoggedIn) {
+      toast.warn("please fill shipping info..");
       return;
     }
-    if(!selectedAddress){
-      toast.warn("Please select the address!")
+    if (!selectedAddress) {
+      toast.warn("Please select the address!");
       return;
     }
-    if(!selectedPaymentMethod){
-      toast.warn("Please select the payment method!")
+    if (!selectedPaymentMethod) {
+      toast.warn("Please select the payment method!");
       return;
     }
-     const sendAddressToPlaced = await getAddressById(selectedAddress);
-      const addressString = `${sendAddressToPlaced.firstName}, ${sendAddressToPlaced.lastName}, ${sendAddressToPlaced.phoneNumber}, ${currentUser.data.data.societyName}, ${sendAddressToPlaced.city}, ${sendAddressToPlaced.zipCode}, ${sendAddressToPlaced.state}`
+    const userId = currentUser.data.data._id;
+    let subscriptionId = null;
+    const sendAddressToPlaced = await getAddressById(selectedAddress);
+    const addressString = `${sendAddressToPlaced.firstName}, ${sendAddressToPlaced.lastName}, ${sendAddressToPlaced.phoneNumber}, ${currentUser.data.data.societyName}`;
+    if (paths === "/subscription/:id") {
+      const subscriptionResponse = await saveSubscriptionProduct(
+        userId,
+        finalObject.subscriptionData
+      );
+      console.log(subscriptionResponse);
+      subscriptionId = subscriptionResponse.subscriptionProduct._id;
+       const extractedProducts = [
+           {productId:finalObject.subscriptionData.productId,
+           productImage:finalObject.subscriptionData.productImage,
+           productName:finalObject.subscriptionData.productName,
+           productPrice:finalObject.subscriptionData.productPrice,
+           productQuantity:1
+           }
+       ]
+      const totalPrice = totalPriceWithTax;
+      const paymentMethod = selectedPaymentMethod;
+      const addressId = selectedAddress;
+      console.log(subscriptionId);
+     
+      // productArray.push(exr)
+      const orderData = {
+        userId,
+        addressId,
+        paymentMethod,
+        totalPrice,
+        subscriptionId,
+        extractedProducts,
+      };
+      try {
+        const res = await saveOrder(orderData);
+        console.log("Inside Checkout Order Details", res);
+        if (res) {
+          toast.success("order successfull");
+          navigate("/orderplaced", { state: { addressString } });
+        }
+      } catch (error) {
+        throw error;
+      }
+    }else{
     if (selectedAddress && selectedPaymentMethod) {
       const extractedProducts = products.map((product) => ({
         productId: product._id,
-        productImage:product.productImage,
-        productName:product.productName,
-        productPrice:product.productPrice,
+        productImage: product.productImage,
+        productName: product.productName,
+        productPrice: product.productPrice,
         productQuantity: product.productQuantity,
       }));
-      const totalPrice=totalPriceWithTax;
-      const paymentMethod=selectedPaymentMethod;
-      const addressId= selectedAddress;
-      const userId =  currentUser.data.data._id;
-     const orderData= {
-       userId,    
-       addressId, 
-        paymentMethod, 
-        totalPrice,         
-        extractedProducts
-      }
-   try {
-        const res= await saveOrder(orderData);
-        console.log("Inside Checkout Order Details",res);
-        if(res){
-          toast.success("order successfull")
-          navigate("/orderplaced",{state:{addressString}});
+      const totalPrice = totalPriceWithTax;
+      const paymentMethod = selectedPaymentMethod;
+      const addressId = selectedAddress;
+      // const userId = currentUser.data.data._id;
+      const orderData = {
+        userId,
+        addressId,
+        paymentMethod,
+        totalPrice,
+        subscriptionId,
+        extractedProducts,
+      };
+      try {
+        const res = await saveOrder(orderData);
+        console.log("Inside Checkout Order Details", res);
+        if (res) {
+          toast.success("order successfull");
+          navigate("/orderplaced", { state: { addressString } });
         }
-   } catch (error) {
-      throw error;
-   }
-
-        
-    } 
+      } catch (error) {
+        throw error;
+      }
+    }
+    }
   };
   const handleRemoveAddress = async (addressId) => {
-    console.log("RemoveAddInsideCheckout",addressId)
+    console.log("RemoveAddInsideCheckout", addressId);
     try {
       const updatedAddresses = await removeAddress(
         currentUser.data.data._id,
@@ -106,37 +156,64 @@ const path = "/checkout"
     <div className="checkout-main-container">
       <div className="check-1">
         {!isLoggedIn ? (
-           <AddAddressPage/>
+          <CheckoutLoginPage
+            onRefresh={() => {
+              setRefreshKey(refreshKey + 1);
+              console.log("Trigger Refreshh!!");
+            }}
+          />
         ) : (
           <>
-           
             <div className="checkoutShippingAddressDiv">
               <h2 className="select-address-h1">Select a delivery address</h2>
-              {addresses?addresses.length===0?"No Address found":"":""}
+              {addresses
+                ? addresses.length === 0
+                  ? "No Address found"
+                  : ""
+                : ""}
               {addresses.map((address, index) => (
                 <>
-                <div key={index} className="shippingaddress">
-                  <input
-                    type="radio"
-                    name="address"
-                    value={address._id}
-                    checked={selectedAddress === address._id}
-                    onChange={() => handleAddressChange(address._id)}
-                  />
-                  <p>{`${address.firstName}, ${address.lastName}, ${address.phoneNumber}, ${address.city}, ${address.zipCode}, ${address.state}`}</p>
-                </div>
-                <div>
-                  <button onClick={()=>{
-                      navigate(`/address/updateaddress/${address._id}`,{ state:  {path,totalPriceWithTax,products}  })
-                  }}>Edit</button>
-                  <button onClick={()=>{handleRemoveAddress(address._id)}}>Remove</button>
-                </div>
+                  <div key={index} className="shippingaddress">
+                    <input
+                      type="radio"
+                      name="address"
+                      value={address._id}
+                      checked={selectedAddress === address._id}
+                      onChange={() => handleAddressChange(address._id)}
+                    />
+                    <p>{` ${address.flatNumber}, ${address.towerNumber},${currentUser.data.data.societyName},${address.firstName}, ${address.lastName}, ${address.phoneNumber} `}</p>{" "}
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => {
+                        navigate(`/address/updateaddress/${address._id}`, {
+                          state: { path, totalPriceWithTax, products },
+                        });
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleRemoveAddress(address._id);
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </>
               ))}
               <div className="add-sec-third">
-                  <button className="iAdd-b1" onClick={()=>{
-                       navigate("/address/addaddress",{ state:  {path,totalPriceWithTax,products}  })
-                  }}>Add new address</button>
+                <button
+                  className="iAdd-b1"
+                  onClick={() => {
+                    navigate("/address/checkoutloginpage", {
+                      state: { path, totalPriceWithTax, products },
+                    });
+                  }}
+                >
+                  Add new address
+                </button>
               </div>
             </div>
           </>
@@ -250,11 +327,7 @@ const path = "/checkout"
           <h2>Order Total</h2>
           <h2>₹{totalPriceWithTax}</h2>
         </div>
-        <button
-          onClick={handlePlaceOrder}
-        >
-          Place your order
-        </button>
+        <button onClick={handlePlaceOrder}>Place your order</button>
         <p>
           By placing your order, you agree to gowwala's privacy notice and
           conditions of use.

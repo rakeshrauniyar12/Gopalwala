@@ -50,7 +50,7 @@
       margin-bottom: 40px;
 }
 .add-addres{
-    width: 90%;
+    width: 60%;
     margin: 20px 0px;
     padding: 10px;
     border-radius: 5px;
@@ -99,6 +99,9 @@
         column-gap: 15px;
           margin-top: 20px;
     }
+    .add-addres {
+        width: 90%;
+      }
     .address-main{
         width: 80%;
         margin: auto;

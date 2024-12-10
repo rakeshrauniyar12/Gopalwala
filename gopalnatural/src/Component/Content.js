@@ -8,9 +8,11 @@ import Checkout from "./Checkout";
 import {Subscription,SubscriptionProductPage} from "./Subscription";
 import Account from "./Account";
 import  { AddAddressPage, AddressContent, UpdateAddressPage } from "./Address";
-import { Orders } from "./Orders";
+import { Orders, ShowOrderDetails } from "./Orders";
+import { OrderDetails } from "./OrderDetails";
 import OrderPlaced from "./OrderPlaced";
 import Profile from "./Profile";
+import CheckoutLoginPage from "./CheckoutLoginPage";
 const Content = () => {
  
   return (
@@ -26,8 +28,11 @@ const Content = () => {
         <Route path="/account" element={<Account />} />
         <Route path="/address" element={<AddressContent />} />
         <Route path="/address/addaddress" element={<AddAddressPage />} />
+        <Route path="/address/checkoutloginpage" element={<CheckoutLoginPage />} />
         <Route path="/address/updateaddress/:id" element={<UpdateAddressPage />} />
         <Route path="/account/orders" element={<Orders />} />
+        <Route path="/orders/orderdetails/:userId/:orderId" element={<OrderDetails />} />
+        <Route path="/orders/showorderdetails/:orderId/:productId" element={<ShowOrderDetails />} />
         <Route path="/orderplaced" element={<OrderPlaced />} />
         <Route path="/account/profile" element={<Profile />} />
       </Routes>
