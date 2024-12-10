@@ -15,7 +15,7 @@ import axios from "axios";
 import { getAllCartProduct } from "../backend";
 import { useCart } from "./CartContext";
 import { useAuth } from "./AuthProvider";
-
+import logo from "../Assets/Navbar/logo.png"
 const Navbar = () => {
   const [showCategories, setShowCategories] = useState(false);
   const [showCategories1, setShowCategories1] = useState(false);
@@ -68,7 +68,9 @@ const Navbar = () => {
       {!isMobile ? (
         <>
           <div className="navbar-main">
-            <div className="logo-div">Logo</div>
+            <div className="logo-div">
+              <img src={logo}/>
+            </div>
             <div className="option-div">
               <div className="option-div-1">
                 <input placeholder="Search here" className="option-div-input" />
@@ -147,8 +149,11 @@ const Navbar = () => {
       ) : (
         <>
           <div className="navbar-main">
+         
             <div className="navbar-mobile">
-              <div className="logo-div">Logo</div>
+            <div className="logo-div">
+              <img src={logo}/>
+            </div>
               <div className="wish-cart-div">
                 <div className="wish-cart-1">
                   <div style={{ position: "relative" }}>

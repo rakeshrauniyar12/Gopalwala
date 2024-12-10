@@ -80,6 +80,14 @@
 .link-nav-btn{
     text-decoration: none;
 }
+.logo-div{
+    width: 30%;
+    height: 80px;
+}
+.logo-div>img{
+    width: 100%;
+    height: 100%;
+}
 .cart-icon-div{
     border-radius: 50%;
     background-color: #ffff;
@@ -285,6 +293,11 @@ z-index: 9999;
     .navbar-end-content {
     justify-content: space-between;
     }
+    .logo-div {
+        width: 60%;
+        height: 80px;
+    }
+  
     .option-div-2 {
         border-left: 1.5px solid #3d8e41;
         width: 50%;
@@ -295,7 +308,8 @@ z-index: 9999;
     }
     .wish-cart-div{
         padding-right: 20px;
-        width: 25%;
+        width: 30%;
+        gap: 10px;
     }
     .wish-cart-1 {
         flex-direction: column;
