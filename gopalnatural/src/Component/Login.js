@@ -27,7 +27,7 @@ const Login = () => {
   const googleAuth = async () => {
     localStorage.setItem("signInMethod","google")
     window.open(
-      `https://gopalbackend.onrender.com/auth/google/callback`,
+      "https://gopalbackend.onrender.com/auth/google/callback",
       "_self"
     );
   };

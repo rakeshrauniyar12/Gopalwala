@@ -40,7 +40,7 @@ const Home = () => {
         let getProducts = await getProduct();
         if(signInMethod==="google"){
           let googleUser = await getUser();
-          console.log(googleUser)
+          console.log("Home Component",googleUser)
            login(googleUser.data.token,googleUser.data.user._id);
         }
         setProducts(getProducts);

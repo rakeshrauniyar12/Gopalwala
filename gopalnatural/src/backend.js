@@ -54,6 +54,7 @@ const registerUserWithGoogle = async (email) => {
     const response = await axios.post(`${apiUrl}/auth/register/google`, {
       email,
     });
+    console.log("Backend Register User",response)
     return response;
   } catch (err) {
     throw err.response?.data?.message || "Registration failed";
@@ -63,7 +64,9 @@ const getUser = async () => {
   try {
     const url = `${googleUrl}/auth/login/success`;
     const { data } = await axios.get(url, { withCredentials: true });
+    console.log("Backend Get User",data)
     const userDetails = await registerUserWithGoogle(data.user.emails[0].value);
+    console.log("Backen User",userDetails)
     return userDetails;
   } catch (err) {
     console.log(err);
