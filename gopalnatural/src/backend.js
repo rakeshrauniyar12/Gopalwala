@@ -1,55 +1,101 @@
 import axios from "axios";
-
-const apiUrl= "https://gopalbackend.onrender.com/api";
+import { useAuth } from "./Component/AuthProvider";
+const apiUrl = "https://gopalbackend.onrender.com/api";
 // const apiUrl= "http://localhost:8080/api";
-
-const registerUser = async (email,password,societyName)=>{
+// const googleUrl = "http://localhost:8080";
+const googleUrl = "https://gopalbackend.onrender.com";
+const registerUser = async (email, password, societyName) => {
   try {
-    const response = await axios.post(
-      `${apiUrl}/auth/register`,
-      { email, password, societyName }
-    );
+    const response = await axios.post(`${apiUrl}/auth/register`, {
+      email,
+      password,
+      societyName,
+    });
     return response.data.user;
   } catch (err) {
-    throw (err.response?.data?.message || "Registration failed");
-  }   
+    throw err.response?.data?.message || "Registration failed";
+  }
+};
+async function sendOtp(email) {
+  try {
+    const response = await axios.post(`${apiUrl}/auth/send-otp`, {
+      email,
+    });
+
+    console.log(response.data.message); // "OTP sent to your email"
+    return response;
+  } catch (error) {
+    console.error(
+      "Error sending OTP:",
+      error.response ? error.response.data : error.message
+    );
+    alert("Failed to send OTP. Please try again.");
+  }
 }
+async function ValidateOtp(email, otp) {
+  try {
+    const response = await axios.post(`${apiUrl}/auth/validate-otp`, {
+      email,
+      otp,
+    });
+
+    console.log(response.data.message); // "OTP sent to your email"
+    return response;
+  } catch (error) {
+    console.error(
+      "Error sending OTP:",
+      error.response ? error.response.data : error.message
+    );
+    alert("Failed to send OTP. Please try again.");
+  }
+}
+const registerUserWithGoogle = async (email) => {
+  try {
+    const response = await axios.post(`${apiUrl}/auth/register/google`, {
+      email,
+    });
+    return response;
+  } catch (err) {
+    throw err.response?.data?.message || "Registration failed";
+  }
+};
 const getUser = async () => {
   try {
-    const url = `http://localhost:8080/auth/login/success`;
+    const url = `${googleUrl}/auth/login/success`;
     const { data } = await axios.get(url, { withCredentials: true });
-      return data;
+    const userDetails = await registerUserWithGoogle(data.user.emails[0].value);
+    return userDetails;
   } catch (err) {
     console.log(err);
   }
 };
-const loginUser = async (email,password)=>{
-try{
-  const response = await axios.post(`${apiUrl}/auth/login`, {
-    email,
-    password,
-  });
-  return response;
-} catch(err){
-  throw (err.response?.data?.message || "login failed");
-}
-}
+
+const loginUser = async (email, password) => {
+  try {
+    const response = await axios.post(`${apiUrl}/auth/login`, {
+      email,
+      password,
+    });
+    return response;
+  } catch (err) {
+    throw err.response?.data?.message || "login failed";
+  }
+};
 
 const getUserById = async (userId) => {
-  console.log("Get user Id",userId);
   try {
     const token = localStorage.getItem("token"); // Replace with your token storage method
-    console.log(apiUrl)
-    console.log("Token",token)
     const res = await axios.get(`${apiUrl}/auth/getUserById/${userId}`, {
       headers: {
         Authorization: `Bearer ${token}`, // Add Bearer token if required
       },
     });
-    console.log("Backend",res);
     return res; // Return the response data
   } catch (error) {
-    console.error("Error fetching user by ID:", error.response?.data || error.message);
+    console.error(
+      "Error fetching user by ID:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow error for debugging or handling in calling code
   }
 };
@@ -69,7 +115,10 @@ const addAddress = async (userId, addressData) => {
     );
     return response.data; // Return the saved address data or success message
   } catch (error) {
-    console.error("Error adding address:", error.response?.data || error.message);
+    console.error(
+      "Error adding address:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow the error for handling in calling code
   }
 };
@@ -84,7 +133,10 @@ const getAddress = async (userId) => {
     });
     return response.data; // Return the address data
   } catch (error) {
-    console.error("Error fetching address:", error.response?.data || error.message);
+    console.error(
+      "Error fetching address:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow the error for handling in calling code
   }
 };
@@ -103,16 +155,24 @@ const saveSubscriptionProduct = async (userId, subscriptionData) => {
     );
     return response.data; // Return the saved subscription product or success message
   } catch (error) {
-    console.error("Error saving subscription product:", error.response?.data || error.message);
+    console.error(
+      "Error saving subscription product:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow the error for handling in calling code
   }
 };
 const getAddressById = async (addressId) => {
   try {
-    const response = await axios.get(`${apiUrl}/auth/getAddressById/${addressId}`);
+    const response = await axios.get(
+      `${apiUrl}/auth/getAddressById/${addressId}`
+    );
     return response.data; // Return the address details
   } catch (error) {
-    console.error("Error fetching address by ID:", error.response?.data || error.message);
+    console.error(
+      "Error fetching address by ID:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow the error for handling in the calling code
   }
 };
@@ -124,27 +184,28 @@ const removeAddress = async (userId, addressId) => {
     );
     return response.data; // Return success message or confirmation
   } catch (error) {
-    console.error("Error removing address:", error.response?.data || error.message);
+    console.error(
+      "Error removing address:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow the error for handling in calling code
   }
 };
 
-
-
-
-
-const getProduct = async ()=>{
-    const response = await axios.get(`${apiUrl}/product/getAllProduct`);
-      return response.data.products;
-}
-const getProductById = async (productId)=>{
+const getProduct = async () => {
+  const response = await axios.get(`${apiUrl}/product/getAllProduct`);
+  return response.data.products;
+};
+const getProductById = async (productId) => {
   const response = await axios.get(`${apiUrl}/product/getProduct/${productId}`);
-    return response.data.product;
-}
-const getAllCartProduct = async ()=>{
-  const cartProducts  = await axios.get(`${apiUrl}/cartProduct/getAllCartProduct`);
+  return response.data.product;
+};
+const getAllCartProduct = async () => {
+  const cartProducts = await axios.get(
+    `${apiUrl}/cartProduct/getAllCartProduct`
+  );
   return cartProducts.data.products;
-}
+};
 const addToCart = async (product) => {
   try {
     // Check if the product already exists in the cart
@@ -180,31 +241,39 @@ const addToCart = async (product) => {
   }
 };
 const updateCartProduct = async (productId, updatedData) => {
-  const res = await axios.patch(`${apiUrl}/cartProduct/updateCartProduct/${productId}`, updatedData, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const res = await axios.patch(
+    `${apiUrl}/cartProduct/updateCartProduct/${productId}`,
+    updatedData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   return res.data;
 };
-const deleteCartProduct = async (productId)=>{
-    const res= await axios.delete(`${apiUrl}/cartProduct/deleteCartProduct/${productId}`);
-   return res;
-}
-
+const deleteCartProduct = async (productId) => {
+  const res = await axios.delete(
+    `${apiUrl}/cartProduct/deleteCartProduct/${productId}`
+  );
+  return res;
+};
 
 const saveOrder = async (orderData) => {
   try {
-   // Send the order data to the backend using a POST request
+    // Send the order data to the backend using a POST request
     const response = await axios.post(
       `${apiUrl}/auth/saveOrder`, // Assuming your backend has a POST method to save orders
-      orderData,
-    )
+      orderData
+    );
 
     // Return the response (order confirmation or details)
-    return response.data; 
+    return response.data;
   } catch (error) {
-    console.error("Error placing order:", error.response?.data || error.message);
+    console.error(
+      "Error placing order:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow error for handling in calling code
   }
 };
@@ -214,7 +283,10 @@ const fetchOrders = async (userId) => {
     console.log("User Orders:", response.data.orders);
     return response.data.orders; // Return orders to use in your frontend
   } catch (error) {
-    console.error("Error fetching orders:", error.response?.data || error.message);
+    console.error(
+      "Error fetching orders:",
+      error.response?.data || error.message
+    );
   }
 };
 const fetchOrdersByUserAndOrderId = async (userId, orderId) => {
@@ -231,15 +303,22 @@ const fetchOrdersByUserAndOrderId = async (userId, orderId) => {
   }
 };
 
-
-
-const fetchOrdersByUserOrderAndProductId = async (userId,orderId,productId) => {
+const fetchOrdersByUserOrderAndProductId = async (
+  userId,
+  orderId,
+  productId
+) => {
   try {
-    const response = await axios.get(`${apiUrl}/auth/getOrderByUserOrderAndProductId/${userId}/${orderId}/${productId}`);
+    const response = await axios.get(
+      `${apiUrl}/auth/getOrderByUserOrderAndProductId/${userId}/${orderId}/${productId}`
+    );
     console.log("User Orders:", response.data);
     return response.data; // Return orders to use in your frontend
   } catch (error) {
-    console.error("Error fetching orders:", error.response?.data || error.message);
+    console.error(
+      "Error fetching orders:",
+      error.response?.data || error.message
+    );
   }
 };
 
@@ -258,19 +337,52 @@ const updateAddress = async (id, updatedData) => {
     );
     return response.data; // Return the updated address data
   } catch (error) {
-    console.error("Error updating address:", error.response?.data || error.message);
+    console.error(
+      "Error updating address:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow the error for handling in the calling code
   }
 };
 const getSubscriptionProducts = async (userId) => {
   try {
     const token = localStorage.getItem("token"); // Fetch token from localStorage or chosen storage
-    const response = await axios.get(`${apiUrl}/auth/getSubscriptionProductByUserId/${userId}`);
+    const response = await axios.get(
+      `${apiUrl}/auth/getSubscriptionProductByUserId/${userId}`
+    );
     return response.data; // Return the fetched subscription products
   } catch (error) {
-    console.error("Error fetching subscription products:", error.response?.data || error.message);
+    console.error(
+      "Error fetching subscription products:",
+      error.response?.data || error.message
+    );
     throw error; // Rethrow error for further handling in calling code
   }
 };
 
-export  {getProduct,getUser,addToCart,saveOrder,getAllCartProduct,addAddress,getAddress,removeAddress,deleteCartProduct,registerUser,loginUser,getProductById,updateCartProduct,getUserById,getAddressById,updateAddress,saveSubscriptionProduct,fetchOrders,fetchOrdersByUserAndOrderId,fetchOrdersByUserOrderAndProductId};
+export {
+  getProduct,
+  getUser,
+  getSubscriptionProducts,
+  registerUserWithGoogle,
+  addToCart,
+  saveOrder,
+  getAllCartProduct,
+  addAddress,
+  getAddress,
+  removeAddress,
+  deleteCartProduct,
+  registerUser,
+  loginUser,
+  getProductById,
+  updateCartProduct,
+  sendOtp,
+  ValidateOtp,
+  getUserById,
+  getAddressById,
+  updateAddress,
+  saveSubscriptionProduct,
+  fetchOrders,
+  fetchOrdersByUserAndOrderId,
+  fetchOrdersByUserOrderAndProductId,
+};

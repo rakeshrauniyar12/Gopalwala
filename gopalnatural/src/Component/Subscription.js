@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../Style/Subscription.css";
-import { getProductById } from "../backend";
+import { getProductById,getSubscriptionProducts } from "../backend";
 import ClipLoader from "react-spinners/ClipLoader";
 import { IoMdClose } from "react-icons/io";
 
@@ -21,8 +21,6 @@ const Subscription = () => {
   const [frequency, setFrequency] = useState("custom"); // State to store frequency
   const [selectedDates, setSelectedDates] = useState([]);
   const [isRangeMode, setIsRangeMode] = useState(false);
-  console.log(selectedDates);
-  // Days of the week
   const days = [
     "Sunday",
     "Monday",
@@ -78,39 +76,7 @@ let finalObject = {
     return dateArray;
   };
 
-  // Function to handle date selection
-  // const handleDateChange = (dates) => {
-  //   let newDates = [];
-
-  //   if (isRangeMode && dates.length === 2) {
-  //     const start = dates[0];
-  //     const end = dates[1];
-
-  //     // Generate all dates in the selected range
-  //     newDates = generateDatesInRange(start, end).map((date) => ({
-  //       date,
-  //       quantity: 1, // Initialize with quantity 1
-  //     }));
-  //   } else if (!isRangeMode) {
-  //     newDates = dates.map((date) => ({
-  //       date: date.toString(),
-  //       quantity: 1, // Initialize with quantity 1
-  //       price:product.productPrice*quantity
-  //     }));
-  //   }
-
-  //   setSelectedDates((prevDates) => {
-  //     // Avoid duplicates
-  //     const uniqueDates = [
-  //       ...prevDates,
-  //       ...newDates.filter(
-  //         (newDate) =>
-  //           !prevDates.some((oldDate) => oldDate.date === newDate.date)
-  //       ),
-  //     ];
-  //     return uniqueDates;
-  //   });
-  // };
+  
   const handleDateChange = (dates) => {
     let newDates = [];
   
@@ -146,16 +112,7 @@ let finalObject = {
       return uniqueDates;
     });
   };
-  // Function to update quantity for a specific date
-  // const updateQuantity = (date, change) => {
-  //   setSelectedDates((prevDates) =>
-  //     prevDates.map((item) =>
-  //       item.date === date
-  //         ? { ...item, quantity: Math.max(0, item.quantity + change) }
-  //         : item
-  //     )
-  //   );
-  // };
+
   const updateQuantity = (date, change) => {
     setSelectedDates((prevDates) =>
       prevDates.map((item) =>
@@ -516,16 +473,56 @@ let finalObject = {
 };
 
 const SubscriptionProductPage = () => {
+    const {currentUser} = useAuth();
+  const [subscriptionProduct,setSubscriptionProduct] = useState([]);
+
+  useEffect(()=>{
+      const fetchSubscriptionProducts = async ()=>{
+        console.log(currentUser?.data.data._id)
+        console.log(currentUser)
+             const subProducts = await getSubscriptionProducts(currentUser?.data.data._id);
+             if(subProducts) setSubscriptionProduct(subProducts.subscriptionProducts)
+             console.log(subProducts);
+             console.log(subscriptionProduct);
+       }
+       fetchSubscriptionProducts();
+   },[currentUser])
+console.log(subscriptionProduct)
+   const totalPrice = subscriptionProduct?.productQuantity.reduce(
+    (sum, { quantity, price }) => {
+      return sum + price; // Ensure you return the updated sum
+    },
+    0 // Initial value of sum
+  );
+
   return (
     <div className="subs-product-page-main">
-      <div>
+    {  !subscriptionProduct?<div>
         <p style={{ color: "Red", fontSize: "18px", fontWeight: "600" }}>
           You have not subscribed any product.
         </p>
         <Link to={"/.product-append"}>
           <button className="sub-btn">Click here to subscribe product</button>
         </Link>
-      </div>
+      </div>:
+        <div>
+          {subscriptionProduct.map((product, index) => (
+            <div className="product">
+              <div className="product-image">
+                <img src={product.productImage} alt="Apple" />
+              </div>
+              <p className="productname-size">{product.productName}</p>
+              <p className="productname-size">
+                 {`You have subscribed this product for ${product.productQuantity.length} days.`}
+
+              </p>
+             <p>
+              {totalPrice}
+             </p>
+            </div>
+          ))}
+          </div>
+      }
     </div>
   );
 };

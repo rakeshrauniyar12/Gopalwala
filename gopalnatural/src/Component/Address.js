@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const AddressContent = () => {
-  const { currentUser } = useAuth();
+  const { currentUser} = useAuth();
   const [addresses, setAddresses] = useState([]);
   const [showAddressPage, setShowAddressPage] = useState(false);
   const [loading, setLoading] = useState(true); // Add loading state for fetching
@@ -18,7 +18,8 @@ const AddressContent = () => {
     const fetchAddress = async () => {
       try {
         setLoading(true); // Start loading
-        const fetchAddress = await getAddress(currentUser.data.data._id);
+        const fetchAddress = await getAddress(currentUser?.data.data._id);
+        console.log("Address Content",fetchAddress)
         setAddresses(fetchAddress.addresses || []);
         setShowAddressPage(fetchAddress.addresses?.length === 0);
       } catch (error) {
@@ -31,12 +32,12 @@ const AddressContent = () => {
     fetchAddress();
   }, [currentUser]);
 
- 
+
 
   const handleRemoveAddress = async (addressId) => {
     try {
       const updatedAddresses = await removeAddress(
-        currentUser.data.data._id,
+        currentUser?.data.data.user._id,
         addressId
       );
       setAddresses(updatedAddresses.addresses || []);
@@ -47,7 +48,7 @@ const AddressContent = () => {
     } catch (error) {
       toast.error("Error removing address!", { autoClose: 1500 });
     }
-  };
+  };console.log("curr",currentUser)
 
   const handleShowAddressPage = () => {
     setShowAddressPage(true);
@@ -79,7 +80,7 @@ const AddressContent = () => {
           ) : (
             addresses.map((address) => (
               <div key={address._id} className="address-first-div">
-                <p>{` ${address.flatNumber}, ${address.towerNumber},${currentUser.data.data.societyName},${address.firstName}, ${address.lastName}, ${address.phoneNumber} `}</p>
+                <p>{` ${address.flatNumber}, ${address.towerNumber},${address.firstName}, ${address.lastName}, ${address.phoneNumber} `}</p>
                 <div style={{display:"flex",justifyContent:"space-between"}}>
                 <button
                   onClick={() => handleRemoveAddress(address._id)}
@@ -131,6 +132,7 @@ const AddAddressPage = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  console.log("Address Page",currentUser)
   useEffect(() => {
     const fetchAddress = async () => {
       try {

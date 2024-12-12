@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
 const Header = () => {
   const { isLoggedIn, logout } = useAuth();
-
+console.log(isLoggedIn)
     return (
         <div className="header-container">
             <div className="header-1-section">

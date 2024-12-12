@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import "../Style/Login.css";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,14 +23,19 @@ const Login = () => {
       [name]: value,
     }));
   };
+ 
   const googleAuth = async () => {
-		window.open(
-			`http://localhost:8080/auth/google/callback`,
-			"_self"
-		);
-	};
+    localStorage.setItem("signInMethod","google")
+    window.open(
+      `https://gopalbackend.onrender.com/auth/google/callback`,
+      "_self"
+    );
+  };
+  
+  
   // Handle login process
   const handleLogin = async () => {
+    localStorage.setItem("signInMethod","manual")
     const { email, password } = formData;
 
     // Basic Validation
@@ -112,7 +117,7 @@ const Login = () => {
               <p>Sign in with Google</p>
               <FcGoogle style={{ height: "30px", width: "30px" }} />
             </div>
-            <Link to="/forgot-password" className='login-forgot'>
+            <Link to="/account/forgotpassword" className='login-forgot'>
               Forgot your Password?
             </Link>
             <p style={{ marginTop: "20px" }}>

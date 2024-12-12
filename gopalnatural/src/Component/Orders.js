@@ -3,6 +3,7 @@ import {
   fetchOrders,
   fetchOrdersByUserAndOrderId,
   fetchOrdersByUserOrderAndProductId,
+  getUser,
 } from "../backend";
 import { useAuth } from "./AuthProvider";
 import "../Style/Order.css";
@@ -89,20 +90,27 @@ const OrderContent = () => {
   const [order, setOrders] = useState([]);
   const [selectedOption, setSelectedOption] = useState("order"); // Track selected option
   const { currentUser } = useAuth();
+  
   const isMobile = window.innerWidth <= 768;
   const navigate = useNavigate();
   useEffect(() => {
-    const getOrder = async () => {
-      const orders = await fetchOrders(currentUser?.data.data._id);
-      setOrders(orders);
-      if (orders) {
-        setLoading(false);
-      } else {
-        setLoading(false);
-      }
+    const fetchOrdersForUser = async () => {
+        if (currentUser) {
+            setLoading(true);
+            try {
+                const orders = await fetchOrders(currentUser.data.data._id); // Replace with your API call
+                setOrders(orders);
+            } catch (error) {
+                console.error("Failed to fetch orders:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
     };
-    getOrder();
-  }, [currentUser]);
+
+    fetchOrdersForUser();
+}, [currentUser]);
+  console.log(currentUser)
   const goToShowOrderDetails= (orderId,productId)=>{
       navigate(`/orders/showorderdetails/${orderId}/${productId}`)
   }

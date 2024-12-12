@@ -1,0 +1,17 @@
+.term-content{
+    width: 80%;
+    margin: auto;
+    margin-top: 40px;
+}
+.term-content>div{
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+    row-gap: 20px;
+}
+.term-content>div>h1{
+    font-size: 20px;
+}
+.term-content>div>p{
+    font-size: 18px;
+}

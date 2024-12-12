@@ -17,10 +17,11 @@ import { toast } from "react-toastify";
 import { getProduct, addToCart, getUser } from "../backend.js";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useCart } from "./CartContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import {useAuth} from "./AuthProvider";
 
 const Home = () => {
+  const {currentUser,login} = useAuth();
   const [isHovered, setIsHovered] = useState(false);
   const [isHovered1, setIsHovered1] = useState(false);
   const [isHovered2, setIsHovered2] = useState(false);
@@ -30,10 +31,18 @@ const Home = () => {
   const [error, setError] = useState(null);
   const { addProduct } = useCart();
   const navigate = useNavigate();
+  const signInMethod = localStorage.getItem("signInMethod");
+ 
+  // console.log(id);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         let getProducts = await getProduct();
+        if(signInMethod==="google"){
+          let googleUser = await getUser();
+          console.log(googleUser)
+           login(googleUser.data.token,googleUser.data.user._id);
+        }
         setProducts(getProducts);
         setLoading(false);
       } catch (error) {
@@ -44,14 +53,12 @@ const Home = () => {
 
     fetchProducts();
   }, []);
+console.log(currentUser);
 
-  useEffect(()=>{
-    const fetchGoogleUserDetails= async ()=>{
-      const  getUserDetails = await getUser();
-      console.log("Login Component",getUserDetails);
-    }
-   fetchGoogleUserDetails();  
-  },[])
+
+
+
+
   if(products.length>0){
   console.log("All Product", products[0].productPrice);
   }

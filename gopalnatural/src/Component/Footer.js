@@ -19,8 +19,8 @@ const Footer = ()=>{
                 <div className="footer-page-link">
                     <div>
                         <Link className="footer-page-link-p"><p>About Us</p></Link>
-                        <Link className="footer-page-link-p"><p>Privacy Policy</p></Link>
-                        <Link className="footer-page-link-p"><p>Terms and Conditions</p></Link>
+                        <Link to={"/privacypolicy"} className="footer-page-link-p"><p>Privacy Policy</p></Link>
+                        <Link to={"/termandcondition"} className="footer-page-link-p"><p>Terms and Conditions</p></Link>
                         <Link className="footer-page-link-p"><p>Purchasing Policy</p></Link>
                     </div>
                     <div>

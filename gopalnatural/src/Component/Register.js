@@ -20,7 +20,13 @@ const Register = () => {
   const handleRotate = () => {
     setIsRotated((prev) => !prev);
   };
-
+  const googleAuth = async () => {
+    localStorage.setItem("signInMethod","google")
+    window.open(
+      `http://localhost:8080/auth/google/callback`,
+      "_self"
+    );
+  };
   const handleShowSociety = () => {
     setShowSociety((prev) => !prev);
   };
@@ -181,7 +187,7 @@ const Register = () => {
           </button>
 
           <div className="login-footer-content">
-            <div className="login-content-google">
+            <div className="login-content-google" onClick={googleAuth}>
               <p>Sign in with Google</p>
               <FcGoogle style={{ height: "30px", width: "30px" }} />
             </div>

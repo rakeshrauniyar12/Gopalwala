@@ -13,6 +13,9 @@ import { OrderDetails } from "./OrderDetails";
 import OrderPlaced from "./OrderPlaced";
 import Profile from "./Profile";
 import CheckoutLoginPage from "./CheckoutLoginPage";
+import {ForgotPassword,ValidateOtpMethod} from "./ForgotPassword";
+import TermAndCondition from "./Terms&Condition";
+import PrivacyPolicy from "./PrivacyPolicy";
 const Content = () => {
  
   return (
@@ -35,6 +38,10 @@ const Content = () => {
         <Route path="/orders/showorderdetails/:orderId/:productId" element={<ShowOrderDetails />} />
         <Route path="/orderplaced" element={<OrderPlaced />} />
         <Route path="/account/profile" element={<Profile />} />
+        <Route path="/account/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/account/validateotp" element={<ValidateOtpMethod />} />
+        <Route path="/termandcondition" element={<TermAndCondition />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
       </Routes>
     </div>
   );
