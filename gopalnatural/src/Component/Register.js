@@ -23,7 +23,7 @@ const Register = () => {
   const googleAuth = async () => {
     localStorage.setItem("signInMethod","google")
     window.open(
-      `http://localhost:8080/auth/google/callback`,
+      `https://gopalbackend.onrender.com/auth/google/callback`,
       "_self"
     );
   };
