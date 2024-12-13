@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams,useLocation } from "react-router-dom";
 import "../Style/Subscription.css";
 import { getProductById,getSubscriptionProducts } from "../backend";
 import ClipLoader from "react-spinners/ClipLoader";
@@ -475,7 +475,7 @@ let finalObject = {
 const SubscriptionProductPage = () => {
     const {currentUser} = useAuth();
   const [subscriptionProduct,setSubscriptionProduct] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(()=>{
       const fetchSubscriptionProducts = async ()=>{
         console.log(currentUser?.data.data._id)
@@ -488,13 +488,15 @@ const SubscriptionProductPage = () => {
        fetchSubscriptionProducts();
    },[currentUser])
 console.log(subscriptionProduct)
-   const totalPrice = subscriptionProduct?.productQuantity?.reduce(
-    (sum, { quantity, price }) => {
-      return sum + price; // Ensure you return the updated sum
-    },
-    0 // Initial value of sum
-  );
+const totalPrice = subscriptionProduct.reduce((totalSum, product) => {
+  const productTotal = product.productQuantity.reduce((sum, item) => sum + item.price, 0);
+  return totalSum + productTotal;
+}, 0);
 
+const goToViewDetailsPage = (product)=>{
+  console.log("Hello")
+       navigate("/subscription/viewdetails",{state:{product}})
+}
   return (
     <div className="subs-product-page-main">
     {  !subscriptionProduct?<div>
@@ -517,9 +519,11 @@ console.log(subscriptionProduct)
 
               </p>
              <p>
-              {totalPrice}
+              {totalPrice+totalPrice*0.12}
              </p>
+             <button onClick={()=>{goToViewDetailsPage(product)}}>View Details</button>
             </div>
+
           ))}
           </div>
       }
@@ -527,6 +531,29 @@ console.log(subscriptionProduct)
   );
 };
 
+const ViewDetails = ()=>{
+    
+    const location = useLocation();
+     const {product} =  location.state||{};
+    console.log(product)
+     
+  return(
+    <div className="view-details-container">
+      {
+        product?.productQuantity.map((item)=>(
+           <div className="view-items-11">
+            <p>{`Date: ${item.date}`}</p>
+            <p>{`Day: ${item.day}`}</p>
+            <p>{`Quantity: ${item.quantity}${product.productUnit}`}</p>
+            <p>{`Price: ${Math.ceil(item.price+item.price*0.12)}`}</p>
+           </div>
+        ))
+      }
+    </div>
+  )
+
+
+}
 const styles = {
   card: {
     maxWidth: "400px",
@@ -590,4 +617,4 @@ const styles = {
     fontSize: "18px",
   },
 };
-export { Subscription, SubscriptionProductPage };
+export { Subscription,ViewDetails, SubscriptionProductPage };

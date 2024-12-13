@@ -18,7 +18,7 @@ const Orders = () => {
 
   useEffect(() => {
     const getOrder = async () => {
-      const orders = await fetchOrders(currentUser.data.data._id);
+      const orders = await fetchOrders(currentUser?.data.data._id);
       console.log("Order Page", orders);
       setOrders(orders);
     };
@@ -99,7 +99,7 @@ const OrderContent = () => {
             setLoading(true);
             try {
                 const orders = await fetchOrders(currentUser.data.data._id); // Replace with your API call
-                setOrders(orders);
+                setOrders(orders||[]);
             } catch (error) {
                 console.error("Failed to fetch orders:", error);
             } finally {
@@ -110,7 +110,7 @@ const OrderContent = () => {
 
     fetchOrdersForUser();
 }, [currentUser]);
-  console.log(currentUser)
+ 
   const goToShowOrderDetails= (orderId,productId)=>{
       navigate(`/orders/showorderdetails/${orderId}/${productId}`)
   }
@@ -122,14 +122,14 @@ const OrderContent = () => {
     const day = String(date.getDate()).padStart(2, "0");
     return `${day}-${month}-${year}`;
   };
-
+console.log((Array.isArray(order)).length)
   return (
     <>
       {loading ? (
         <div className="spinner-container">
           <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
         </div>
-      ) : order.length === 0 ? (
+      ) : (Array.isArray(order) && order.length === 0) ? (
         <h2
           style={{
             display: "flex",

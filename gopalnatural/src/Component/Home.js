@@ -31,18 +31,12 @@ const Home = () => {
   const [error, setError] = useState(null);
   const { addProduct } = useCart();
   const navigate = useNavigate();
-  const signInMethod = localStorage.getItem("signInMethod");
  
   // console.log(id);
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         let getProducts = await getProduct();
-        if(signInMethod==="google"){
-          let googleUser = await getUser();
-          console.log("Home Component",googleUser)
-           login(googleUser.data.token,googleUser.data.user._id);
-        }
         setProducts(getProducts);
         setLoading(false);
       } catch (error) {

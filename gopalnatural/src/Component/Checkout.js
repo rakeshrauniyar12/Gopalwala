@@ -168,7 +168,12 @@ const Checkout = () => {
               <h2 className="select-address-h1">Select a delivery address</h2>
               {addresses
                 ? addresses.length === 0
-                  ? "No Address found"
+                  ?  <CheckoutLoginPage
+                  onRefresh={() => {
+                    setRefreshKey(refreshKey + 1);
+                    console.log("Trigger Refreshh!!");
+                  }}
+                />
                   : ""
                 : ""}
               {addresses.map((address, index) => (
@@ -203,7 +208,7 @@ const Checkout = () => {
                   </div>
                 </>
               ))}
-              <div className="add-sec-third">
+              {/* <div className="add-sec-third">
                 <button
                   className="iAdd-b1"
                   onClick={() => {
@@ -214,7 +219,7 @@ const Checkout = () => {
                 >
                   Add new address
                 </button>
-              </div>
+              </div> */}
             </div>
           </>
         )}

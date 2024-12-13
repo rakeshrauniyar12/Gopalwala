@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useAuth } from "./Component/AuthProvider";
-const apiUrl = "https://gopalbackend.onrender.com/api";
-// const apiUrl= "http://localhost:8080/api";
+import { toast } from "react-toastify";
+// const apiUrl = "https://gopalbackend.onrender.com/api";
+const apiUrl= "http://localhost:8080/api";
 const googleUrl = "http://localhost:8080";
 // const googleUrl = "https://gopalbackend.onrender.com";
 const registerUser = async (email, password, societyName) => {
@@ -84,7 +85,31 @@ const loginUser = async (email, password) => {
     throw err.response?.data?.message || "login failed";
   }
 };
+const updateUserPassword = async (userId, newPassword) => {
+  try {
+    if (!newPassword) {
+      toast.warn("New password is required.");
+      return;
+    }
 
+    const response = await axios.patch(`${apiUrl}/auth/updatepassword/${userId}`, {
+      newPassword,
+    });
+
+    if (response.status === 200) {
+      return response.data.message; // "Password updated successfully."
+    }
+  } catch (error) {
+    if (error.response) {
+      // Handle errors returned by the server
+      alert(error.response.data.message || "Failed to update password.");
+    } else {
+      // Handle other errors (network issues, etc.)
+      console.error("An error occurred:", error);
+      alert("An unexpected error occurred. Please try again.");
+    }
+  }
+};
 const getUserById = async (userId) => {
   try {
     const token = localStorage.getItem("token"); // Replace with your token storage method
@@ -388,4 +413,5 @@ export {
   fetchOrders,
   fetchOrdersByUserAndOrderId,
   fetchOrdersByUserOrderAndProductId,
+  updateUserPassword
 };

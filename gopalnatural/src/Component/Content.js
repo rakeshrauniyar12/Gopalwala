@@ -5,7 +5,7 @@ import Home from "./Home";
 import Register from "./Register"
 import Cart from "./Cart";
 import Checkout from "./Checkout";
-import {Subscription,SubscriptionProductPage} from "./Subscription";
+import {Subscription,SubscriptionProductPage, ViewDetails} from "./Subscription";
 import Account from "./Account";
 import  { AddAddressPage, AddressContent, UpdateAddressPage } from "./Address";
 import { Orders, ShowOrderDetails } from "./Orders";
@@ -13,7 +13,7 @@ import { OrderDetails } from "./OrderDetails";
 import OrderPlaced from "./OrderPlaced";
 import Profile from "./Profile";
 import CheckoutLoginPage from "./CheckoutLoginPage";
-import {ForgotPassword,ValidateOtpMethod} from "./ForgotPassword";
+import {ForgotPassword,UpdateUserPassword,ValidateOtpMethod} from "./ForgotPassword";
 import TermAndCondition from "./Terms&Condition";
 import PrivacyPolicy from "./PrivacyPolicy";
 const Content = () => {
@@ -42,6 +42,8 @@ const Content = () => {
         <Route path="/account/validateotp" element={<ValidateOtpMethod />} />
         <Route path="/termandcondition" element={<TermAndCondition />} />
         <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+        <Route path="/subscription/viewdetails" element={<ViewDetails />} />
+        <Route path="/account/updatepassword" element={<UpdateUserPassword />} />
       </Routes>
     </div>
   );

@@ -60,6 +60,12 @@
     cursor: pointer;
     background-color: #dbeac5;
 }
+.check-ship-btn{
+    width: 90%;
+    margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
 .add-addres:hover{
   background-color: #3d8e41;
   color: #ffff;
@@ -100,7 +106,7 @@
           margin-top: 20px;
     }
     .add-addres {
-        width: 90%;
+        width: 98%;
       }
     .address-main{
         width: 80%;

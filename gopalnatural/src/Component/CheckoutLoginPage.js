@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
 const CheckoutLoginPage = ({ onRefresh }) => {
+  const isMobile = window.innerWidth<=768;
   const { currentUser,isLoggedIn,login } = useAuth();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -40,6 +41,7 @@ const CheckoutLoginPage = ({ onRefresh }) => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
   useEffect(() => {
     const fetchAddress = async () => {
       try {
@@ -116,14 +118,16 @@ const CheckoutLoginPage = ({ onRefresh }) => {
           } finally {
             setLoading(false);
           }  
-         } else{
+         }
+          else{
           toast.error("Facing some error!")
          }
 
      }
 
-    }else{
-    if (!validateFields()) return;
+    }
+    else{
+   // if (!validateFields()) return;
     if(addresses){
       if(addresses.length>=5){
         toast.warn("Please remove one to add this address!")
@@ -148,10 +152,8 @@ const CheckoutLoginPage = ({ onRefresh }) => {
       setPhoneNumber("");
       setFlatNumber("");
       setTowerNumber("");
-      setEmail("");
-      setPassword("");
       toast.success("Address added successfully!", { autoClose: 1500 });
-      navigate(path,{state:{totalPriceWithTax,products}})
+      onRefresh();
       // Update address list in AddressContent
     } catch (error) {
       console.error("Error saving address:", error);
@@ -161,16 +163,16 @@ const CheckoutLoginPage = ({ onRefresh }) => {
     }
   }
   };
-
+ const paths="/checkout"
   return (
     <div className="address-main" style={{width:"100%"}}>
-      <div style={{ marginTop: "30px" }}>
+     { !isLoggedIn?<div style={{ marginTop: "30px" }}>
         <h1 style={{ fontSize: "25px" }}>Shipping Information</h1>
         <div style={{display:"flex"}}>
           <p>Already have an account?</p>
           <Link to={"/login"}>Login</Link>
         </div>
-      </div>
+      </div>:""}
       <div className="address-page-content">
         <div className="checkout-input">
           <div>
@@ -189,7 +191,9 @@ const CheckoutLoginPage = ({ onRefresh }) => {
             />
             {errors.lastName && <p style={{ color: "red" }}>{errors.lastName}</p>}
           </div>
-          <div>
+         { !isLoggedIn?
+         <>
+         <div>
             <input
               placeholder="Enter Email"
               value={email}
@@ -205,6 +209,8 @@ const CheckoutLoginPage = ({ onRefresh }) => {
             />
             {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
           </div>
+          </>
+          :""}
           <div>
             <input
               placeholder="Enter Phone No"
@@ -230,7 +236,7 @@ const CheckoutLoginPage = ({ onRefresh }) => {
             {errors.towerNumber && <p style={{ color: "red" }}>{errors.towerNumber}</p>}
           </div>
           <div>
-          <div className="select-society" style={{marginTop:"0px",height:"46px",width:"95%"}}>
+          <div className="select-society" style={{marginTop:"0px",height:"46px",width:"90%"}}>
             <p>{societyName ? `${societyName}` : "Select Your Society"}</p>
             <div
               className="society-selection-box"
@@ -257,7 +263,9 @@ const CheckoutLoginPage = ({ onRefresh }) => {
          
         </div>
         {showSociety && (
-            <div className="society-dropdown" style={{width:"30%",margin:"auto"}}>
+            <div className="society-dropdown" style={{
+              width:!isMobile?"30%":"75%",
+              margin:"auto"}}>
               {[
                 "Select Your Society",
                  "OUCOLONY",
@@ -303,7 +311,7 @@ const CheckoutLoginPage = ({ onRefresh }) => {
           {errors.fullAddress && <p style={{ color: "red" }}>{errors.fullAddress}</p>}
         </div> */}
       </div>
-      <div style={{ marginTop: "20px" }}>
+      <div className="check-ship-btn">
         <button onClick={handleAddAddress} disabled={loading} className="add-addres">
           {loading ? "Saving..." : "Add Shipping Info"}
         </button>

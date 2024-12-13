@@ -68,11 +68,12 @@
   margin: auto;
   margin-top: 20px;
   background-color: #dbeac5;
-    border-radius: 20px;
-    padding: 20px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
-.select-range{
+.select-range {
   padding: 5px 15px;
   background-color: #dbeac5;
   cursor: pointer;
@@ -82,9 +83,9 @@
   font-weight: 600;
   color: #3d8e41;
 }
-.select-range:hover{
-   background-color: #3d8e41;
-   color: #ffff;
+.select-range:hover {
+  background-color: #3d8e41;
+  color: #ffff;
 }
 .quantity-incr {
   cursor: pointer;
@@ -124,14 +125,29 @@
   background-color: #3d8e41;
   color: #ffff;
 }
+.view-details-container{
+  width: 40%;
+  margin: auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+.view-items-11{
+  display: flex;
+  gap: 20px;
+}
+.view-items-11>p{
+  width: 30%;
+}
 .subs-product-page-main {
   width: 90%;
   margin: auto;
-  display: flex;
+  display: grid;
   justify-content: center;
   align-items: center;
   height: 300px;
   text-align: center;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto;
 }
 
 .option-everyday > div {
@@ -167,7 +183,7 @@
   font-size: 30px;
   margin-bottom: 20px;
 }
-.rang-btn{
+.rang-btn {
   width: 30%;
 }
 @media (max-width: 768px) {
@@ -175,12 +191,12 @@
     font-size: 17px;
     font-weight: 700;
   }
-  .rang-btn{
+  .rang-btn {
     width: 100%;
     margin-top: 20px;
   }
-  .select-range{
-     width: 100%;
+  .select-range {
+    width: 100%;
   }
   .end-start-btn {
     flex-direction: column;

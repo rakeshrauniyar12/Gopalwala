@@ -7,6 +7,7 @@ import { toast } from "react-toastify"; // Import toast for notifications
 import { getUser, loginUser,registerUserWithGoogle } from '../backend';
 import Header from './Header';
 import {useAuth} from "./AuthProvider";
+import { useLocation } from 'react-router-dom';
 import { GoogleAuthProvider,signInWithPopup } from 'firebase/auth';
 import { auth } from './Firebase';
 import { GoogleLogin } from '@react-oauth/google';
@@ -26,12 +27,16 @@ const Login = () => {
       [name]: value,
     }));
   };
- 
+  const location = useLocation();
+  const {paths}  = location.state||{};
   const googleLogin = async ()=>{
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth,provider).then(async (result)=>{
     const userDetails= await registerUserWithGoogle(result.user.email);
     login(userDetails.data.token,userDetails.data.user._id);
+    if(paths==="/checkout"){
+      navigate(paths);
+    }
     navigate("/");
     });
   }
@@ -75,7 +80,10 @@ const Login = () => {
        
         // Navigate to the dashboard or home page
        
-        navigate("/"); // Replace with your route after login
+        if(paths==="/checkout"){
+          navigate(paths);
+        }
+        navigate("/");
       } else {
         toast.error("Invalid email or password");
       }
