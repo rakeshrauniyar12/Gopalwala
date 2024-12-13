@@ -488,7 +488,7 @@ const SubscriptionProductPage = () => {
        fetchSubscriptionProducts();
    },[currentUser])
 console.log(subscriptionProduct)
-   const totalPrice = subscriptionProduct?.productQuantity.reduce(
+   const totalPrice = subscriptionProduct?.productQuantity?.reduce(
     (sum, { quantity, price }) => {
       return sum + price; // Ensure you return the updated sum
     },

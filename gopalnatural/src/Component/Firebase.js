@@ -13,7 +13,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_APP_ID,
 };
-
+console.log("API Key:", process.env.REACT_APP_API_KEY);
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth();
