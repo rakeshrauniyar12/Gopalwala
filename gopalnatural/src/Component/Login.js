@@ -30,12 +30,9 @@ const Login = () => {
   const googleLogin = async ()=>{
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth,provider).then(async (result)=>{
-      console.log(result.user.email)
     const userDetails= await registerUserWithGoogle(result.user.email);
-    console.log("Mongo Db User Details",userDetails);
     login(userDetails.data.token,userDetails.data.user._id);
     navigate("/");
-      console.log(result)
     });
   }
   // const googleAuth = async () => {
