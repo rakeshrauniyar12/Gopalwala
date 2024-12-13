@@ -4,9 +4,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios"; // Import Axios for API requests
 import { toast } from "react-toastify"; // Import toast for notifications
-import { getUser, loginUser } from '../backend';
+import { getUser, loginUser,registerUserWithGoogle } from '../backend';
 import Header from './Header';
 import {useAuth} from "./AuthProvider";
+import { GoogleAuthProvider,signInWithPopup } from 'firebase/auth';
+import { auth } from './Firebase';
+import { GoogleLogin } from '@react-oauth/google';
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
@@ -24,13 +27,24 @@ const Login = () => {
     }));
   };
  
-  const googleAuth = async () => {
-    localStorage.setItem("signInMethod","google")
-    window.open(
-      "https://gopalbackend.onrender.com/auth/google/callback",
-      "_self"
-    );
-  };
+  const googleLogin = async ()=>{
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth,provider).then(async (result)=>{
+      console.log(result.user.email)
+    const userDetails= await registerUserWithGoogle(result.user.email);
+    console.log("Mongo Db User Details",userDetails);
+    login(userDetails.data.token,userDetails.data.user._id);
+    navigate("/");
+      console.log(result)
+    });
+  }
+  // const googleAuth = async () => {
+  //   localStorage.setItem("signInMethod","google")
+  //   window.open(
+  //     "http://localhost:8080/auth/google/callback",
+  //     "_self"
+  //   );
+  // };
   
   
   // Handle login process
@@ -113,7 +127,7 @@ const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
           <div className='login-footer-content'>
-            <div className='login-content-google' onClick={googleAuth}>
+            <div className='login-content-google' onClick={googleLogin}>
               <p>Sign in with Google</p>
               <FcGoogle style={{ height: "30px", width: "30px" }} />
             </div>

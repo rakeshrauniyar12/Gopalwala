@@ -2,8 +2,8 @@ import axios from "axios";
 import { useAuth } from "./Component/AuthProvider";
 const apiUrl = "https://gopalbackend.onrender.com/api";
 // const apiUrl= "http://localhost:8080/api";
-// const googleUrl = "http://localhost:8080";
-const googleUrl = "https://gopalbackend.onrender.com";
+const googleUrl = "http://localhost:8080";
+// const googleUrl = "https://gopalbackend.onrender.com";
 const registerUser = async (email, password, societyName) => {
   try {
     const response = await axios.post(`${apiUrl}/auth/register`, {
