@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useAuth } from "./Component/AuthProvider";
 import { toast } from "react-toastify";
-// const apiUrl = "https://gopalbackend.onrender.com/api";
-const apiUrl= "http://localhost:8080/api";
+const apiUrl = "https://gopalbackend.onrender.com/api";
+// const apiUrl= "http://localhost:8080/api";
 // const googleUrl = "http://localhost:8080";
 const googleUrl = "https://gopalbackend.onrender.com";
 const registerUser = async (email, password, societyName) => {
