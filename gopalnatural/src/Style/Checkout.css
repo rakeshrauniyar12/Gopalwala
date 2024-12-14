@@ -242,7 +242,10 @@
     flex-direction: column;
     padding-top: 0px;
   }
-
+  .che-ship-btn {
+    margin-top: 10px;
+    width: 100%;
+  }
   .checkoutRightMain {
     width: 85%;
     margin: 30px 0px;
