@@ -193,7 +193,7 @@
   line-height: 16px;
   margin-top: 5px;
 }
-.select-address-h1{
+.select-address-h1 {
   width: 100%;
   font-size: 23px;
   margin-bottom: 20px;
@@ -204,10 +204,37 @@
   /* justify-content: space-between; */
   gap: 25px;
 }
+.che-ship-btn{
+  width: 45%;
+  margin-top: 10px;
+}
+.che-ship-btn>button{
+  width: 46%;
+  padding: 8px 10px;
+  border-radius: 5px;
+  color: #ffff;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 10px;
+  cursor: pointer;
+  border: 1px solid #b44700;
+  background-color: #b44700;
+}
+.che-ship-btn>button:hover{
+   background-color: #ffff;
+   color: black;
+}
 .add-sec-third button {
   padding: 5px 10px;
   text-align: center;
   margin: 15px 35px 10px 35px;
+}
+.check-select-sco {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  height: 80px;
 }
 @media (max-width: 768px) {
   .checkout-main-container {

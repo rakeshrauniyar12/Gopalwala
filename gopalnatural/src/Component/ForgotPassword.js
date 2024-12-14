@@ -63,10 +63,20 @@ const UpdateUserPassword = () => {
       toast.warn("password does not match!")
       return;
     }
-    const message = await updateUserPassword(userId, newPassword);
-    toast.success(message);
-    setNewPassword(""); // Clear the input field
-    navigate("/login");
+    try {
+      const message = await updateUserPassword(userId, newPassword);
+      if(message==="Password updated successfully."){
+        toast.success(message);
+        setNewPassword(""); // Clear the input field
+        navigate("/login");
+      } else{
+        toast.error(message);
+      }
+     
+    } catch (error) {
+      console.log("Error",error)
+    }
+  
   };
 
   return (
@@ -82,7 +92,7 @@ const UpdateUserPassword = () => {
         placeholder="Enter New Password"
       />
         </div>
-        <div className="otp-inputs">
+        <div className="login-content-input-1">
         <input
         type="password"
         value={confirmNewPassword}
@@ -120,9 +130,15 @@ const ValidateOtpMethod = () => {
       const res = await ValidateOtp(email, otpString);
       
       const userId= res?.data.userId;
-     
-      toast.success("OTP Validated Successfully.");
-      navigate("/account/updatepassword",{state:{userId}})
+      console.log(res);
+      console.log(userId);
+       if(userId){
+        toast.success("OTP Validated Successfully.");
+        navigate("/account/updatepassword",{state:{userId}})
+       }else{
+        console.log("User Id is not available")
+       }
+      
     } catch (error) {
       console.error("Error validating OTP:", error);
       toast.error("Failed to validate OTP. Please try again.");

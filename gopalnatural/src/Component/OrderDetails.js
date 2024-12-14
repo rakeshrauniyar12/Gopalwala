@@ -96,7 +96,7 @@ const OrderDetails = () => {
           <div className="pOrder-details-main-section">
             <div className="pfirst-section">
               <h2 className="ph2">Shipping Address</h2>
-              <p className="nBorder">{order.addressId?.flatNumber},{order.addressId?.towerNumber},{order.addressId?.firstName},{order.addressId?.lastName},{order.addressId?.phoneNumber}</p>
+              <p className="nBorder">{order.addressId?.flatNumber},{order.addressId?.towerNumber},{currentUser.data.data.societyName},{order.addressId?.firstName},{order.addressId?.lastName},{order.addressId?.phoneNumber}</p>
             </div>
             <div className="psecond-section">
               <h2 className="ph2">Payment Methods</h2>

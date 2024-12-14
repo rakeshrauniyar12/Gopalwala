@@ -284,10 +284,10 @@ let finalObject = {
                   <b>Price:</b>
                   <p>{product.productPrice}</p>
                 </div>
-                <div>
+                {/* <div>
                   <b>Total:</b>
                   <p>{product.productQuantity * product.productPrice}</p>
-                </div>
+                </div> */}
               </div>
             </div>
           )}
@@ -473,33 +473,44 @@ let finalObject = {
 };
 
 const SubscriptionProductPage = () => {
-    const {currentUser} = useAuth();
+    const {isLoggedIn,currentUser} = useAuth();
+    const [loading,setLoading] = useState(true);
   const [subscriptionProduct,setSubscriptionProduct] = useState([]);
   const navigate = useNavigate();
   useEffect(()=>{
+
       const fetchSubscriptionProducts = async ()=>{
-        console.log(currentUser?.data.data._id)
-        console.log(currentUser)
+     
              const subProducts = await getSubscriptionProducts(currentUser?.data.data._id);
-             if(subProducts) setSubscriptionProduct(subProducts.subscriptionProducts)
-             console.log(subProducts);
-             console.log(subscriptionProduct);
+             if(subProducts) {
+              setSubscriptionProduct(subProducts.subscriptionProducts)
+              setLoading(false);
+             }
+           
        }
-       fetchSubscriptionProducts();
+       if(isLoggedIn){
+        fetchSubscriptionProducts();
+       }
+      
    },[currentUser])
-console.log(subscriptionProduct)
+
 const totalPrice = subscriptionProduct.reduce((totalSum, product) => {
   const productTotal = product.productQuantity.reduce((sum, item) => sum + item.price, 0);
   return totalSum + productTotal;
 }, 0);
 
 const goToViewDetailsPage = (product)=>{
-  console.log("Hello")
        navigate("/subscription/viewdetails",{state:{product}})
 }
   return (
-    <div className="subs-product-page-main">
-    {  !subscriptionProduct?<div>
+    <div className="subs-product-page-main-1">
+    {  loading ? (
+        <div className="spinner-container">
+          <ClipLoader color={"#36D7B7"} loading={loading} size={50} />
+        </div>
+      ) :!isLoggedIn? 
+        <div style={{display:"flex",justifyContent:"center",alignItems:"center",fontSize:"35px"}}><Link to={"/login"}>Please Login</Link></div>
+    :!subscriptionProduct?<div>
         <p style={{ color: "Red", fontSize: "18px", fontWeight: "600" }}>
           You have not subscribed any product.
         </p>
@@ -507,9 +518,9 @@ const goToViewDetailsPage = (product)=>{
           <button className="sub-btn">Click here to subscribe product</button>
         </Link>
       </div>:
-        <div>
+        <div className="subs-product-page-main">
           {subscriptionProduct.map((product, index) => (
-            <div className="product">
+            <div className="product-1">
               <div className="product-image">
                 <img src={product.productImage} alt="Apple" />
               </div>
@@ -518,10 +529,10 @@ const goToViewDetailsPage = (product)=>{
                  {`You have subscribed this product for ${product.productQuantity.length} days.`}
 
               </p>
-             <p>
-              {totalPrice+totalPrice*0.12}
+             <p style={{fontSize:"20px"}}>
+              <b>Total Price: </b>{Math.ceil(product.productQuantity.reduce((sum, item) => sum + item.price, 0)+product.productQuantity.reduce((sum, item) => sum + item.price, 0)*0.12)}
              </p>
-             <button onClick={()=>{goToViewDetailsPage(product)}}>View Details</button>
+             <button className="sub-btn-1" onClick={()=>{goToViewDetailsPage(product)}}>View Details</button>
             </div>
 
           ))}

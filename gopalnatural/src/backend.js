@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useAuth } from "./Component/AuthProvider";
 import { toast } from "react-toastify";
-const apiUrl = "https://gopalbackend.onrender.com/api";
-// const apiUrl= "http://localhost:8080/api";
+// const apiUrl = "https://gopalbackend.onrender.com/api";
+const apiUrl= "http://localhost:8080/api";
 // const googleUrl = "http://localhost:8080";
 const googleUrl = "https://gopalbackend.onrender.com";
 const registerUser = async (email, password, societyName) => {
@@ -47,9 +47,23 @@ async function ValidateOtp(email, otp) {
       "Error sending OTP:",
       error.response ? error.response.data : error.message
     );
-    alert("Failed to send OTP. Please try again.");
   }
 }
+const updateSocietyName = async (userId, societyName) => {
+  try {
+    const response = await axios.patch(`${apiUrl}/auth/updatesocietyname/${userId}`, {
+      societyName,
+    });
+
+    // Log the success response
+    console.log('Society name updated:', response.data);
+    return response.data; // Return the response for further use
+  } catch (error) {
+    // Handle errors appropriately
+    console.error('Error updating society name:', error.response?.data || error.message);
+    throw error; // Re-throw the error for the caller to handle
+  }
+};
 const registerUserWithGoogle = async (email) => {
   try {
     const response = await axios.post(`${apiUrl}/auth/register/google`, {
@@ -102,11 +116,11 @@ const updateUserPassword = async (userId, newPassword) => {
   } catch (error) {
     if (error.response) {
       // Handle errors returned by the server
-      alert(error.response.data.message || "Failed to update password.");
+      return (error.response.data.message || "Failed to update password.");
     } else {
       // Handle other errors (network issues, etc.)
       console.error("An error occurred:", error);
-      alert("An unexpected error occurred. Please try again.");
+      return ("An unexpected error occurred. Please try again.");
     }
   }
 };
@@ -413,5 +427,6 @@ export {
   fetchOrders,
   fetchOrdersByUserAndOrderId,
   fetchOrdersByUserOrderAndProductId,
-  updateUserPassword
+  updateUserPassword,
+  updateSocietyName
 };

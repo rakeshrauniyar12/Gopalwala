@@ -35,7 +35,7 @@ console.log("Profile Current User",currentUser)
           </div>
           <button
             onClick={() => {
-              navigate("/forgotpassword");
+              navigate("/account/forgotpassword");
             }}
             className="login-main-first-second"
           >

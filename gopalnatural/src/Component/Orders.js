@@ -90,7 +90,8 @@ const OrderContent = () => {
   const [order, setOrders] = useState([]);
   const [selectedOption, setSelectedOption] = useState("order"); // Track selected option
   const { currentUser } = useAuth();
-  
+  const [showReturnPopup, setReturnShowPopup] = useState(false);
+ const [selectedReturnReason, setReturnSelectedReason] = useState("");
   const isMobile = window.innerWidth <= 768;
   const navigate = useNavigate();
   useEffect(() => {
@@ -110,7 +111,24 @@ const OrderContent = () => {
 
     fetchOrdersForUser();
 }, [currentUser]);
- 
+const handleReturnSubmit = () => {
+  // handleReturnOrder(
+  //   currentReturnOrder,
+  //   currentReturnProduct,
+  //   selectedReturnReason,
+  //   user
+  // );
+  setReturnShowPopup(false);
+};
+const handleReturnButtonClick = (orderId, productId) => {
+  setReturnShowPopup(true);
+};
+const handleReturnReasonChange = (event) => {
+  setReturnSelectedReason(event.target.value);
+};
+const handleReturnClosePopup = () => {
+  setReturnShowPopup(false);
+};
   const goToShowOrderDetails= (orderId,productId)=>{
       navigate(`/orders/showorderdetails/${orderId}/${productId}`)
   }
@@ -200,6 +218,7 @@ console.log((Array.isArray(order)).length)
               </div>
               <div className="iOrder-details-sec-sec">
                 <h1 className="iOrder-t-h1">{order.status}</h1>
+                <h1 className="iOrder-t-h1" style={{color:"#3d8e41",fontWeight:"600"}}>{order.subscriptionId?"Subscribed Product":""}</h1>
               </div>
               <div>
                 {order.items.map((item, index) =>
@@ -215,6 +234,7 @@ console.log((Array.isArray(order)).length)
                         <p className="iOrder-details-p1">{item.productName}</p>
                         <p className="iOrder-details-p">{item.productName}</p>
                         <p className="iOrder-details-p5">{order.status}</p>
+                        <p className="iOrder-details-p5" style={{color:"#3d8e41",fontWeight:"600"}}>{order.subscriptionId?"Subscribed Product":""}</p>
                         <div style={{ width: "130%", display: "flex" }}>
                           <button className="iOrder-b" onClick={()=>{goToShowOrderDetails(order._id,item.productId)}}>View details</button>
 
@@ -240,7 +260,13 @@ console.log((Array.isArray(order)).length)
                           <p>Quantity: {item.quantity}</p>
                         </div>
                         <div className="bOrder-button">
-                          <button className="iOrder-b1">
+                          <button className="iOrder-b1" onClick={() => {
+                                  handleReturnButtonClick(
+                                    order._id,
+                                    item.productId,
+                                    item.productPrice+item.productPrice*0.12
+                                  );
+                                }}>
                             Return this item
                           </button>
 
@@ -279,6 +305,31 @@ console.log((Array.isArray(order)).length)
               </div>
             </div>
           ))}
+        </div>
+      )}
+      {showReturnPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h3>Why do you want to return this order?</h3>
+            <select
+              value={selectedReturnReason}
+              onChange={handleReturnReasonChange}
+            >
+              <option value="">Select return reason</option>
+              <option value="mistake">Order created by mistake</option>
+              <option value="time">Items would not arrive on time</option>
+              <option value="price">Item price too high</option>
+              <option value="cheaper">Found cheaper somewhere else</option>
+              <option value="shipping">Need to change shipping address</option>
+              <option value="payment">Need to change payment method</option>
+            </select>
+            <button onClick={handleReturnSubmit} className="pop-btn">
+              Submit
+            </button>
+            <button onClick={handleReturnClosePopup} className="pop-btn">
+              Close
+            </button>
+          </div>
         </div>
       )}
     </>
@@ -544,39 +595,6 @@ const ShowOrderDetails = () => {
   );
 };
 
-const useOrderDetails = (userId, orderId) => {
-  const [order, setOrder] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchOrderDetails = async () => {
-      if (!orderId || !userId) {
-        console.error("Missing userId or orderId");
-        setLoading(false); // Stop loading if inputs are invalid
-        return;
-      }
-
-      try {
-        const orderData = await fetchOrdersByUserAndOrderId(userId, orderId);
-        console.log("Fetched Order Details:", orderData);
-        if (orderData) {
-          setOrder(orderData.order); // Properly update the order state
-        } else {
-          setError("No such document!");
-        }
-      } catch (err) {
-        setError("Error fetching order details: " + err.message);
-      } finally {
-        setLoading(false); // Ensure loading is set to false
-      }
-    };
-
-    fetchOrderDetails(); // Call the function when the dependency changes
-  }, [userId, orderId]); // Dependencies: triggers fetch when userId or orderId changes
-
-  console.log("Use Order Details Hook:", { order, loading, error });
-  return { order, loading, error };
-};
 
 export { Orders, ShowOrderDetails };

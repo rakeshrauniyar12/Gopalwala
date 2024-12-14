@@ -4,10 +4,16 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import axios from "axios"; // Import Axios for API requests
-import { registerUser } from "../backend";
+import { registerUser,registerUserWithGoogle } from "../backend";
 import { toast } from "react-toastify";
+import { GoogleAuthProvider,signInWithPopup } from 'firebase/auth';
+import { auth } from './Firebase';
+import { useAuth } from "./AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const {login} = useAuth();
+  const navigate = useNavigate();
   const [isRotated, setIsRotated] = useState(false);
   const [showSociety, setShowSociety] = useState(false);
   const [formData, setFormData] = useState({
@@ -20,13 +26,14 @@ const Register = () => {
   const handleRotate = () => {
     setIsRotated((prev) => !prev);
   };
-  const googleAuth = async () => {
-    localStorage.setItem("signInMethod","google")
-    window.open(
-      `https://gopalbackend.onrender.com/auth/google/callback`,
-      "_self"
-    );
-  };
+  const googleLogin = async ()=>{
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth,provider).then(async (result)=>{
+    const userDetails= await registerUserWithGoogle(result.user.email);
+    login(userDetails.data.token,userDetails.data.user._id);
+    navigate("/");
+    });
+  }
   const handleShowSociety = () => {
     setShowSociety((prev) => !prev);
   };
@@ -187,7 +194,7 @@ const Register = () => {
           </button>
 
           <div className="login-footer-content">
-            <div className="login-content-google" onClick={googleAuth}>
+            <div className="login-content-google" onClick={googleLogin}>
               <p>Sign in with Google</p>
               <FcGoogle style={{ height: "30px", width: "30px" }} />
             </div>

@@ -8,12 +8,14 @@ import paytm from "../Assets/Checkout/paytm.png";
 import phone_pe from "../Assets/Checkout/phone_pe.png";
 import visa from "../Assets/Checkout/visa.png";
 import { useAuth } from "./AuthProvider";
+import { RiArrowDropDownLine } from "react-icons/ri";
 import {
   getAddress,
   saveOrder,
   removeAddress,
   getAddressById,
   saveSubscriptionProduct,
+  updateSocietyName
 } from "../backend";
 import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -23,13 +25,18 @@ const Checkout = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = window.innerWidth <= 768;
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
-  const { currentUser, isLoggedIn } = useAuth();
+  const [societyName, setShowSocietyName] = useState("Select Society Name");
+  const [showSociety, setShowSociety] = useState(false);
+  const [isRotated, setIsRotated] = useState(false);
+  const [errors, setErrors] = useState({});
+  const { currentUser, isLoggedIn, login } = useAuth();
   const { totalPriceWithTax, products, finalObject, paths } =
     location.state || {};
-  console.log(paths);
+ 
   useEffect(() => {
     const fetchAddress = async () => {
       const fetchAddress = await getAddress(currentUser.data.data._id);
@@ -44,16 +51,47 @@ const Checkout = () => {
   const handleAddressChange = (addressId) => {
     setSelectedAddress(addressId);
   };
+  const handleRotate = () => {
+    setIsRotated((prev) => !prev);
+  };
+
+  const handleShowSociety = () => {
+    setShowSociety((prev) => !prev);
+  };
+
   const path = "/checkout";
   const handlePaymentChange = (paymentMethod) => {
     setSelectedPaymentMethod(paymentMethod);
   };
-
+ console.log("Before Updation",refreshKey)
+ const updateUserAfterSocietNameUpdate = ()=>{
+            const token = localStorage.getItem("token");
+            const userId = localStorage.getItem("userId");
+            login(token,userId);
+ }
+  const handleUpdateSocietyName = async (userId,societyName)=>{
+    if (societyName === "Select Society Name") {
+      toast.warn("Please select a valid society name!");
+      return;
+    }
+    try {
+      await updateSocietyName(currentUser.data.data._id, societyName);
+      toast.success("Society name updated successfully!");
+      setRefreshKey((prev) => prev + 1);
+      console.log("After Updation",refreshKey)
+      updateUserAfterSocietNameUpdate();
+    } catch (error) {
+      toast.error("Error updating society name!");
+      console.error("Update error:", error);
+    }
+   }
+   console.log("Cuur",currentUser)
   const handlePlaceOrder = async () => {
     if (!isLoggedIn) {
       toast.warn("please fill shipping info..");
       return;
     }
+   
     if (!selectedAddress) {
       toast.warn("Please select the address!");
       return;
@@ -73,19 +111,20 @@ const Checkout = () => {
       );
       console.log(subscriptionResponse);
       subscriptionId = subscriptionResponse.subscriptionProduct._id;
-       const extractedProducts = [
-           {productId:finalObject.subscriptionData.productId,
-           productImage:finalObject.subscriptionData.productImage,
-           productName:finalObject.subscriptionData.productName,
-           productPrice:finalObject.subscriptionData.productPrice,
-           productQuantity:1
-           }
-       ]
+      const extractedProducts = [
+        {
+          productId: finalObject.subscriptionData.productId,
+          productImage: finalObject.subscriptionData.productImage,
+          productName: finalObject.subscriptionData.productName,
+          productPrice: finalObject.subscriptionData.productPrice,
+          productQuantity: 1,
+        },
+      ];
       const totalPrice = totalPriceWithTax;
       const paymentMethod = selectedPaymentMethod;
       const addressId = selectedAddress;
       console.log(subscriptionId);
-     
+
       // productArray.push(exr)
       const orderData = {
         userId,
@@ -105,39 +144,44 @@ const Checkout = () => {
       } catch (error) {
         throw error;
       }
-    }else{
-    if (selectedAddress && selectedPaymentMethod) {
-      const extractedProducts = products.map((product) => ({
-        productId: product._id,
-        productImage: product.productImage,
-        productName: product.productName,
-        productPrice: product.productPrice,
-        productQuantity: product.productQuantity,
-      }));
-      const totalPrice = totalPriceWithTax;
-      const paymentMethod = selectedPaymentMethod;
-      const addressId = selectedAddress;
-      // const userId = currentUser.data.data._id;
-      const orderData = {
-        userId,
-        addressId,
-        paymentMethod,
-        totalPrice,
-        subscriptionId,
-        extractedProducts,
-      };
-      try {
-        const res = await saveOrder(orderData);
-        console.log("Inside Checkout Order Details", res);
-        if (res) {
-          toast.success("order successfull");
-          navigate("/orderplaced", { state: { addressString } });
+    } else {
+      if (selectedAddress && selectedPaymentMethod) {
+        const extractedProducts = products.map((product) => ({
+          productId: product._id,
+          productImage: product.productImage,
+          productName: product.productName,
+          productPrice: product.productPrice,
+          productQuantity: product.productQuantity,
+        }));
+        const totalPrice = totalPriceWithTax;
+        const paymentMethod = selectedPaymentMethod;
+        const addressId = selectedAddress;
+        // const userId = currentUser.data.data._id;
+        const orderData = {
+          userId,
+          addressId,
+          paymentMethod,
+          totalPrice,
+          subscriptionId,
+          extractedProducts,
+        };
+        try {
+          const res = await saveOrder(orderData);
+          console.log("Inside Checkout Order Details", res);
+          if (res) {
+            toast.success("order successfull");
+            navigate("/orderplaced", { state: { addressString } });
+          }
+        } catch (error) {
+          throw error;
         }
-      } catch (error) {
-        throw error;
       }
     }
-    }
+  };
+  const handleSocietySelect = (society) => {
+    setShowSocietyName(society);
+    setShowSociety(false);
+    setIsRotated(false);
   };
   const handleRemoveAddress = async (addressId) => {
     console.log("RemoveAddInsideCheckout", addressId);
@@ -153,31 +197,130 @@ const Checkout = () => {
     }
   };
   return (
-    <div className="checkout-main-container">
+    <div className="checkout-main-container" key={refreshKey}>
       <div className="check-1">
         {!isLoggedIn ? (
           <CheckoutLoginPage
             onRefresh={() => {
               setRefreshKey(refreshKey + 1);
-              console.log("Trigger Refreshh!!");
             }}
           />
         ) : (
           <>
             <div className="checkoutShippingAddressDiv">
               <h2 className="select-address-h1">Select a delivery address</h2>
-              {addresses
-                ? addresses.length === 0
-                  ?  <CheckoutLoginPage
-                  onRefresh={() => {
-                    setRefreshKey(refreshKey + 1);
-                    console.log("Trigger Refreshh!!");
-                  }}
-                />
-                  : ""
-                : ""}
+              {addresses ? (
+                addresses.length === 0 ? (
+                  <CheckoutLoginPage
+                    onRefresh={() => {
+                      setRefreshKey(refreshKey + 1);
+                      console.log("Trigger Refreshh!!");
+                    }}
+                  />
+                ) : (
+                  ""
+                )
+              ) : (
+                ""
+              )}
               {addresses.map((address, index) => (
                 <>
+                  {currentUser.data.data.societyName ===
+                  "Select Society Name" ? (
+                    <>
+                      <div className="check-select-sco">
+                        <div
+                          className="select-society"
+                          style={{
+                            marginTop: "0px",
+                            height: "46px",
+                            width: "90%",
+                          }}
+                        >
+                          <p>
+                            {societyName
+                              ? `${societyName}`
+                              : "Select Your Society"}
+                          </p>
+                          <div
+                            className="society-selection-box"
+                            onClick={() => {
+                              handleRotate();
+                              handleShowSociety();
+                            }}
+                          >
+                            <RiArrowDropDownLine
+                              style={{
+                                fontSize: "60px",
+                                transform: isRotated
+                                  ? "rotate(180deg)"
+                                  : "rotate(0deg)",
+                                transition: "transform 0.3s ease",
+                                cursor: "pointer",
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <div className="check-ship-btn">
+                          <button
+                           onClick={()=>{
+                            handleUpdateSocietyName(currentUser.data.data._id,societyName)
+                           }}
+                            // disabled={loading}
+                            className="add-addres"
+                          >
+                         Add Shipping Info
+                          </button>
+                        </div>
+                      </div>
+                      {showSociety && (
+                        <div
+                          className="society-dropdown"
+                          style={{
+                            width: !isMobile ? "45%" : "75%",
+                           
+                          }}
+                        >
+                          {[
+                            "Select Your Society",
+                            "OUCOLONY",
+                            "OUTEMPLE",
+                            "WESTERN PLAZA",
+                            "MANIKONDA",
+                            "PUPPALAGUDA",
+                            "KHAJAGUDA",
+                            "AYYAPPA SOCIETY",
+                            "KOKAPET",
+                            "APARNA CYBERZON",
+                            "APARNA CYBERLIFE",
+                            "APARNA SAROVAR ZENITH",
+                            "APARNA SERENE PARK",
+                            "APARNA CYBERSCAPE",
+                            "APARNA LUXOR PARK",
+                            "APARNA KANOPY MARIGOLD",
+                            "APARNA SERENITY",
+                            "Tata Promont",
+                            "Sobha Neopolis",
+                            "Embassy Lake",
+                            "Felicity Engrace",
+                            "Sattva Aeropolis",
+                            "Suncity",
+                            "Grey Stone",
+                          ].map((society) => (
+                            <p
+                              key={society}
+                              onClick={() => handleSocietySelect(society)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {society}
+                            </p>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    ""
+                  )}
                   <div key={index} className="shippingaddress">
                     <input
                       type="radio"
@@ -188,7 +331,7 @@ const Checkout = () => {
                     />
                     <p>{` ${address.flatNumber}, ${address.towerNumber},${currentUser.data.data.societyName},${address.firstName}, ${address.lastName}, ${address.phoneNumber} `}</p>{" "}
                   </div>
-                  <div>
+                  <div className="che-ship-btn">
                     <button
                       onClick={() => {
                         navigate(`/address/updateaddress/${address._id}`, {

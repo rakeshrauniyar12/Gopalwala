@@ -19,7 +19,6 @@ const AddressContent = () => {
       try {
         setLoading(true); // Start loading
         const fetchAddress = await getAddress(currentUser?.data.data._id);
-        console.log("Address Content",fetchAddress)
         setAddresses(fetchAddress.addresses || []);
         setShowAddressPage(fetchAddress.addresses?.length === 0);
       } catch (error) {
